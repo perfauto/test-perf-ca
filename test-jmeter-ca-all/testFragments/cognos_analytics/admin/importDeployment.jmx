@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="simple import" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set deployment info" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">return vars.get(&quot;item&quot;)</stringProp>
+          </JSR223Sampler>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get deployment_name" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">deployment_name</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">${__P(deploymentName)}</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get deployment_password" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">deployment_password</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.password</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">${__P(deploymentPassword,)}</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="generate authToken" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">import com.ibm.bi.auth.AuthenticityToken;
+import com.ibm.bi.auth.BiBase64;
+import java.io.ByteArrayOutputStream;
+log.debug(&quot;usersessionid=&quot; + vars.get(&quot;COOKIE_usersessionid&quot;));	
+authToken = AuthenticityToken.generateToken(vars.get(&quot;COOKIE_usersessionid&quot;));
+log.debug(&quot;authToken=&quot; + authToken);
+vars.put(&quot;authToken&quot;, authToken);</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="query" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope&#xd;
+	xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&#xd;
+	xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&#xd;
+	xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&#xd;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&#xd;
+	xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&#xd;
+	xmlns:ns1=&quot;http://developer.cognos.com/schemas/contentManagerService/1&quot;&gt;&#xd;
+	&lt;SOAP-ENV:Header&gt;&#xd;
+		&lt;bus:biBusHeader xsi:type=&quot;bus:biBusHeader&quot;&gt;&#xd;
+			&lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&#xd;
+				&lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&#xd;
+					&lt;name xsi:type=&quot;xsd:string&quot;&gt;html&lt;/name&gt;&#xd;
+					&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&#xd;
+				&lt;/item&gt;&#xd;
+			&lt;/bus:dispatcherTransportVars&gt;&#xd;
+			&lt;bus:CAM xsi:type=&quot;bus:CAM&quot;&gt;&#xd;
+				&lt;authenticityToken xsi:type=&quot;xsd:base64Binary&quot;&gt;${authToken}&lt;/authenticityToken&gt;&#xd;
+			&lt;/bus:CAM&gt;&#xd;
+			&lt;bus:CAF xsi:type=&quot;bus:CAF&quot;&gt;&#xd;
+				&lt;contextID xsi:type=&quot;xsd:string&quot;&gt;${cafContextId}&lt;/contextID&gt;&#xd;
+			&lt;/bus:CAF&gt;&#xd;
+			&lt;bus:userPreferenceVars SOAP-ENC:arrayType=&quot;bus:userPreferenceVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+				&lt;item&gt;&#xd;
+					&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;productLocale&lt;/bus:name&gt;&#xd;
+					&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/bus:value&gt;&#xd;
+				&lt;/item&gt;&#xd;
+				&lt;item&gt;&#xd;
+					&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;contentLocale&lt;/bus:name&gt;&#xd;
+					&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en-us&lt;/bus:value&gt;&#xd;
+				&lt;/item&gt;&#xd;
+			&lt;/bus:userPreferenceVars&gt;&#xd;
+			&lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&#xd;
+				&lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&#xd;
+					&lt;name xsi:type=&quot;xsd:string&quot;&gt;cm&lt;/name&gt;&#xd;
+					&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+				&lt;/item&gt;&#xd;
+			&lt;/bus:dispatcherTransportVars&gt;&#xd;
+		&lt;/bus:biBusHeader&gt;&#xd;
+	&lt;/SOAP-ENV:Header&gt;&#xd;
+	&lt;SOAP-ENV:Body&gt;&#xd;
+		&lt;ns1:query&gt;&#xd;
+			&lt;searchPath xsi:type=&quot;bus:searchPathMultipleObject&quot;&gt;/adminFolder&lt;/searchPath&gt;&#xd;
+			&lt;properties SOAP-ENC:arrayType=&quot;bus:propEnum[2]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+				&lt;properties xsi:type=&quot;bus:propEnum&quot;&gt;searchPath&lt;/properties&gt;&#xd;
+				&lt;properties xsi:type=&quot;bus:propEnum&quot;&gt;policies&lt;/properties&gt;&#xd;
+			&lt;/properties&gt;&#xd;
+			&lt;sortBy SOAP-ENC:arrayType=&quot;bus:sort[0]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;/&gt;&#xd;
+			&lt;options xsi:type=&quot;bus:queryOptions&quot;&gt;&#xd;
+				&lt;dataEncoding xsi:type=&quot;bus:encodingEnum&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;maxDataBytes xsi:type=&quot;xsd:integer&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;maxObjects xsi:type=&quot;xsd:integer&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;permission xsi:type=&quot;xsd:string&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;refProps xsi:type=&quot;bus:refProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;schemaInfo xsi:type=&quot;xsd:boolean&quot;&gt;false&lt;/schemaInfo&gt;&#xd;
+				&lt;skipDataBytes xsi:type=&quot;xsd:integer&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+				&lt;skipObjects xsi:type=&quot;xsd:integer&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+			&lt;/options&gt;&#xd;
+		&lt;/ns1:query&gt;&#xd;
+	&lt;/SOAP-ENV:Body&gt;&#xd;
+&lt;/SOAP-ENV:Envelope&gt;&#xd;
+</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${urlPath}/bi/api/soap</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="SOAPAction" elementType="Header">
+                  <stringProp name="Header.name">SOAPAction</stringProp>
+                  <stringProp name="Header.value">http://host.com/xmlns/prod/cognos/contentManagerService/201701/</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">*/*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get userCapabilityCache" enabled="true">
+              <stringProp name="XPathExtractor.default">&lt;userCapabilityCache&gt;&lt;/userCapabilityCache&gt;</stringProp>
+              <stringProp name="XPathExtractor.refname">userCapabilityCache</stringProp>
+              <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">//userCapabilityCache</stringProp>
+              <boolProp name="XPathExtractor.fragment">true</boolProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">false</boolProp>
+              <boolProp name="XPathExtractor.namespace">true</boolProp>
+            </XPathExtractor>
+            <hashTree/>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get policies" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">policies</stringProp>
+              <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">//policies</stringProp>
+              <boolProp name="XPathExtractor.fragment">true</boolProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">false</boolProp>
+              <boolProp name="XPathExtractor.namespace">true</boolProp>
+            </XPathExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="getDeploymentOptions" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope&#xd;
+  xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&#xd;
+  xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&#xd;
+  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&#xd;
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&#xd;
+  xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&#xd;
+  xmlns:ns1=&quot;http://developer.cognos.com/schemas/contentManagerService/1&quot;&gt;&#xd;
+  &lt;SOAP-ENV:Header&gt;&#xd;
+    &lt;bus:biBusHeader xsi:type=&quot;bus:biBusHeader&quot;&gt;&#xd;
+      &lt;bus:CAM xsi:type=&quot;bus:CAM&quot;&gt;&#xd;
+        &lt;authenticityToken xsi:type=&quot;xsd:base64Binary&quot;&gt;${authToken}&lt;/authenticityToken&gt;&#xd;
+      &lt;/bus:CAM&gt;&#xd;
+      &lt;bus:CAF xsi:type=&quot;bus:CAF&quot;&gt;&#xd;
+        &lt;contextID xsi:type=&quot;xsd:string&quot;&gt;${cafContextId}&lt;/contextID&gt;&#xd;
+      &lt;/bus:CAF&gt;&#xd;
+      &lt;bus:hdrSession xsi:type=&quot;bus:hdrSession&quot;&gt;&#xd;
+        &lt;bus:formFieldVars SOAP-ENC:arrayType=&quot;bus:formFieldVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+          &lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&#xd;
+            &lt;name xsi:type=&quot;xsd:string&quot;&gt;_ContextBlockSize&lt;/name&gt;&#xd;
+            &lt;value xsi:type=&quot;xsd:string&quot;&gt;1000000&lt;/value&gt;&#xd;
+          &lt;/item&gt;&#xd;
+          &lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&#xd;
+            &lt;name xsi:type=&quot;xsd:string&quot;&gt;ignoreXHTMLStrict&lt;/name&gt;&#xd;
+            &lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+          &lt;/item&gt;&#xd;
+        &lt;/bus:formFieldVars&gt;&#xd;
+      &lt;/bus:hdrSession&gt;&#xd;
+      &lt;bus:userPreferenceVars SOAP-ENC:arrayType=&quot;bus:userPreferenceVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+        &lt;item&gt;&#xd;
+          &lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;productLocale&lt;/bus:name&gt;&#xd;
+          &lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/bus:value&gt;&#xd;
+        &lt;/item&gt;&#xd;
+        &lt;item&gt;&#xd;
+          &lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;contentLocale&lt;/bus:name&gt;&#xd;
+          &lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en-us&lt;/bus:value&gt;&#xd;
+        &lt;/item&gt;&#xd;
+      &lt;/bus:userPreferenceVars&gt;&#xd;
+      &lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&#xd;
+        &lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&#xd;
+          &lt;name xsi:type=&quot;xsd:string&quot;&gt;rs&lt;/name&gt;&#xd;
+          &lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+        &lt;/item&gt;&#xd;
+      &lt;/bus:dispatcherTransportVars&gt;&#xd;
+    &lt;/bus:biBusHeader&gt;&#xd;
+  &lt;/SOAP-ENV:Header&gt;&#xd;
+  &lt;SOAP-ENV:Body&gt;&#xd;
+    &lt;ns1:getDeploymentOptions SOAP-ENC:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xd;
+      &lt;archive xsi:type=&quot;xsd:string&quot;&gt;${deployment_name}&lt;/archive&gt;&#xd;
+        ${getDeploymentsOptions_password_option}&#xd;
+    &lt;/ns1:getDeploymentOptions&gt;&#xd;
+  &lt;/SOAP-ENV:Body&gt;&#xd;
+&lt;/SOAP-ENV:Envelope&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${urlPath}/bi/api/soap</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="SOAPAction" elementType="Header">
+                  <stringProp name="Header.name">SOAPAction</stringProp>
+                  <stringProp name="Header.value">http://host.com/xmlns/prod/cognos/contentManagerService/201701/</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">*/*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <XPath2Extractor guiclass="XPath2ExtractorGui" testclass="XPath2Extractor" testname="get deployment_options" enabled="true">
+              <stringProp name="XPathExtractor2.default"></stringProp>
+              <stringProp name="XPathExtractor2.refname">deployment_options</stringProp>
+              <stringProp name="XPathExtractor2.matchNumber">1</stringProp>
+              <stringProp name="XPathExtractor2.xpathQuery">//result</stringProp>
+              <stringProp name="XPathExtractor2.namespaces"></stringProp>
+              <boolProp name="XPathExtractor2.fragment">true</boolProp>
+            </XPath2Extractor>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set password_nv_option" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${deployment_password}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">
+if (Parameters == &quot;&quot;) {
+  password_nv_option = &apos;&apos;
+} else {
+  password_nv_option =  &apos;&lt;name xsi:type=&quot;bus:deploymentOptionEnum&quot;&gt;archiveEncryptPassword&lt;/name&gt;&apos; +
+                           &apos;&lt;value xsi:type=&quot;xsd:string&quot;&gt;&amp;lt;credential&amp;gt;&amp;lt;password&amp;gt;&apos; +
+                           Parameters + &apos;&amp;lt;/password&amp;gt;&amp;lt;/credential&amp;gt;&lt;/value&gt;&apos;
+}
+
+vars.put(&quot;password_nv_option&quot;, password_nv_option)                  
+
+</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set getDeploymentsOptions_password_option" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${password_nv_option}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">if (Parameters == &quot;&quot;) {
+  getDeploymentsOptions_password_option = &apos;&apos;
+} else {
+  getDeploymentsOptions_password_option = &apos;&lt;options SOAP-ENC:arrayType=&quot;ns3:option[1]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&apos; +
+                           &apos;&lt;options xsi:type=&quot;bus:deploymentOptionString&quot;&gt;&apos; +
+                           Parameters + 
+                           &apos;&lt;/options&gt;&lt;/options&gt;&apos;
+}
+
+vars.put(&quot;getDeploymentsOptions_password_option&quot;, getDeploymentsOptions_password_option)                  
+
+</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="prepare deployment_options" enabled="true">
+              <stringProp name="scriptLanguage">java</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Iterator;
+import org.apache.commons.lang3.StringEscapeUtils;
+
+import javax.xml.namespace.NamespaceContext;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+
+deployment_options = vars.get(&quot;deployment_options&quot;);
+//log.info(deployment_options)
+
+
+DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+factory.setNamespaceAware(true);
+DocumentBuilder builder = factory.newDocumentBuilder();
+
+document = builder.parse(new InputSource(new StringReader(deployment_options)));
+
+// change root items to value
+for(nextTopItem = ((Element)document.getElementsByTagName(&quot;result&quot;).item(0)).getFirstChild(); 
+    nextTopItem != null; 
+    nextTopItem = nextTopItem.getNextSibling()) {
+    	
+	if (nextTopItem.getNodeName().equals(&quot;item&quot;)) {
+		document.renameNode(((Element)nextTopItem), null, &quot;value&quot;);
+	}
+}
+
+nodes = document.getElementsByTagName(&quot;ancestors&quot;);
+
+for(int i = 0; i&lt;nodes.getLength(); i++) {
+  Node eachNode = nodes.item(i);
+  NodeList items = ((Element)eachNode).getElementsByTagName(&quot;item&quot;);
+  for (int j = 0; j &lt; items.getLength(); j++) {
+	  Element eachItem = ((Element)items.item(j));
+  	  Element storeID = document.createElement(&quot;storeID&quot;);
+  	  storeID.setAttribute(&quot;xsi:nil&quot;, &quot;true&quot;);
+  	  storeID.setAttribute(&quot;xsi:type&quot;, &quot;cm:guid&quot;);
+  	  eachItem.appendChild(storeID);
+	  document.renameNode(eachItem, null, &quot;ancestors&quot;);
+  }
+}
+
+								          
+xPathfactory = XPathFactory.newInstance();
+xpath = xPathfactory.newXPath();
+
+NamespaceContext ctx = new NamespaceContext() {
+    public String getNamespaceURI(String prefix) {
+        if (&quot;xsi&quot;.equals(prefix)) {
+            return &quot;http://www.w3.org/2001/XMLSchema-instance&quot;;
+        }
+        return null;
+    }
+    public String getPrefix(String uri) {
+        throw new UnsupportedOperationException();
+    }
+    public Iterator getPrefixes(String uri) {
+        throw new UnsupportedOperationException();
+    }
+};
+
+xpath.setNamespaceContext(ctx);
+
+expr = xpath.compile(&quot;//item[@xsi:type=&apos;cm:multilingualToken&apos;]&quot;);
+// //item[contains(@xsi:type,&quot;:multilingualToken&quot;)]
+itemToNameList = expr.evaluate(document, XPathConstants.NODESET);
+for (int i = 0; i&lt;itemToNameList.getLength(); i++) {
+	Node thisNode = itemToNameList.item(i);
+	document.renameNode(thisNode, null, &quot;name&quot;);
+     Node multilingualToken = ((Element)thisNode).getElementsByTagName(&quot;value&quot;).item(0);
+     //newcontent = StringEscapeUtils.escapeXml10(multilingualToken.getTextContent());
+     originalTextContent = multilingualToken.getTextContent();
+     newTextContent = &quot;&quot;;
+		
+	for(int i=0; i&lt;originalTextContent.length(); i++) {
+		String conv = StringEscapeUtils.escapeJson(originalTextContent.substring(i, i+1));
+		if (conv.length()==1) {
+			newTextContent = newTextContent + conv;
+		} else {
+			newTextContent = newTextContent + conv.replaceFirst(&quot;\\\\u&quot;, &quot;&amp;#x&quot;) + &quot;;&quot;;
+		}
+	}
+     //log.info(&quot;old: &quot; + multilingualToken.getTextContent() + &quot;  --- new &quot; + newTextContent);
+	multilingualToken.setTextContent(newTextContent);
+}
+
+/**
+for (int i = itemToNameList.getLength() - 1; i &gt;= 0; i--) {
+  Element e = ((Element)itemToNameList.item(i));
+  Node locale = e.getElementsByTagName(&quot;locale&quot;).item(0);
+   if (!((Element)locale).getTextContent().contains(&quot;en&quot;)) {
+    e.getParentNode().removeChild(e);
+  }
+}
+**/
+
+domSource = new DOMSource(document);
+writer = new StringWriter();
+result = new StreamResult(writer);
+tf = TransformerFactory.newInstance();
+transformer = tf.newTransformer();
+transformer.setOutputProperty(&quot;omit-xml-declaration&quot;, &quot;yes&quot;);
+transformer.transform(domSource, result);
+
+outString = writer.toString();
+outString = outString.replaceAll(&quot;&lt;result [^&lt;]*&quot;, &quot;&quot;).replaceFirst(&quot;&lt;/result&gt;&quot;, &quot;&quot;);
+outString = outString.replaceAll(&quot;&lt;item &quot;, &quot;&lt;value &quot;).replaceAll(&quot;&lt;/item&gt;&quot;, &quot;&lt;/value&gt;&quot;);
+
+vars.put(&quot;deployment_options&quot;, outString);</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get busHeader" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">busHeader</stringProp>
+              <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">//bus:biBusHeader</stringProp>
+              <boolProp name="XPathExtractor.fragment">true</boolProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">false</boolProp>
+              <boolProp name="XPathExtractor.namespace">true</boolProp>
+            </XPathExtractor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="add" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope&#xd;
+  xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&#xd;
+  xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&#xd;
+  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&#xd;
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&#xd;
+  xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&#xd;
+  xmlns:ns1=&quot;http://developer.cognos.com/schemas/contentManagerService/1&quot;&gt;&#xd;
+  &lt;SOAP-ENV:Header&gt;&#xd;
+    ${busHeader}&#xd;
+  &lt;/SOAP-ENV:Header&gt;&#xd;
+  &lt;SOAP-ENV:Body&gt;&#xd;
+    &lt;ns1:add SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:cm1=&quot;http://developer.cognos.com/schemas/contentManagerService/1&quot; xmlns:cm=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&gt;&#xd;
+  &lt;parentPath xsi:type=&quot;bus:searchPathSingleObject&quot;&gt;/adminFolder&lt;/parentPath&gt;&#xd;
+  &lt;objects SOAP-ENC:arrayType=&quot;bus:baseClass[1]&quot; xsi:type=&quot;SOAP-ENC:Array&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xd;
+    &lt;objects xsi:type=&quot;bus:importDeployment&quot;&gt;&#xd;
+      &lt;ancestors xsi:type=&quot;bus:ancestorInfoArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;creationTime xsi:type=&quot;bus:dateTimeProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;defaultName xsi:type=&quot;bus:tokenProp&quot;&gt;&#xd;
+        &lt;schemaInfo xsi:type=&quot;bus:schemaInfo&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+        &lt;value xsi:type=&quot;xsd:string&quot;&gt;${deployment_name}&lt;/value&gt;&#xd;
+      &lt;/defaultName&gt;&#xd;
+      &lt;disabled xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;hasChildren xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;modificationTime xsi:type=&quot;bus:dateTimeProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;name xsi:type=&quot;bus:multilingualTokenProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;objectClass xsi:type=&quot;bus:classEnumProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;owner xsi:type=&quot;bus:baseClassArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;parent xsi:type=&quot;bus:baseClassArrayProp&quot;&gt;&#xd;
+        &lt;schemaInfo xsi:type=&quot;bus:schemaInfo&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+        &lt;value SOAP-ENC:arrayType=&quot;bus:baseClass[1]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+          &lt;value xsi:type=&quot;bus:adminFolder&quot;&gt;&#xd;
+            &lt;ancestors xsi:type=&quot;bus:ancestorInfoArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;creationTime xsi:type=&quot;bus:dateTimeProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;defaultName xsi:type=&quot;bus:tokenProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;disabled xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;hasChildren xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;modificationTime xsi:type=&quot;bus:dateTimeProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;name xsi:type=&quot;bus:multilingualTokenProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;objectClass xsi:type=&quot;bus:classEnumProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;owner xsi:type=&quot;bus:baseClassArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;parent xsi:type=&quot;bus:baseClassArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;permissions xsi:type=&quot;bus:nmtokenArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            ${policies}&#xd;
+            &lt;position xsi:type=&quot;bus:nonNegativeIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;searchPath xsi:type=&quot;bus:stringProp&quot;&gt;&#xd;
+              &lt;schemaInfo xsi:type=&quot;bus:schemaInfo&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+              &lt;value xsi:type=&quot;xsd:string&quot;&gt;/adminFolder&lt;/value&gt;&#xd;
+            &lt;/searchPath&gt;&#xd;
+            &lt;storeID xsi:type=&quot;bus:guidProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;tenantID xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;usage xsi:type=&quot;bus:nmtokenProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;version xsi:type=&quot;bus:positiveIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;defaultDescription xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;defaultScreenTip xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;description xsi:type=&quot;bus:multilingualStringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;displaySequence xsi:type=&quot;bus:nonNegativeIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;hidden xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;iconURI xsi:type=&quot;bus:anyURIProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;screenTip xsi:type=&quot;bus:multilingualStringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;shown xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;viewed xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;contact xsi:type=&quot;bus:baseClassArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+            &lt;contactEMail xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+          &lt;/value&gt;&#xd;
+        &lt;/value&gt;&#xd;
+      &lt;/parent&gt;&#xd;
+      &lt;permissions xsi:type=&quot;bus:nmtokenArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;policies xsi:type=&quot;bus:policyArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;position xsi:type=&quot;bus:nonNegativeIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;searchPath xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;storeID xsi:type=&quot;bus:guidProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;tenantID xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;usage xsi:type=&quot;bus:nmtokenProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;version xsi:type=&quot;bus:positiveIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;defaultDescription xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;defaultScreenTip xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;description xsi:type=&quot;bus:multilingualStringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;displaySequence xsi:type=&quot;bus:nonNegativeIntegerProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;hidden xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;iconURI xsi:type=&quot;bus:anyURIProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;screenTip xsi:type=&quot;bus:multilingualStringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;shown xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;viewed xsi:type=&quot;bus:booleanProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;options xsi:type=&quot;bus:optionArrayProp&quot;&gt;&#xd;
+        &lt;schemaInfo xsi:type=&quot;bus:schemaInfo&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+        &lt;value SOAP-ENC:arrayType=&quot;bus:option[33]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+          &lt;value xsi:type=&quot;bus:deploymentOptionAuditLevel&quot;&gt;&#xd;
+            &lt;name xsi:type=&quot;bus:deploymentOptionEnum&quot;&gt;recordingLevel&lt;/name&gt;&#xd;
+            &lt;value xsi:type=&quot;bus:auditLevelEnum&quot;&gt;full&lt;/value&gt;&#xd;
+          &lt;/value&gt;&#xd;
+          ${deployment_options}&#xd;
+          ${add_password_option}&#xd;
+        &lt;/value&gt;&#xd;
+      &lt;/options&gt;&#xd;
+      &lt;parameters xsi:type=&quot;bus:parameterValueArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;retentions xsi:type=&quot;bus:retentionRuleArrayProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;routingServerGroup xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+      &lt;routingServerGroupEdition xsi:type=&quot;bus:stringProp&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+    &lt;/objects&gt;&#xd;
+  &lt;/objects&gt;&#xd;
+  &lt;options xsi:type=&quot;ns5:addOptions&quot; xmlns:ns5=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&gt;&#xd;
+    &lt;dataEncoding xsi:type=&quot;ns5:encodingEnum&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+    &lt;faultIfObjectReferenced xsi:type=&quot;xsd:boolean&quot;&gt;false&lt;/faultIfObjectReferenced&gt;&#xd;
+    &lt;ignoreInvalidObjectReference xsi:type=&quot;xsd:boolean&quot;&gt;false&lt;/ignoreInvalidObjectReference&gt;&#xd;
+    &lt;returnProperties xsi:type=&quot;ns5:propEnum&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+    &lt;updateAction xsi:type=&quot;ns5:updateActionEnum&quot;&gt;replace&lt;/updateAction&gt;&#xd;
+  &lt;/options&gt;&#xd;
+&lt;/ns1:add&gt;&#xd;
+  &lt;/SOAP-ENV:Body&gt;&#xd;
+&lt;/SOAP-ENV:Envelope&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${urlPath}/bi/api/soap</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="SOAPAction" elementType="Header">
+                  <stringProp name="Header.name">SOAPAction</stringProp>
+                  <stringProp name="Header.value">http://host.com/xmlns/prod/cognos/contentManagerService/201701/</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">*/*</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set add_password_option" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${password_nv_option}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">if (Parameters == &quot;&quot;) {
+  add_password_option = &apos;&apos;
+} else {
+  add_password_option = &apos;&lt;value xsi:type=&quot;bus:deploymentOptionString&quot;&gt;&apos; +
+                            Parameters + 
+                            &apos;&lt;/value&gt;&apos;
+}
+vars.put(&quot;add_password_option&quot;, add_password_option)                  
+</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="add setCookieVar" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">false</stringProp>
+              <stringProp name="script">busHeader = vars.get(&quot;busHeader&quot;)
+cookieVars = &quot;&lt;item xsi:type=\&quot;bus:setCookieVar\&quot;&gt;\n&quot; + 
+			&quot;						&lt;name xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;cea-ssa&lt;/name&gt;\n&quot; + 
+			&quot;						&lt;value xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;&quot;+ vars.get(&quot;COOKIE_cea-ssa&quot;)+&quot;&lt;/value&gt;\n&quot; + 
+			&quot;						&lt;maxAge xsi:type=\&quot;xsd:int\&quot;&gt;0&lt;/maxAge&gt;\n&quot; + 
+			&quot;					&lt;/item&gt;\n&quot; + 
+			&quot;					&lt;item xsi:type=\&quot;bus:setCookieVar\&quot;&gt;\n&quot; + 
+			&quot;						&lt;name xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;usersessionid&lt;/name&gt;\n&quot; + 
+			&quot;						&lt;value xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;&quot;+ vars.get(&quot;COOKIE_usersessionid&quot;)+&quot;&lt;/value&gt;\n&quot; + 
+			&quot;						&lt;maxAge xsi:type=\&quot;xsd:int\&quot;&gt;0&lt;/maxAge&gt;\n&quot; + 
+			&quot;					&lt;/item&gt;\n&quot; + 
+			&quot;					&lt;item xsi:type=\&quot;bus:setCookieVar\&quot;&gt;\n&quot; + 
+			&quot;						&lt;name xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;cam_passport&lt;/name&gt;\n&quot; + 
+			&quot;						&lt;value xsi:type=\&quot;xsd:string\&quot; xml:space=\&quot;preserve\&quot;&gt;&quot;+ vars.get(&quot;COOKIE_cam_passport&quot;)+&quot;&lt;/value&gt;\n&quot; + 
+			&quot;						&lt;maxAge xsi:type=\&quot;xsd:int\&quot;&gt;0&lt;/maxAge&gt;\n&quot; + 
+			&quot;					&lt;/item&gt;\n&quot; + 
+			&quot;					&lt;item xsi:type=\&quot;bus:setCookieVar\&quot;&gt;\n&quot; + 
+			&quot;						&lt;name xsi:type=\&quot;xsd:string\&quot;&gt;userCapabilities&lt;/name&gt;\n&quot; + 
+			&quot;						&lt;value xsi:type=\&quot;xsd:string\&quot;&gt;&quot;+ vars.get(&quot;COOKIE_userCapabilities&quot;)+&quot;&lt;/value&gt;\n&quot; + 
+			&quot;						&lt;maxAge xsi:type=\&quot;xsd:int\&quot;&gt;0&lt;/maxAge&gt;\n&quot; + 
+			&quot;					&lt;/item&gt;\n&quot; + 
+			&quot;					&lt;item xsi:type=\&quot;bus:setCookieVar\&quot;&gt;\n&quot; + 
+			&quot;						&lt;name xsi:type=\&quot;xsd:string\&quot;&gt;userCapabilitiesEx&lt;/name&gt;\n&quot; + 
+			&quot;						&lt;value xsi:type=\&quot;xsd:string\&quot;&gt;&quot;+ vars.get(&quot;COOKIE_userCapabilitiesEx&quot;)+&quot;&lt;/value&gt;\n&quot; + 
+			&quot;						&lt;maxAge xsi:type=\&quot;xsd:int\&quot;&gt;0&lt;/maxAge&gt;\n&quot; + 
+			&quot;					&lt;/item&gt;\n&quot; + 
+			&quot;				&lt;/setCookieVars&gt;&quot;;
+
+busHeader = busHeader.replaceAll(&quot;&lt;/setCookieVars&gt;&quot;, cookieVars);
+busHeader = busHeader.replaceAll(&quot;setCookieVar\\[1\\]&quot;, &quot;setCookieVar[6]&quot;);
+vars.put(&quot;busHeader&quot;, busHeader);</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set policies for parent" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">policies = vars.get(&quot;policies&quot;);
+policies = policies.replaceAll(&quot;&lt;item &quot;, &quot;&lt;value &quot;).replaceAll(&quot;&lt;/item&gt;&quot;, &quot;&lt;/value&gt;&quot;);
+policies = policies.replaceAll(&quot;policy\\[\\]&quot;,&quot;policy[3]&quot;);
+policies = policies.replaceAll(&quot;xml:space=\&quot;preserve\&quot;&quot;, &quot;&quot;);
+policies = policies.replaceAll(&quot;&lt;value xsi:type=\&quot;bus:permission\&quot;&gt;&quot;, &quot;&lt;permissions xsi:type=\&quot;bus:permission\&quot;&gt;&quot;);
+policies = policies.replaceAll(&quot;&lt;/value&gt;&lt;permissions &quot;, &quot;&lt;/permissions&gt;&lt;permissions &quot;);
+policies = policies.replaceAll(&quot;&lt;/value&gt;&lt;/permissions&gt;&quot;, &quot;&lt;/permissions&gt;&lt;/permissions&gt;&quot;);
+policies = policies.replaceAll(&quot;CAMID\\(\&quot;:PowerPlay Administrators\&quot;\\)&quot;, &quot;CAMID(&amp;quot;:PowerPlay Administrators&amp;quot;)&quot;);
+policies = policies.replaceAll(&quot;CAMID\\(\&quot;:Report Administrators\&quot;\\)&quot;, &quot;CAMID(&amp;quot;:Report Administrators&amp;quot;)&quot;);
+policies = policies.replaceAll(&quot;CAMID\\(\&quot;:Server Administrators\&quot;\\)&quot;, &quot;CAMID(&amp;quot;:Server Administrators&amp;quot;)&quot;);
+vars.put(&quot;policies&quot;, policies);</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get camHeader" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">camHeader</stringProp>
+              <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">//bus:CAM</stringProp>
+              <boolProp name="XPathExtractor.fragment">true</boolProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">false</boolProp>
+              <boolProp name="XPathExtractor.namespace">true</boolProp>
+            </XPathExtractor>
+            <hashTree/>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="import_${deployment_name}" enabled="true">
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="soapAction" elementType="Argument">
+                  <stringProp name="Argument.name">soapAction</stringProp>
+                  <stringProp name="Argument.value">http://host.com/xmlns/prod/cognos/monitorService/201701/</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </Arguments>
+            <hashTree/>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset asyncTimer" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">vars.put(&quot;asyncTimer&quot;, &quot;0&quot;);
+vars.put(&quot;asyncTimeNotReached&quot;, &quot;true&quot;);
+vars.put(&quot;sendAsync&quot;, &quot;true&quot;);</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="import" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope&#xd;
+  xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot;&#xd;
+  xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&#xd;
+  xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&#xd;
+  xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&#xd;
+  xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot;&#xd;
+  xmlns:ns1=&quot;http://developer.cognos.com/schemas/contentManagerService/1&quot;&gt;&#xd;
+  &lt;SOAP-ENV:Header&gt;&#xd;
+    &lt;bus:biBusHeader xsi:type=&quot;bus:biBusHeader&quot;&gt;&#xd;
+	 &lt;CAF xsi:type=&quot;ns1:CAF&quot; xsi:nil=&quot;true&quot;/&gt;&#xd;
+	 ${camHeader}&#xd;
+      &lt;bus:hdrSession xsi:type=&quot;bus:hdrSession&quot;&gt;&#xd;
+        &lt;bus:formFieldVars SOAP-ENC:arrayType=&quot;bus:formFieldVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+          &lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&#xd;
+            &lt;name xsi:type=&quot;xsd:string&quot;&gt;_ContextBlockSize&lt;/name&gt;&#xd;
+            &lt;value xsi:type=&quot;xsd:string&quot;&gt;1000000&lt;/value&gt;&#xd;
+          &lt;/item&gt;&#xd;
+          &lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&#xd;
+            &lt;name xsi:type=&quot;xsd:string&quot;&gt;ignoreXHTMLStrict&lt;/name&gt;&#xd;
+            &lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+          &lt;/item&gt;&#xd;
+        &lt;/bus:formFieldVars&gt;&#xd;
+      &lt;/bus:hdrSession&gt;&#xd;
+	&lt;userPreferenceVars soapenc:arrayType=&quot;ns1:userPreferenceVar[19]&quot; xsi:type=&quot;soapenc:Array&quot; xmlns:soapenc=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot;&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;showHints&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;showAll&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/biDirectionalOptionEnum#baseTextDirection&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/baseTextDirectionEnum#Auto&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;automaticPageRefresh&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;30&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;listViewSeparator&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;none&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;showHiddenObjects&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;columnsPerPage&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;3&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;contentLocale&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;linesPerPage&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;15&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;backgroundSessionLogging&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;1970-01-01 00:00:00&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;format&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;HTML&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;displayMode&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;list&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;skin&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;corporate&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;isToolbarDocked&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;productLocale&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/systemOptionEnum#accessibilityFeatures&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;showWelcomePage&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;timeZoneID&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;America/New_York&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/biDirectionalOptionEnum#biDirectionalFeaturesEnabled&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+		&lt;userPreferenceVars xsi:type=&quot;ns1:userPreferenceVar&quot;&gt;&#xd;
+			&lt;name xsi:type=&quot;xsd:string&quot;&gt;showOptionSummary&lt;/name&gt;&#xd;
+			&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+		&lt;/userPreferenceVars&gt;&#xd;
+	&lt;/userPreferenceVars&gt;&#xd;
+      &lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&#xd;
+        &lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&#xd;
+          &lt;name xsi:type=&quot;xsd:string&quot;&gt;html&lt;/name&gt;&#xd;
+          &lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&#xd;
+        &lt;/item&gt;&#xd;
+      &lt;/bus:dispatcherTransportVars&gt;&#xd;
+    &lt;/bus:biBusHeader&gt;&#xd;
+  &lt;/SOAP-ENV:Header&gt;&#xd;
+  &lt;SOAP-ENV:Body&gt;&#xd;
+	&lt;ns2:run SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:ns2=&quot;http://developer.cognos.com/schemas/monitorService/1&quot;&gt;&#xd;
+	  &lt;objectPath xsi:type=&quot;bus:searchPathSingleObject&quot;&gt;/adminFolder/importDeployment[@name=&apos;${deployment_name}&apos;]&lt;/objectPath&gt;&#xd;
+	  &lt;parameterValues SOAP-ENC:arrayType=&quot;bus:parameterValue[0]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;/&gt;&#xd;
+	  &lt;options SOAP-ENC:arrayType=&quot;bus:option[1]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+	    &lt;options xsi:type=&quot;bus:deploymentOptionClassEnumArray&quot;&gt;&#xd;
+	      &lt;name xsi:type=&quot;bus:deploymentOptionEnum&quot;&gt;upgradeClasses&lt;/name&gt;&#xd;
+	      &lt;value SOAP-ENC:arrayType=&quot;bus:classEnum[2]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&#xd;
+	        &lt;value xsi:type=&quot;bus:classEnum&quot;&gt;report&lt;/value&gt;&#xd;
+	        &lt;value xsi:type=&quot;bus:classEnum&quot;&gt;query&lt;/value&gt;&#xd;
+	      &lt;/value&gt;&#xd;
+	    &lt;/options&gt;&#xd;
+	  &lt;/options&gt;&#xd;
+	&lt;/ns2:run&gt;&#xd;
+  &lt;/SOAP-ENV:Body&gt;&#xd;
+&lt;/SOAP-ENV:Envelope&gt;</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/api/soap</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="SOAPAction" elementType="Header">
+                    <stringProp name="Header.name">SOAPAction</stringProp>
+                    <stringProp name="Header.value">${soapAction}.session</stringProp>
+                  </elementProp>
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">*/*</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="getTrackingInfo" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">import com.ibm.bi.util.ContentUtil;
+
+trackingStartTag = &quot;&lt;bus:tracking &quot;;
+trackingEndTag = &quot;&lt;/bus:tracking&gt;&quot;;
+response = prev.getResponseDataAsString()
+trackingInnerContent = ContentUtil.getOptional(response, trackingStartTag, trackingEndTag);
+log.debug(&quot;tracking is: &quot; + trackingInnerContent);
+trackingFull = trackingStartTag + trackingInnerContent + trackingEndTag;
+vars.put(&quot;busTracking&quot;, trackingFull);
+
+status = ContentUtil.getOptional(trackingInnerContent, &quot;&lt;bus:status &quot;, &quot;&lt;/bus:status&gt;&quot;);
+if (status != null) {
+	status = status.substring(status.indexOf(&quot;&gt;&quot;) + 1)
+} else {
+	status = ContentUtil.getOptional(response, &quot;&lt;status &quot;, &quot;&lt;/status&gt;&quot;);
+	status = status.substring(status.indexOf(&quot;&gt;&quot;) + 1)
+}
+
+vars.put(&quot;conversationStatus&quot;, status);
+log.info(&quot;conversationStatus: &quot; + vars.get(&quot;conversationStatus&quot;))</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="setReleaseInfo" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">log.debug(&quot;conversationStatus: &quot; + vars.get(&quot;conversationStatus&quot;));
+if (vars.get(&quot;conversationStatus&quot;) != null) {
+	if (!vars.get(&quot;conversationStatus&quot;).equals(&quot;conversationComplete&quot;)) {
+		log.debug(&quot;release: &quot; + vars.get(&quot;report_busTracking&quot;));
+		vars.put(&quot;release&quot;, &quot;true&quot;);
+	}
+	if (vars.get(&quot;conversationStatus&quot;).equals(&quot;conversationComplete&quot;)) {
+		vars.remove(&quot;release&quot;);
+		vars.put(&quot;sendAsync&quot;, &quot;false&quot;);
+	}
+	if (vars.get(&quot;conversationStatus&quot;).equals(&quot;complete&quot;)) {
+		vars.put(&quot;sendAsync&quot;, &quot;false&quot;);
+	}
+	if (vars.get(&quot;conversationStatus&quot;).equals(&quot;complete&quot;) &amp;&amp; (prev.getResponseDataAsString().contains(&quot;&lt;SOAP-ENV:Fault&gt;&quot;))){
+		if (vars.get(&quot;release&quot;) != null) {
+			vars.remove(&quot;release&quot;);
+			vars.put(&quot;sendAsync&quot;, &quot;false&quot;);
+		}
+	}
+
+	//log.info(&quot;busTracking: &quot; + vars.get(&quot;report_busTracking&quot;));
+}
+log.debug(&quot;sendAsync = &quot; + vars.get(&quot;sendAsync&quot;));
+vars.put(&quot;response&quot;, prev.getResponseDataAsString());//getSamplerData());</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+              <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get entireHeader" enabled="true">
+                <stringProp name="XPathExtractor.default"></stringProp>
+                <stringProp name="XPathExtractor.refname">entireHeader</stringProp>
+                <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+                <stringProp name="XPathExtractor.xpathQuery">//bus:biBusHeader</stringProp>
+                <boolProp name="XPathExtractor.fragment">true</boolProp>
+                <boolProp name="XPathExtractor.validate">false</boolProp>
+                <boolProp name="XPathExtractor.tolerant">false</boolProp>
+                <boolProp name="XPathExtractor.namespace">true</boolProp>
+              </XPathExtractor>
+              <hashTree/>
+              <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get asyncDetails" enabled="true">
+                <stringProp name="XPathExtractor.default"></stringProp>
+                <stringProp name="XPathExtractor.refname">asyncDetails</stringProp>
+                <stringProp name="XPathExtractor.matchNumber">-1</stringProp>
+                <stringProp name="XPathExtractor.xpathQuery">//details</stringProp>
+                <boolProp name="XPathExtractor.fragment">true</boolProp>
+                <boolProp name="XPathExtractor.validate">false</boolProp>
+                <boolProp name="XPathExtractor.tolerant">false</boolProp>
+                <boolProp name="XPathExtractor.namespace">true</boolProp>
+              </XPathExtractor>
+              <hashTree/>
+              <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="get eventID" enabled="true">
+                <stringProp name="XPathExtractor.default"></stringProp>
+                <stringProp name="XPathExtractor.refname">eventID</stringProp>
+                <stringProp name="XPathExtractor.matchNumber">1</stringProp>
+                <stringProp name="XPathExtractor.xpathQuery">//eventID</stringProp>
+                <boolProp name="XPathExtractor.validate">false</boolProp>
+                <boolProp name="XPathExtractor.tolerant">false</boolProp>
+                <boolProp name="XPathExtractor.namespace">true</boolProp>
+              </XPathExtractor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="prepare for activities loop" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;currentActivitiesHasEventID&quot;, &quot;true&quot;);</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+            </hashTree>
+            <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While currentActivitiesHasEventID" enabled="true">
+              <stringProp name="WhileController.condition">${__groovy(&quot;${currentActivitiesHasEventID}&quot;==&quot;true&quot;)}</stringProp>
+            </WhileController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="current activities" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;type&quot;:&quot;current&quot;,&quot;filters&quot;:{},&quot;pageSize&quot;:2000,&quot;sort&quot;:{&quot;order&quot;:&quot;ascending&quot;,&quot;sortItem&quot;:&quot;startTime&quot;}}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/activities</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="" elementType="Header">
+                      <stringProp name="Header.name">Content-Type</stringProp>
+                      <stringProp name="Header.value">application/json</stringProp>
+                    </elementProp>
+                    <elementProp name="" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">application/json</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get eventStatus" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">eventStatus</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.activities[?(@.eventID==&quot;${eventID}&quot;)].status</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">EVENT_STATUS_NOT_FOUND</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="continue?" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">EVENT_STATUS_NOT_FOUND = &quot;EVENT_STATUS_NOT_FOUND&quot;
+currentActivitiesHasEventID = &quot;false&quot;;
+eventStatus = vars.get(&quot;eventStatus&quot;);
+if (EVENT_STATUS_NOT_FOUND.equals(eventStatus)) {
+	currentActivitiesHasEventID = &quot;false&quot;;
+} else {
+	currentActivitiesHasEventID = &quot;true&quot;;
+}
+vars.put(&quot;currentActivitiesHasEventID&quot;, currentActivitiesHasEventID);
+</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+                <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="wait before checking again" enabled="true">
+                  <stringProp name="ConstantTimer.delay">60000</stringProp>
+                </ConstantTimer>
+                <hashTree/>
+              </hashTree>
+            </hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="wait before final check" enabled="true">
+              <stringProp name="ConstantTimer.delay">60000</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="past activities" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;type&quot;:&quot;past&quot;,&quot;filters&quot;:{&quot;startTime&quot;:&quot;${startTime}&quot;,&quot;endTime&quot;:&quot;${endTime}&quot;},&quot;pageSize&quot;:2000}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/activities</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set start and end time" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+ZonedDateTime t = ZonedDateTime.now();
+
+vars.put(&quot;endTime&quot;, t.plusDays(1).format(DateTimeFormatter.ISO_INSTANT))
+vars.put(&quot;startTime&quot;, t.minusDays(1).format(DateTimeFormatter.ISO_INSTANT))</stringProp>
+              </JSR223PreProcessor>
+              <hashTree/>
+              <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="succeeded?" enabled="true">
+                <stringProp name="JSON_PATH">$.activities[?(@.defaultName==&quot;${deployment_name}&quot;)].status</stringProp>
+                <stringProp name="EXPECTED_VALUE">succeeded</stringProp>
+                <boolProp name="JSONVALIDATION">true</boolProp>
+                <boolProp name="EXPECT_NULL">false</boolProp>
+                <boolProp name="INVERT">false</boolProp>
+                <boolProp name="ISREGEX">false</boolProp>
+              </JSONPathAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="WebDriver" enabled="true"/>
+        <hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If default users" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${credentialFile}&quot;==&quot;&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set credentials" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${__P(usernamePrefix,user)}${__threadNum} cognos ${namespace}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">vars.put(&quot;username&quot;, args[0])
+vars.put(&quot;password&quot;, args[1])
+vars.put(&quot;namespace&quot;, args[2])</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If NOT default users" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${credentialFile}&quot;!=&quot;&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="/ set credentials" enabled="true">
+              <stringProp name="delimiter">\t</stringProp>
+              <stringProp name="fileEncoding"></stringProp>
+              <stringProp name="filename">${credentialFile}</stringProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">username,password,namespace</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+            </CSVDataSet>
+            <hashTree/>
+          </hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include common/bi_connect.jmx" enabled="true">
+            <stringProp name="IncludeController.includepath">common/bi_connect.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ read scenarioGroup from global" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">return props.get(&quot;scenarioGroup&quot;)</stringProp>
+          </JSR223Sampler>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract scenarios array" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">scenarios</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.scenarios[*]</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach scenario in scenarios" enabled="true">
+            <stringProp name="ForeachController.inputVal">scenarios</stringProp>
+            <stringProp name="ForeachController.returnVal">scenario</stringProp>
+            <boolProp name="ForeachController.useSeparator">true</boolProp>
+            <stringProp name="ForeachController.startIndex">0</stringProp>
+            <stringProp name="ForeachController.endIndex">${__javaScript(parseInt(${scenarios_matchNr}))}</stringProp>
+          </ForeachController>
+          <hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ return scenario" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">return vars.get(&quot;scenario&quot;);</stringProp>
+            </JSR223Sampler>
+            <hashTree>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get navigation base path for this scenario" enabled="true">
+                <stringProp name="TestPlan.comments">One to one mapping of scenario name value to navigation path value</stringProp>
+                <stringProp name="JSONPostProcessor.referenceNames">scenario_navigation</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.navigation</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                <stringProp name="Scope.variable">scenario</stringProp>
+                <stringProp name="Sample.scope">variable</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get items in this scenario" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">items</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.items[*]</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                <stringProp name="Sample.scope">variable</stringProp>
+                <stringProp name="Scope.variable">scenario</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach item in this scenario" enabled="true">
+              <stringProp name="ForeachController.inputVal">items</stringProp>
+              <stringProp name="ForeachController.returnVal">item</stringProp>
+              <boolProp name="ForeachController.useSeparator">true</boolProp>
+              <stringProp name="ForeachController.startIndex">0</stringProp>
+              <stringProp name="ForeachController.endIndex">${__javaScript(parseInt(${items_matchNr}))}</stringProp>
+            </ForeachController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ return item" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get type" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">type</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.type</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">NONE</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If dashboard or story" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;dashboard&quot; || &quot;${type}&quot;==&quot;story&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ return item" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+                </JSR223Sampler>
+                <hashTree>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get dashboards in this item" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">dashboardNames</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                    <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get suggestions count for this item" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">suggestions</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.suggestions</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                    <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+                    <stringProp name="JSONPostProcessor.defaultValues">NONE</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get executionsDatacheck for this item" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">executionsDatacheck</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$..executionsDatacheck[*]</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                    <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+                    <stringProp name="JSONPostProcessor.defaultValues">NONE</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="/ get datachecks in this item" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters">item datacheck datachecks</stringProp>
+                    <stringProp name="filename">${__P(includecontroller.prefix)}/dashboarding/groovy/getDatachecks.groovy</stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">// uses script file defined above</stringProp>
+                  </JSR223PostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get action names in this item" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">actionNames</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions..name</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                    <boolProp name="JSONPostProcessor.compute_concat">true</boolProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get navigation base path for this item" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">navigation</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.navigation</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                    <stringProp name="TestPlan.comments">One to one mapping of scenario name value to navigation path value</stringProp>
+                    <stringProp name="JSONPostProcessor.defaultValues">${scenario_navigation}</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="/ get expectedRequestCount" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">datasetsRequestCount = Integer.parseInt(vars.get(&quot;datachecks_matchNr&quot;));
+
+// default use the datacheck count as the expected request count
+expectedRequestCount = datasetsRequestCount;
+
+// endor has suggestions requests for most widgets that affects the overall request count
+suggestions = vars.get(&quot;suggestions&quot;);
+
+if (&quot;NONE&quot;.equals(suggestions)) {
+	// if there isn&apos;t a count defined in the scenarios file, assume # of suggestsions call == # widgets
+	expectedRequestCount = expectedRequestCount * 2;
+} else {
+	// if a suggestions count is provided then use it
+	expectedRequestCount = expectedRequestCount + Integer.parseInt(suggestions);	
+}
+
+executionsDatacheck_matchNr = vars.get(&quot;executionsDatacheck_matchNr&quot;);
+if (executionsDatacheck_matchNr != null &amp;&amp; !&quot;0&quot;.equals(executionsDatacheck_matchNr)) {
+	// if a executionsDatacheck_matchNr is provided then use it
+	expectedRequestCount = expectedRequestCount + Integer.parseInt(executionsDatacheck_matchNr);
+}
+
+vars.put(&quot;expectedRequestCount&quot;, String.valueOf(expectedRequestCount));</stringProp>
+                  </JSR223PostProcessor>
+                  <hashTree/>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Initialize below loop&apos;s counter" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">props.put(&quot;navigationIteration&quot;,1); </stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+                <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach dashboard in this item" enabled="true">
+                  <stringProp name="ForeachController.inputVal">dashboardNames</stringProp>
+                  <stringProp name="ForeachController.returnVal">dashboardName</stringProp>
+                  <boolProp name="ForeachController.useSeparator">true</boolProp>
+                  <stringProp name="ForeachController.startIndex">0</stringProp>
+                </ForeachController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ recording exists?" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">import org.apache.jorphan.io.TextFile;
+
+vars.put(&quot;dashboardRecordingExists&quot;, &quot;false&quot;);
+
+String[] navPath = vars.get(&quot;navigation&quot;).split(&quot;,&quot;);
+String relDashboardDir = vars.get(&quot;data_dir&quot;) + &quot;/&quot;;
+for(i = 1; i &lt; navPath.length+1; i ++){
+	relDashboardDir = relDashboardDir + &quot;/&quot; + navPath[i-1]; 
+}
+relDashboardDir = relDashboardDir + &quot;/&quot; + vars.get(&quot;dashboardName&quot;); 
+vars.put(&quot;relDashboardDir&quot;, relDashboardDir);
+vars.put(&quot;relDashboardDir_enc&quot;, relDashboardDir.replaceAll(&quot; &quot;,&quot;%20&quot;));
+
+queryspecFile = relDashboardDir + &quot;/&quot; + (&quot;tab_000&quot;);
+log.info(Label + &quot; queryspecFile = &quot; + queryspecFile);
+queryspec = new TextFile(queryspecFile);
+response = &quot;&quot;
+
+// define common logging function
+def loginfo = {
+	String msg -&gt;
+	log.info(msg);
+	response = response + msg + &quot;\n&quot;
+}
+
+if (queryspec.exists()) {
+	loginfo Label + &quot;: file exists&quot;
+	
+
+	linesInRecordedFile = queryspec.getText().split(System.getProperty(&quot;line.separator&quot;));
+	numberOfWidgetRecordings = linesInRecordedFile.length;
+
+	// in endor there is suggestion call per widget, must ignore these when counting widget calls
+	
+	numberOfWidgetRecordings = 0;
+	for (line in linesInRecordedFile) {
+		if (line.contains(&quot;/datasets/&quot;)) {
+			numberOfWidgetRecordings = numberOfWidgetRecordings + 1;
+		}
+	}
+	loginfo Label + &quot;: numberOfWidgetRecordings=&quot; + numberOfWidgetRecordings
+
+
+	expectedNumberOfWidgetRecordings = Integer.parseInt(vars.get(&quot;datachecks_matchNr&quot;));
+	loginfo Label + &quot;: expectedNumberOfWidgetRecordings=&quot; + expectedNumberOfWidgetRecordings
+	if (numberOfWidgetRecordings == expectedNumberOfWidgetRecordings) {
+		loginfo Label + &quot;: numberOfWidgetRecordings == expectedNumberOfWidgetRecordings&quot;
+		vars.put(&quot;dashboardRecordingExists&quot;, &quot;true&quot;);	
+	}
+} else {
+	loginfo Label + &quot;: file does not exist: &quot; + queryspec.getAbsolutePath()
+}
+	  
+return response</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                  <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not dashboardRecordingExists" enabled="true">
+                    <stringProp name="IfController.condition">${__groovy(&quot;${dashboardRecordingExists}&quot;==&quot;false&quot;)}</stringProp>
+                    <boolProp name="IfController.evaluateAll">false</boolProp>
+                    <boolProp name="IfController.useExpression">true</boolProp>
+                  </IfController>
+                  <hashTree>
+                    <com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig guiclass="com.googlecode.jmeter.plugins.webdriver.config.gui.ChromeDriverConfigGui" testclass="com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig" testname="jp@gc - Chrome Driver Config" enabled="true">
+                      <stringProp name="WebDriverConfig.proxy_type">DIRECT</stringProp>
+                      <stringProp name="WebDriverConfig.proxy_pac_url">${pac_loc}</stringProp>
+                      <stringProp name="WebDriverConfig.http_host">vottilt01</stringProp>
+                      <intProp name="WebDriverConfig.http_port">52230</intProp>
+                      <boolProp name="WebDriverConfig.use_http_for_all_protocols">true</boolProp>
+                      <stringProp name="WebDriverConfig.https_host"></stringProp>
+                      <intProp name="WebDriverConfig.https_port">8080</intProp>
+                      <stringProp name="WebDriverConfig.ftp_host"></stringProp>
+                      <intProp name="WebDriverConfig.ftp_port">8080</intProp>
+                      <stringProp name="WebDriverConfig.socks_host"></stringProp>
+                      <intProp name="WebDriverConfig.socks_port">8080</intProp>
+                      <stringProp name="WebDriverConfig.no_proxy">localhost</stringProp>
+                      <boolProp name="WebDriverConfig.maximize_browser">false</boolProp>
+                      <boolProp name="WebDriverConfig.reset_per_iteration">true</boolProp>
+                      <boolProp name="WebDriverConfig.dev_mode">false</boolProp>
+                      <stringProp name="ChromeDriverConfig.chromedriver_path">${__P(chromedriver)}</stringProp>
+                      <boolProp name="ChromeDriverConfig.android_enabled">false</boolProp>
+                      <boolProp name="ChromeDriverConfig.headless_enabled">true</boolProp>
+                      <boolProp name="ChromeDriverConfig.insecurecerts_enabled">true</boolProp>
+                    </com.googlecode.jmeter.plugins.webdriver.config.ChromeDriverConfig>
+                    <hashTree/>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Create encoded versions of variables used in webdriver sampler" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script">//vars may not contain spaces
+//${navigation} ${scenarioName} ${usernameHAR}
+log.debug(&quot;navigation=&quot;+vars.get(&quot;navigation&quot;))
+vars.put(&quot;navigation_enc&quot;, vars.get(&quot;navigation&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));
+vars.put(&quot;dashboardName_enc&quot;, vars.get(&quot;dashboardName&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));
+vars.put(&quot;username_enc&quot;, vars.get(&quot;username&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));</stringProp>
+                    </JSR223Sampler>
+                    <hashTree/>
+                    <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ Log in and open team content" enabled="true">
+                      <stringProp name="WebDriverSampler.script">var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+var support_ui = JavaImporter(org.openqa.selenium.support.ui.WebDriverWait)
+var wait = new support_ui.WebDriverWait(WDS.browser, 20)
+var timeunit = java.util.concurrent.TimeUnit
+WDS.browser.manage().timeouts().pageLoadTimeout(20, timeunit.SECONDS)
+WDS.browser.manage().timeouts().implicitlyWait(1, timeunit.SECONDS)
+
+var cp4d = WDS.args[9]
+var productVersion = WDS.args[10]
+try{
+  if (cp4d == &quot;true&quot;) {
+    WDS.browser.get(WDS.args[8] + &quot;://&quot;+WDS.args[0]+&quot;:&quot;+WDS.args[1]+WDS.args[6] + &quot;/bi/&quot;)
+  } else {
+    WDS.browser.get(WDS.args[8] + &quot;://&quot;+WDS.args[0]+&quot;:&quot;+WDS.args[1]+WDS.args[6])
+  }
+}catch(err){
+    WDS.log.info(&quot;Gateway url path was not provided. Defaulting to /&quot;)
+    WDS.browser.get(&quot;http://&quot;+WDS.args[0]+&quot;:&quot;+WDS.args[1])
+}
+
+var namespace = &quot;&apos;&quot;+ WDS.args[7]+&quot;&apos;&quot; 
+
+// 11.2 has different login page
+var regex112 = RegExp(&apos;^11\.2.*&apos;)
+if (regex112.test(productVersion)) {
+	//CSS selector definitions for login and navigation
+	var userIDTextFieldSelector = &quot;#CAMUsername&quot;
+	var userPwdFieldSelector = &quot;#CAMPassword&quot;
+	var signInBtnSelector = &quot;#signInBtn&quot;
+	var slideoutSelector = &quot;[class=&apos;appview paneColumn&apos;] [id=&apos;com.ibm.bi.contentApps.teamFoldersSlideout&apos;]&quot;
+	var namespaceIDTextFieldSelector = &quot;#CAMNamespace button&quot;
+
+	// wait for namespace selection OR username field to appear
+	var cssNamespaceOrUser = namespaceIDTextFieldSelector + &quot;,&quot; + userIDTextFieldSelector
+	wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(cssNamespaceOrUser)))
+
+	var camNamespaceElements = WDS.browser.findElements(pkg.By.cssSelector(namespaceIDTextFieldSelector))
+	if (camNamespaceElements.size() &gt; 0 ) {
+
+	    // the namespace selection is present, first click to open options list
+	    camNamespaceElements[0].click()
+
+	    // find and click the namespace option
+	    var namespaceSelector = &quot;div[role=&apos;option&apos;][title=&quot; + namespace + &quot;]&quot;
+	    wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(namespaceSelector)))
+	    WDS.browser.findElement(pkg.By.cssSelector(namespaceSelector)).click()
+	}
+	
+} else {
+
+	//CSS selector definitions for login and navigation
+	var userIDTextFieldSelector = &quot;.authInput.userPromptInput[name=&apos;CAMUsername&apos;]&quot;
+	var userPwdFieldSelector = &quot;.authInput.userPromptInput[name=&apos;CAMPassword&apos;]&quot;
+	var signInBtnSelector = &quot;.signInBtn&quot;
+	var slideoutSelector = &quot;[class=&apos;appview paneColumn&apos;] [id=&apos;com.ibm.bi.contentApps.teamFoldersSlideout&apos;]&quot;
+	var namespaceIDTextFieldSelector = &quot;.authInput.userPromptInput[name=&apos;CAMNamespace&apos;]&quot;
+	
+	// icp4d has custom login page
+	if (cp4d == &quot;true&quot;) {
+		userIDTextFieldSelector = &quot;[id=&apos;username-textinput&apos;]&quot;
+		userPwdFieldSelector = &quot;[id=&apos;password-textinput&apos;]&quot;
+		signInBtnSelector = &quot;[id=&apos;signInButton&apos;]&quot;
+		slideoutSelector = &quot;[class=&apos;appview paneColumn&apos;] [id=&apos;com.ibm.bi.contentApps.teamFoldersSlideout&apos;]&quot;
+		namespaceIDTextFieldSelector = &quot;#main select.authInput.userPromptInput[name=&apos;CAMNamespace&apos;]&quot;
+	}
+
+	var cssNamespaceOrUser = namespaceIDTextFieldSelector + &quot;,&quot; + userIDTextFieldSelector
+
+	wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(cssNamespaceOrUser)))
+
+	var camNamespaceElements = WDS.browser.findElements(pkg.By.cssSelector(namespaceIDTextFieldSelector + &quot; option[value=&quot; + namespace + &quot;]&quot;))
+	if (camNamespaceElements.size() &gt; 0 ) {
+	  
+	    camNamespaceElements[0].click()
+	}
+}
+
+//Enter username
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(userIDTextFieldSelector)))
+var userIDTextField = WDS.browser.findElement(pkg.By.cssSelector(userIDTextFieldSelector))
+userIDTextField.sendKeys([WDS.args[4].replace(/%20/g, &apos; &apos;)])
+
+//Enter password
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(userPwdFieldSelector)))
+var userPwdField = WDS.browser.findElement(pkg.By.cssSelector(userPwdFieldSelector))
+userPwdField.sendKeys([WDS.args[5]])
+
+//Click Sign in
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(signInBtnSelector)))
+var signInBtn = WDS.browser.findElement(pkg.By.cssSelector(signInBtnSelector))
+signInBtn.click()
+
+var waitSlideout = new support_ui.WebDriverWait(WDS.browser, 60)
+waitSlideout.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(slideoutSelector)))
+var slideoutSelector = WDS.browser.findElement(pkg.By.cssSelector(slideoutSelector))
+// wait until loadingIndicatorContainer is not visible
+waitSlideout.until(pkg.ExpectedConditions.invisibilityOfElementLocated(pkg.By.cssSelector(&quot;.loadingIndicatorContainer&quot;)))
+
+//Click on team folder
+waitSlideout.until(pkg.ExpectedConditions.visibilityOf(slideoutSelector))
+slideoutSelector.click()</stringProp>
+                      <stringProp name="WebDriverSampler.parameters">${serverName} ${serverPort} ${navigation_enc} ${dashboardName_enc} ${username_enc} ${password} ${__P(urlPath,/)} ${namespace} ${protocol} ${ICP4D} ${productVerFormatted}</stringProp>
+                      <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                    </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                    <hashTree/>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Create vars for each step in navigation" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script">//first go through the tedious process of clearing old nav values. 
+//Big TODO: do this better...
+boolean endOfSuffix = false;
+int i=1;
+while(endOfSuffix == false){
+	if(vars.get(&quot;navigationForEach_&quot; + i)==null){
+		endOfSuffix = true;
+	}else{
+		vars.remove(&quot;navigationForEach_&quot;+i);
+		i=i+1;
+	}
+}
+
+String[] navPath = vars.get(&quot;navigation&quot;).split(&quot;,&quot;);
+for(i = 1; i &lt; navPath.length+1; i ++){
+	vars.put(&quot;navigationForEach_&quot; + i, navPath[i-1]); 
+}
+
+//assign current dashboard name for when its time to click the dashboard
+vars.put(&quot;currentDashboardName&quot;, vars.get(&quot;dashboardName&quot;));</stringProp>
+                    </JSR223Sampler>
+                    <hashTree/>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Encoded current dashboard name" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script">//vars may not contain spaces
+vars.put(&quot;currentDashboardName_enc&quot;, vars.get(&quot;currentDashboardName&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));
+</stringProp>
+                    </JSR223Sampler>
+                    <hashTree/>
+                    <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach nav step to reach the dashboard" enabled="true">
+                      <stringProp name="ForeachController.inputVal">navigationForEach</stringProp>
+                      <stringProp name="ForeachController.returnVal">navOutput</stringProp>
+                      <boolProp name="ForeachController.useSeparator">true</boolProp>
+                      <stringProp name="ForeachController.startIndex">0</stringProp>
+                    </ForeachController>
+                    <hashTree>
+                      <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+                        <stringProp name="CounterConfig.start">0</stringProp>
+                        <stringProp name="CounterConfig.end"></stringProp>
+                        <stringProp name="CounterConfig.incr">1</stringProp>
+                        <stringProp name="CounterConfig.name">dashboardNavCounter</stringProp>
+                        <stringProp name="CounterConfig.format"></stringProp>
+                        <boolProp name="CounterConfig.per_user">true</boolProp>
+                        <boolProp name="CounterConfig.reset_on_tg_iteration">true</boolProp>
+                      </CounterConfig>
+                      <hashTree/>
+                      <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ navigate 1 step to dashboard" enabled="true">
+                        <stringProp name="WebDriverSampler.script">var support_ui = JavaImporter(org.openqa.selenium.support.ui.WebDriverWait)
+var keys = JavaImporter(org.openqa.selenium.Keys)
+var wait = new support_ui.WebDriverWait(WDS.browser, 1000)
+var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+WDS.sampleResult.sampleStart()
+
+// decode the nav
+var path = WDS.args[2].replace(/%20/g, &apos; &apos;)
+var navPathSelector = &quot;.pane-content tr div[title=&apos;&quot; + path + &quot;&apos;]&quot;
+WDS.log.info(&quot;navPathSelector &quot; + navPathSelector)
+//wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(navPathSelector)))
+var maxTryCount = 10;
+var elementFound = false;
+java.lang.Thread.sleep(3000);
+var results = WDS.browser.findElements(pkg.By.cssSelector(navPathSelector));
+
+// make sure scroll is available before we use it
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(&quot;.dataTables_scrollBody&quot;)))
+var scrollCount = 0;
+
+try {
+WDS.log.info(&quot;result tried 1 &quot; + (results.length))
+while(maxTryCount &gt; 0 &amp;&amp; results.length == 0) {
+    scrollCount = scrollCount + 400;
+    
+    WDS.browser.executeScript(&quot;document.querySelector(&apos;.dataTables_scrollBody&apos;).scrollTop = &quot;+ scrollCount)
+    
+    java.lang.Thread.sleep(1000);
+    results = WDS.browser.findElements(pkg.By.cssSelector(navPathSelector));
+    maxTryCount = maxTryCount - 1;
+}
+WDS.log.info(&quot;clicking &quot; + path)
+if (results.length == 0) {
+	throw new Error(&quot;path not found: &quot; + path);
+}
+results[0].click();
+}catch(e){
+    WDS.log.error(&quot;error &quot; + e.message);
+    WDS.sampleResult.setSuccessful(false);
+    WDS.sampleResult.setResponseMessage(e.message);
+}
+
+
+WDS.sampleResult.sampleEnd()
+</stringProp>
+                        <stringProp name="WebDriverSampler.parameters">${serverName} ${serverPort} ${navOutput_enc}</stringProp>
+                        <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                      </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                      <hashTree>
+                        <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="encode navOutput" enabled="true">
+                          <stringProp name="scriptLanguage">groovy</stringProp>
+                          <stringProp name="parameters"></stringProp>
+                          <stringProp name="filename"></stringProp>
+                          <stringProp name="cacheKey">true</stringProp>
+                          <stringProp name="script">import org.apache.commons.io.FileUtils;
+
+//vars may not contain spaces
+vars.put(&quot;navOutput_enc&quot;, vars.get(&quot;navOutput&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));
+</stringProp>
+                        </JSR223PreProcessor>
+                        <hashTree/>
+                      </hashTree>
+                      <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="wait for resource load" enabled="true">
+                        <boolProp name="resetInterpreter">false</boolProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="script">Thread.sleep(1000);</stringProp>
+                      </BeanShellPostProcessor>
+                      <hashTree/>
+                    </hashTree>
+                    <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ Click dashboard_${actionNames_matchNr}" enabled="true">
+                      <stringProp name="WebDriverSampler.script">var support_ui = JavaImporter(org.openqa.selenium.support.ui.WebDriverWait)
+var wait = new support_ui.WebDriverWait(WDS.browser, 10)
+var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+var javaLang= JavaImporter(java.lang.Thread);
+
+WDS.sampleResult.sampleStart()
+
+dashboardName = WDS.args[2].replace(/%20/g, &apos; &apos;)
+var navPathSelector = &apos;.pane-content tr div[title=&quot;&apos; + dashboardName + &apos;&quot;]&apos;
+
+try{
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(pkg.By.cssSelector(navPathSelector))) 
+}
+catch(e){
+    WDS.log.error(&quot;********************************error on waiting for dashboard element&quot; + e);  
+}
+  
+WDS.log.info(&quot;clicking &quot; + WDS.args[2])
+var dashboard;
+var driver= WDS.browser
+var n = WDS.args[3]
+
+try{
+    WDS.browser.executeScript( &apos;delete sessionStorage.datasetCalls;&apos;)
+    
+    WDS.log.info(&quot;step 1&quot;)
+    // define a function for identifying requests to be recorded
+    recordFunc_onOpen = function(open) {
+       XMLHttpRequest.prototype.open = function(method, url) {
+            if (url.indexOf(&quot;datasets&quot;)&gt;0 
+            		|| url.indexOf(&quot;predict/annotations&quot;)&gt;0 
+            		|| url.indexOf(&quot;smarts/explore/annotation&quot;)&gt;0) {
+              this.method = method;
+              this.url = url;
+            }
+            open.call(this, method, url);
+        };
+    };
+    WDS.log.info(&quot;step 2&quot;)
+    // override the open function in the browser
+    WDS.browser.executeScript(&quot;(&quot; + recordFunc_onOpen.toLocaleString() + &quot;)(XMLHttpRequest.prototype.open);&quot;)
+    
+    WDS.log.info(&quot;step 3&quot;)
+    // define a function for capturing the data in the requests
+    recordFunc_onSend = function(send) {
+        XMLHttpRequest.prototype.send = function(data) {
+            if (this.method){
+                
+                var datasetCalls = [];
+                if (sessionStorage.datasetCalls) {
+                    datasetCalls = JSON.parse(sessionStorage.datasetCalls)
+                }
+                
+                // if this is a post then we need to handle it differently
+                if (this.method.indexOf(&quot;POST&quot;)&gt;-1){
+                    if (typeof data === &quot;string&quot; ) {
+                        // regular post with a simple body
+                        datasetCalls.push({
+                                &quot;method&quot;:this.method,
+                                &quot;url&quot;:this.url,
+                                &quot;data&quot;:data, 
+                                &quot;type&quot;: &quot;string&quot;
+                                });
+                    } else {
+                        // assume multiplart
+                        it = data.entries();
+					multiPData = [];
+					var result = it.next();
+					while (!result.done) {
+						 multiPData.push(result.value);
+						 result = it.next();
+					}
+                        datasetCalls.push({
+                                &quot;method&quot;:this.method,
+                                &quot;url&quot;:this.url,
+                                &quot;data&quot;:multiPData,
+                                &quot;type&quot;:&quot;multipart&quot;
+                                });
+                    }
+                }else {
+                    // simple GET without data
+                    datasetCalls.push({
+                        &quot;method&quot;:this.method,
+                        &quot;url&quot;:this.url,
+                        &quot;data&quot;:&quot;&quot;
+                        });
+                }
+                sessionStorage.datasetCalls = JSON.stringify(datasetCalls);
+            }
+            send.call(this, data);
+        };
+    };
+    WDS.log.info(&quot;step 4&quot;)
+    // override the send function in the browser
+    WDS.browser.executeScript(&quot;(&quot; + recordFunc_onSend.toLocaleString() + &quot;)(XMLHttpRequest.prototype.send);&quot;)
+    
+    WDS.log.info(&quot;step 5&quot;)
+    // click the dashboard
+    dashboard = driver.findElement(pkg.By.cssSelector(navPathSelector))
+    dashboard.click()
+    
+    WDS.log.info(&quot;************begin of Loading dashboard after click&quot;);
+    for (var i =0;i&lt;240;i++) {
+    	// exit when we have our expected recordings
+    	var dcSet = WDS.browser.executeScript( &apos;return typeof sessionStorage.datasetCalls != &quot;undefined&quot;&apos;);
+    	WDS.log.info(&quot;**************************************datasetCalls typeof &quot; + dcSet);
+    	if (dcSet) {
+    		WDS.log.info(&quot;**************************************datasetCalls not undefined&quot;);
+    		var requestsRecorded = WDS.browser.executeScript( &apos;return JSON.parse(sessionStorage.datasetCalls).length&apos;);
+    		WDS.log.info(&quot;**************************************datasetCalls.length is &quot; + requestsRecorded + &quot; expected is &quot; + WDS.args[5]);
+    		if (requestsRecorded == WDS.args[5]) {
+    			WDS.log.info(&quot;**************************************request calls match expected, exiting&quot;);
+    			break;
+		}
+	}
+	javaLang.Thread.sleep(1000);
+	WDS.log.info(&quot;**************************************Tabs count outside of loop &quot; +n ); 
+    }
+    
+    WDS.log.info(&quot;step 6&quot;)
+    fileDir = WDS.args[4].replace(/%20/g, &apos; &apos;)
+    urlPrefix = &quot;/bi/&quot;;
+    
+    // retreive the recorded dataset calls from the browser
+    var array = WDS.browser.executeScript( &apos;return JSON.parse(sessionStorage.datasetCalls);&apos;)
+    WDS.log.info(&quot;array is &quot; + array);
+    
+    var possible = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
+    for (var index = 0; index&lt;array.length;index++) {
+        WDS.log.info(&quot;open object returned: &quot; + array[index].method)
+        WDS.log.info(&quot;open object returned: &quot; + array[index].url)
+        WDS.log.info(&quot;open object returned: &quot; + array[index].data)
+        urlToWrite = urlPrefix + array[index].url.replace(/i[0-9A-F]{32}/i, &apos;@@dataset_id@@&apos;)
+        //urlToWrite = urlPrefix + array[index].url.replace(/[0-9a-f]{40}_sessionTemp/, &apos;@@sessionTemp@@&apos;)
+        
+        // if it&apos;s a POST we need to store the data in a separate file
+        if (array[index].method.indexOf(&quot;POST&quot;)!=-1) {
+            contentDisposition = array[index].data[0];
+        	
+            // generate random header
+            var text = &quot;WebKitFormBoundary&quot;;
+            for (var i = 0; i &lt; 16; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            WDS.log.info(&quot;boundary name: &quot; + text);
+            
+            // generate a post file
+            contentTypeShort = text;
+            postFile = new java.io.File(fileDir + &quot;/&quot; + contentTypeShort);
+            WDS.log.info(&quot;writing post data to: &quot; + postFile.getAbsolutePath());
+            if (array[index].type === &quot;string&quot;) {
+                data = array[index].data;
+                WDS.log.info(&quot;post data: &quot; + data);
+                lineAsList = new java.util.ArrayList();
+        		 lineAsList.add(data);
+       		 org.apache.commons.io.FileUtils.writeLines(postFile, lineAsList, false);
+            } else {
+            	if (array[index].data.length &gt; 2) {
+            		WDS.log.info(&quot;complex multipart&quot;);
+            	 	// complex multipart
+            	 	for(var dIndex = 0; dIndex&lt;array[index].data.length; dIndex++) {
+            	 		 dataType = array[index].data[dIndex][0];
+            	 		 dataValue = array[index].data[dIndex][1];
+		                WDS.log.info(&quot;post data: &quot; + dataValue);
+		                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+		                org.apache.commons.io.FileUtils.write(postFile,&quot;Content-Disposition: form-data; name=\&quot;&quot;+dataType+&quot;\&quot;\r\n\r\n&quot;, &quot;UTF-8&quot;, true);
+		                org.apache.commons.io.FileUtils.write(postFile, dataValue + &quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 	}
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;--\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 } else {
+            	 	 WDS.log.info(&quot;simple multipart&quot;);
+	                contentDisposition = array[index].data[0][0];
+	                data = array[index].data[0][1];
+	                WDS.log.info(&quot;post data: &quot; + data);
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;\r\n&quot;, &quot;UTF-8&quot;, false);
+	                org.apache.commons.io.FileUtils.write(postFile,&quot;Content-Disposition: form-data; name=\&quot;&quot;+contentDisposition+&quot;\&quot;\r\n\r\n&quot;, &quot;UTF-8&quot;, true);
+	                org.apache.commons.io.FileUtils.write(postFile, data + &quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;--\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 }
+            }
+        	// write tab file
+        	urlToWrite = &quot;post_file=&quot; + text + &quot;;&quot; + urlToWrite;
+        	
+        }
+        //WDS.vars.put(&quot;requests_&quot; + (index-1),array[index])
+        dashboardIdFile = new java.io.File(fileDir + &quot;/&quot; + &quot;tab_000&quot;);
+        WDS.log.info(&quot;writing to file: &quot; + dashboardIdFile.getAbsolutePath())
+        lineAsList = new java.util.ArrayList();
+        lineAsList.add(urlToWrite);
+        org.apache.commons.io.FileUtils.writeLines(dashboardIdFile, lineAsList, index&gt;0);
+    }
+    
+    WDS.log.info(&quot;step 7&quot;)
+    WDS.browser.executeScript( &apos;delete sessionStorage.datasetCalls;&apos;)
+}catch(e){
+    WDS.log.error(&quot;error &quot; + e);  
+    WDS.sampleResult.setSuccessful(false);
+    WDS.sampleResult.setResponseMessage(e.message);
+}
+
+WDS.log.info(&quot;************end of Loading dashboard&quot;)
+
+
+WDS.sampleResult.sampleEnd()</stringProp>
+                      <stringProp name="WebDriverSampler.parameters">${serverName} ${serverPort} ${currentDashboardName_enc} ${actionNames_matchNr} ${relDashboardDir_enc} ${expectedRequestCount}</stringProp>
+                      <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                    </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                    <hashTree/>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Reset actionCount" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script">vars.put(&quot;actionCount&quot;,&quot;0&quot;);</stringProp>
+                    </JSR223Sampler>
+                    <hashTree/>
+                    <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname=" ForEach action in actions (tabs)" enabled="true">
+                      <stringProp name="ForeachController.inputVal">actionNames</stringProp>
+                      <stringProp name="ForeachController.returnVal">actionName</stringProp>
+                      <boolProp name="ForeachController.useSeparator">true</boolProp>
+                      <stringProp name="ForeachController.startIndex">0</stringProp>
+                      <stringProp name="ForeachController.endIndex">${actionNames_matchNr}</stringProp>
+                    </ForeachController>
+                    <hashTree>
+                      <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ return item" enabled="true">
+                        <stringProp name="scriptLanguage">groovy</stringProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="cacheKey">true</stringProp>
+                        <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+                      </JSR223Sampler>
+                      <hashTree>
+                        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get tabDetails" enabled="true">
+                          <stringProp name="JSONPostProcessor.referenceNames">tabDetails</stringProp>
+                          <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[${actionCount}]</stringProp>
+                          <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                        </JSONPostProcessor>
+                        <hashTree/>
+                        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="/ get tabDatachecks" enabled="true">
+                          <stringProp name="scriptLanguage">groovy</stringProp>
+                          <stringProp name="parameters">tabDetails datachecks tabDatachecks</stringProp>
+                          <stringProp name="filename">${__P(includecontroller.prefix)}/dashboarding/groovy/getDatachecks.groovy</stringProp>
+                          <stringProp name="cacheKey">true</stringProp>
+                          <stringProp name="script">// uses script file defined above</stringProp>
+                        </JSR223PostProcessor>
+                        <hashTree/>
+                        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get suggestions count for this tab" enabled="true">
+                          <stringProp name="JSONPostProcessor.referenceNames">suggestions</stringProp>
+                          <stringProp name="JSONPostProcessor.jsonPathExprs">$.suggestions</stringProp>
+                          <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                          <stringProp name="JSONPostProcessor.defaultValues">NONE</stringProp>
+                          <stringProp name="Sample.scope">variable</stringProp>
+                          <stringProp name="Scope.variable">tabDetails</stringProp>
+                        </JSONPostProcessor>
+                        <hashTree/>
+                        <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="/ get expectedRequestCount" enabled="true">
+                          <stringProp name="scriptLanguage">groovy</stringProp>
+                          <stringProp name="parameters"></stringProp>
+                          <stringProp name="filename"></stringProp>
+                          <stringProp name="cacheKey">true</stringProp>
+                          <stringProp name="script">datasetsRequestCount = Integer.parseInt(vars.get(&quot;tabDatachecks_matchNr&quot;));
+
+// default use the datacheck count as the expected request count
+expectedRequestCount = datasetsRequestCount;
+
+// endor has suggestions requests for most widgets that affects the overall request count	
+suggestions = vars.get(&quot;suggestions&quot;);
+
+if (&quot;NONE&quot;.equals(suggestions)) {
+	// if there isn&apos;t a count defined in the scenarios file, assume # of suggestsions call == # widgets
+	expectedRequestCount = expectedRequestCount * 2;
+} else {
+	// if a suggestions count is provided then use it
+	expectedRequestCount = expectedRequestCount + Integer.parseInt(suggestions);	
+}
+
+vars.put(&quot;expectedRequestCount&quot;, String.valueOf(expectedRequestCount));</stringProp>
+                        </JSR223PostProcessor>
+                        <hashTree/>
+                      </hashTree>
+                      <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ encode action name vars" enabled="true">
+                        <stringProp name="scriptLanguage">groovy</stringProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="cacheKey">true</stringProp>
+                        <stringProp name="script">//vars may not contain spaces when used in webdriver
+vars.put(&quot;actionName_enc&quot;, vars.get(&quot;actionName&quot;).replaceAll(&quot; &quot;,&quot;%20&quot;));</stringProp>
+                      </JSR223Sampler>
+                      <hashTree/>
+                      <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ counter" enabled="true">
+                        <stringProp name="scriptLanguage">groovy</stringProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="cacheKey">true</stringProp>
+                        <stringProp name="script">actionCount = Integer.parseInt(vars.get(&quot;actionCount&quot;));
+actionCount = actionCount + 1;
+vars.put(&quot;actionCount&quot;, String.valueOf(actionCount));</stringProp>
+                      </JSR223Sampler>
+                      <hashTree/>
+                      <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ Click tab_${actionNames_matchNr}_${actionCount}" enabled="true">
+                        <stringProp name="WebDriverSampler.script">var support_ui = JavaImporter(org.openqa.selenium.support.ui.WebDriverWait)
+var wait = new support_ui.WebDriverWait(WDS.browser, 10)
+var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+var javaLang= JavaImporter(java.lang.Thread);
+
+
+WDS.sampleResult.sampleStart()
+var actionName = WDS.args[3].replace(/%20/g, &apos; &apos;)
+
+var selector;
+var xpathSelector = &apos;//div[@data-tid][. = &quot;&apos;+ actionName +&apos;&quot;]&apos;
+selector = pkg.By.xpath(xpathSelector);
+
+wait.until(pkg.ExpectedConditions.presenceOfElementLocated(selector))
+   
+WDS.log.info(&quot;clicking on tab &apos;&quot; + actionName + &quot;&apos;&quot;)
+var tab;
+var driver= WDS.browser
+var tabsCount = WDS.args[4]
+var currentTabNumber = WDS.args[5]
+
+try{
+
+    tab = driver.findElement(selector)
+}catch(e){
+    WDS.log.error(&quot;error locating element&quot; + e);  
+}
+
+try{
+//tab.click()
+WDS.browser.executeScript(&apos;document.evaluate(&quot;.//div[@class=\&apos;ba-common-tabList__label\&apos;]/span[text()=\&apos;&apos; + actionName + &apos;\&apos;]&quot;, document).iterateNext().click()&apos;)
+WDS.log.info (&quot;***********************************_clicked on tab&quot;);
+WDS.log.info (&quot;***********************************_number of tabs in the dashboard&quot; + tabsCount );
+ 
+
+for (var i =0;i&lt;12;i++) {
+     // exit when we have our expected recordings
+     if (WDS.browser.executeScript( &apos;return typeof sessionStorage.datasetCalls != &quot;undefined&quot;&apos;)) {
+       WDS.log.info(&quot;**************************************datasetCalls not undefined&quot;);
+       javaLang.Thread.sleep(500)
+       var requestsRecorded = WDS.browser.executeScript( &apos;return JSON.parse(sessionStorage.datasetCalls).length&apos;);
+       WDS.log.info(&quot;**************************************datasetCalls.length is &quot; + requestsRecorded + &quot; expected is &quot; + WDS.args[7]);
+       if (requestsRecorded == WDS.args[7]) {
+           WDS.log.info(&quot;**************************************request calls match expected, exiting&quot;);
+           break;
+       }
+     }
+     javaLang.Thread.sleep(5000);
+	WDS.log.info(&quot;**************************************current Tab clicking outside of the loop &quot; +currentTabNumber );
+}
+
+ WDS.log.info(&quot;step 6&quot;)
+    fileDir = WDS.args[6].replace(/%20/g, &apos; &apos;)
+    urlPrefix = &quot;/bi/&quot;;
+    
+    var array = WDS.browser.executeScript( &apos;return JSON.parse(sessionStorage.datasetCalls);&apos;)
+    WDS.log.info(&quot;array is &quot; + array);
+    var possible = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&quot;;
+    for (var index = 0; index&lt;array.length;index++) {
+        WDS.log.info(&quot;open object returned: &quot; + array[index].method)
+        WDS.log.info(&quot;open object returned: &quot; + array[index].url)
+        WDS.log.info(&quot;open object returned: &quot; + array[index].data)
+        urlToWrite = urlPrefix + array[index].url.replace(/i[0-9A-F]{32}/i, &apos;@@dataset_id@@&apos;)
+        //urlToWrite = urlPrefix + array[index].url.replace(/[0-9a-f]{40}_sessionTemp/, &apos;@@sessionTemp@@&apos;)
+        
+        if (array[index].method.indexOf(&quot;POST&quot;)!=-1) {
+            contentDisposition = array[index].data[0];
+            
+            // generate random header
+            var text = &quot;WebKitFormBoundary&quot;;
+            for (var i = 0; i &lt; 16; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            WDS.log.info(&quot;boundary name: &quot; + text);
+            
+            // generate a post file
+            contentTypeShort = text;
+            postFile = new java.io.File(fileDir + &quot;/&quot; + contentTypeShort);
+            WDS.log.info(&quot;writing post data to: &quot; + postFile.getAbsolutePath());
+            if (array[index].type === &quot;string&quot;) {
+                data = array[index].data;
+                WDS.log.info(&quot;post data: &quot; + data);
+                lineAsList = new java.util.ArrayList();
+        		 lineAsList.add(data);
+       		 org.apache.commons.io.FileUtils.writeLines(postFile, lineAsList, false);
+            } else {
+            	if (array[index].data.length &gt; 2) {
+            		WDS.log.info(&quot;complex multipart&quot;);
+            	 	// complex multipart
+            	 	for(var dIndex = 0; dIndex&lt;array[index].data.length; dIndex++) {
+            	 		 dataType = array[index].data[dIndex][0];
+            	 		 dataValue = array[index].data[dIndex][1];
+		                WDS.log.info(&quot;post data: &quot; + dataValue);
+		                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+		                org.apache.commons.io.FileUtils.write(postFile,&quot;Content-Disposition: form-data; name=\&quot;&quot;+dataType+&quot;\&quot;\r\n\r\n&quot;, &quot;UTF-8&quot;, true);
+		                org.apache.commons.io.FileUtils.write(postFile, dataValue + &quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 	}
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;--\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 } else {
+            	 	 WDS.log.info(&quot;simple multipart&quot;);
+	                contentDisposition = array[index].data[0][0];
+	                data = array[index].data[0][1];
+	                WDS.log.info(&quot;post data: &quot; + data);
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;\r\n&quot;, &quot;UTF-8&quot;, false);
+	                org.apache.commons.io.FileUtils.write(postFile,&quot;Content-Disposition: form-data; name=\&quot;&quot;+contentDisposition+&quot;\&quot;\r\n\r\n&quot;, &quot;UTF-8&quot;, true);
+	                org.apache.commons.io.FileUtils.write(postFile, data + &quot;\r\n&quot;, &quot;UTF-8&quot;, true);
+	                org.apache.commons.io.FileUtils.write(postFile, &quot;------&quot;+text+&quot;--\r\n&quot;, &quot;UTF-8&quot;, true);
+            	 }
+            }
+        	// write tab file
+        	urlToWrite = &quot;post_file=&quot; + text + &quot;;&quot; + urlToWrite;
+        	
+        }
+        //WDS.vars.put(&quot;requests_&quot; + (index-1),array[index])
+        dashboardIdFile = new java.io.File(fileDir + &quot;/&quot; + actionName);
+        WDS.log.info(&quot;writing to file: &quot; + dashboardIdFile.getAbsolutePath())
+        lineAsList = new java.util.ArrayList();
+        lineAsList.add(urlToWrite);
+        org.apache.commons.io.FileUtils.writeLines(dashboardIdFile, lineAsList, index&gt;0);
+    }
+    
+    WDS.log.info(&quot;step 7&quot;)
+    // clear the recorded calls in the browser
+    WDS.browser.executeScript( &apos;delete sessionStorage.datasetCalls;&apos;)
+}catch(e){
+    WDS.log.error(&quot;error &quot; + e);
+    WDS.sampleResult.setSuccessful(false);
+    WDS.sampleResult.setResponseMessage(e.message);
+}
+
+WDS.sampleResult.sampleEnd()
+</stringProp>
+                        <stringProp name="WebDriverSampler.parameters">${serverName} ${serverPort} ${currentDashboardName_enc} ${actionName_enc} ${actionNames_matchNr} ${actionCount} ${relDashboardDir_enc} ${expectedRequestCount}</stringProp>
+                        <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                      </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                      <hashTree/>
+                    </hashTree>
+                    <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ click save" enabled="true">
+                      <stringProp name="WebDriverSampler.script">var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+var navPathSelector = &apos;button[id=&quot;com.ibm.bi.dashboard.saveMenu.default&quot;]&apos;
+
+WDS.log.info(&quot;save dashboard&quot;)
+// click the save button
+dashboard = WDS.browser.findElement(pkg.By.cssSelector(navPathSelector))
+dashboard.click()</stringProp>
+                      <stringProp name="WebDriverSampler.parameters"></stringProp>
+                      <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                    </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                    <hashTree/>
+                    <com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler guiclass="com.googlecode.jmeter.plugins.webdriver.sampler.gui.WebDriverSamplerGui" testclass="com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler" testname="/ Log out" enabled="true">
+                      <stringProp name="WebDriverSampler.script">var pkg = JavaImporter(org.openqa.selenium, org.openqa.selenium.support.ui)
+
+WDS.sampleResult.sampleStart()
+WDS.log.info(&quot;logging out&quot;)
+WDS.browser.findElement(pkg.By.cssSelector(&quot;[class=&apos;appview paneColumn&apos;] [id=&apos;com.ibm.bi.glass.common.personalMenu&apos;]&quot;)).click()
+WDS.browser.findElement(pkg.By.cssSelector(&quot;[class*=&apos;com.ibm.bi.glass.common.logout&apos;]&quot;)).click()
+WDS.sampleResult.sampleEnd()
+</stringProp>
+                      <stringProp name="WebDriverSampler.parameters"></stringProp>
+                      <stringProp name="WebDriverSampler.language">javascript</stringProp>
+                    </com.googlecode.jmeter.plugins.webdriver.sampler.WebDriverSampler>
+                    <hashTree>
+                      <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion (ignore failureS)" enabled="true">
+                        <collectionProp name="Asserion.test_strings"/>
+                        <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                        <boolProp name="Assertion.assume_success">true</boolProp>
+                        <intProp name="Assertion.test_type">16</intProp>
+                        <stringProp name="Assertion.custom_message"></stringProp>
+                      </ResponseAssertion>
+                      <hashTree/>
+                      <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="wait for logout" enabled="true">
+                        <boolProp name="resetInterpreter">false</boolProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="script">Thread.sleep(2000);</stringProp>
+                      </BeanShellPostProcessor>
+                      <hashTree/>
+                    </hashTree>
+                  </hashTree>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Clear dashboardNames var" enabled="true">
+                  <stringProp name="TestPlan.comments">Otherwise, if the next scenario has fewer items than the present one, the remaining items from this scenairo will be used in the next scenario</stringProp>
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">for(int i = 0; i &lt; Integer.valueOf(vars.get(&quot;dashboardNames_matchNr&quot;)); i ++){
+	vars.remove(&quot;dashboardNames_&quot; + (i + 1));	
+}
+vars.remove(&quot;previousDashboardID&quot;)</stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

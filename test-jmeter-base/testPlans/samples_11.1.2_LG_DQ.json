@@ -1,0 +1,554 @@
+{
+  "scenarioGroups": [
+    {
+      "scenarioGroup": "mixed_reports",
+      "scenarios": [
+        {
+          "items":[
+            {
+              "chartcount": "1",
+              "datacheck": "13.7",
+              "name": "Customer Returns and Satisfaction_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "83.32",
+                  "type": "nextPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "2",
+              "datacheck": "21.4",
+              "name": "Employee Satisfaction 2012_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "2013",
+              "name": "Employee Training by Year_DQ",
+              "type": "report_not_working",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "Q3 2013",
+                  "prompt":[
+                      {
+                         "name":"P_Year",
+                         "type":"value-optional",
+                         "value":"2013"
+                      }
+                   ],
+                   "type":"prompt"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "129,750",
+                  "prompt":[
+                      {
+                         "name":"P_Quarter",
+                         "type":"value-multiselect",
+                         "value":"Q3 2013",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "6",
+              "datacheck": "491,478.1",
+              "name": "Eyewear revenue by brand and size_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "",
+              "name": "Global Bonus Report_DQ",
+              "type": "report_not_working"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "4,353,363,798",
+              "name": "Great Outdoors Company Balance Sheet as at Dec 31 2012_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "Compensation",
+              "name": "Manager Profile_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "1",
+                  "datacheck": "2010",
+                  "prompt":[
+                      {
+                         "name":"p_employee",
+                         "type":"value-optional",
+                         "value":"Aaghie Heiman,Amy Scott,Otto Kunstler",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "5",
+              "datacheck": "97.95%",
+              "name": "Planned Headcount_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "Marketing Specialist",
+              "name": "Positions to Fill_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "1",
+                  "datacheck": "Marketing Specialist",
+                  "prompt":[
+                      {
+                         "name":"Year selection",
+                         "type":"value-optional",
+                         "value":"2011,2012,2013",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "",
+              "name": "Promotion Plan Revenue_DQ",
+              "type": "report_not_working"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "year",
+              "name": "Promotion Success_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "1",
+                  "datacheck": "Camping Equipment",
+                  "prompt":[
+                      {
+                         "name":"P_Year",
+                         "type":"value-optional",
+                         "value":"2010,2011,2012",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "Quarterly 2010-2012",
+              "name": "Quantity Sold vs. Shipped and Inventory_DQ",
+              "type": "report"
+            }
+          ],
+          "scenario": "group1",
+          "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+        },
+        {
+          "items": [
+            {
+              "chartcount": "0",
+              "datacheck": "Putters",
+              "name": "Bursted Sales Performance Report_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "20100131",
+              "name": "Employee expenses (report)_DQ",
+              "type": "report",
+              "actions":[
+                {
+                  "chartcount": "0",
+                  "datacheck": "Sales",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "Seefelder",
+                  "type": "lastPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "20100331",
+              "name": "Health Insurance_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "20100531",
+              "name": "Pension Plan_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "15,320.51",
+              "name": "Regular Salary_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "783,505",
+              "name": "TOC report_DQ",
+              "type": "report"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "Esportes",
+              "name": "Total Revenue by Country_DQ",
+              "type": "report",
+              "actions":[
+                {
+                  "chartcount": "1",
+                  "datacheck": "161,454,246.13",
+                  "type": "lastPage"
+                }
+              ]
+            }
+          ],
+          "scenario": "group2",
+          "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (query),Report Studio Report Samples"
+        },
+        {
+          "items": [
+            {
+              "chartcount": "0",
+              "datacheck": "Recruitment Report",
+              "name": "Recruitment Report_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples",
+              "actions": [
+                {
+                  "chartcount": "10",
+                  "datacheck": "Americas",
+                  "prompt":[
+                      {
+                         "name":"p_Year",
+                         "type":"value-optional",
+                         "value":"2010,2011,2012,2013",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "17.2%",
+              "name": "Return Quantity by Order Method_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "BugShield Spray",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "Sun Shield",
+                  "type": "lastPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "16,942",
+              "name": "Returned Items_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "297,466",
+              "name": "Returns by Damage, Failed Orders and Complaints in 2012_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "297,466",
+              "name": "Returns by Failed Orders in 2012_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "method",
+              "name": "Returns by Order Method - Prompted Chart_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples",
+              "actions": [
+                {
+                  "chartcount": "1",
+                  "datacheck": "Golf Equipment",
+                  "prompt":[
+                      {
+                         "name":"Parameter1",
+                         "type":"value-optional",
+                         "value":"E-mail,Fax,Mail,Sales visit,Special,Telephone,Web",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "1",
+              "datacheck": "47,827",
+              "name": "Returns by Order Method_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+            },
+            {
+              "chartcount": "6",
+              "datacheck": "32%",
+              "name": "Revenue by GO Subsidiary 2011_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples",
+              "actions": [
+                {
+                  "chartcount": "6",
+                  "datacheck": "Same quarter, 2010",
+                  "prompt":[
+                      {
+                         "name":"Quarter_Parameter",
+                         "type":"value-optional",
+                         "value":"Q2 2011,Q3 2011,Q4 2011",
+                         "mode": "random"
+                      }
+                   ],
+                   "type":"prompt"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "",
+              "name": "Sales Commissions for Central Europe_DQ",
+              "type": "report_not_working"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "Vincent Mercier",
+              "name": "Succession Report_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Data Warehouse (analysis),Report Studio Report Samples"
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "4,889,6",
+              "name": "2011 Quarterly Sales Forecast_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Sales (analysis),Report Studio Report Samples",
+              "actions":[
+                {
+                  "chartcount": "0",
+                  "datacheck": "707,020,7",
+                  "type": "lastPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "6",
+              "datacheck": "6,135",
+              "name": "2011 Sales Summary_DQ",
+              "type": "report",
+              "navigation": "Samples_LG_DQ,Models,GO Sales (analysis),Report Studio Report Samples"
+            }
+          ],
+          "scenario": "group3"
+        },
+        {
+          "items": [
+            {
+              "chartcount": "0",
+              "datacheck": "Briefing Book",
+              "name": "Briefing Book_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "TOC page",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "Extreme Outdoors",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "1,017,434,523.30",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "391,647,093.61",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "Sales by Retailer Name",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "second of two Table of Contents",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "Telephone",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "25,008,574.08",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "Direct Marketing",
+                  "type": "nextPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "fit-to-page",
+              "name": "Horizontal Pagination_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "12660160.31",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "10817147.08",
+                  "type": "nextPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "108720.2",
+              "name": "Order Invoices - Donald Chow, Sales Person_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "312503.9",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "65612.7",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "455443.8",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "513533.6",
+                  "type": "lastPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "Page Orientation",
+              "name": "PDF Page Properties_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "1589036664.0",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "75899094.6",
+                  "type": "nextPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "singleton",
+              "name": "Singletons on Page Body_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "Extreme Outdoors",
+                  "type": "nextPage"
+                }
+              ]
+            },
+            {
+              "chartcount": "0",
+              "datacheck": "two Tables",
+              "name": "Table of Contents_DQ",
+              "type": "report",
+              "actions": [
+                {
+                  "chartcount": "0",
+                  "datacheck": "main report",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "1,986,395",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "0",
+                  "datacheck": "5,895,053",
+                  "type": "nextPage"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "Revenue",
+                  "type": "lastPage"
+                },
+                {
+                  "chartcount": "1",
+                  "datacheck": "Revenue",
+                  "type": "previousPage"
+                }
+              ]
+            }
+          ],
+          "scenario": "group4",
+          "navigation": "Samples_LG_DQ,Models,GO Sales (query),Report Studio Report Samples"
+        }
+      ]
+    }
+  ]
+}

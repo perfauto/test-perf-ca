@@ -1,0 +1,900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="create_dataset" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="create data set" enabled="true"/>
+        <hashTree>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="ds vars" enabled="true">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="parent_folderId" elementType="Argument">
+                <stringProp name="Argument.name">parent_folderId</stringProp>
+                <stringProp name="Argument.value">.my_folders</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="datasource_dataModuleName" elementType="Argument">
+                <stringProp name="Argument.name">datasource_dataModuleName</stringProp>
+                <stringProp name="Argument.value">New_data_module1</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="datasource_datasetName" elementType="Argument">
+                <stringProp name="Argument.name">datasource_datasetName</stringProp>
+                <stringProp name="Argument.value">MySQL_DTS_CONFORMANCE_DATASET</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="selectionFile" elementType="Argument">
+                <stringProp name="Argument.name">selectionFile</stringProp>
+                <stringProp name="Argument.value">${__P(includecontroller.prefix,&apos;..&apos;)}datasource/data/DB2_dataset_selection.data</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="ds_prefix" elementType="Argument">
+                <stringProp name="Argument.name">ds_prefix</stringProp>
+                <stringProp name="Argument.value">MySQL</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </Arguments>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ generate AuthToken" enabled="false">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import com.ibm.bi.auth.AuthenticityToken;
+import com.ibm.bi.auth.BiBase64;
+import java.io.ByteArrayOutputStream;
+log.debug(&quot;usersessionid=&quot; + vars.get(&quot;COOKIE_usersessionid&quot;));	
+authToken = AuthenticityToken.generateToken(vars.get(&quot;COOKIE_usersessionid&quot;));
+log.debug(&quot;authToken=&quot; + authToken);
+vars.put(&quot;auth_token&quot;, authToken);</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / Get content from parent folder ds" enabled="true">
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="nav_filter" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">true</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">nav_filter</stringProp>
+                </elementProp>
+                <elementProp name="fields" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">userInterfaces%2Cowner.id%2CdefaultName%2Cdisabled%2Chidden%2Cpermissions%2CrunInAdvancedViewer%2Cowner.defaultName%2CmodificationTime%2CcanBurst%2CiconURI%2CdefaultScreenTip%2CsearchPath%2CdefaultPortalAction</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">fields</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${parent_folderId}/items</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="process and generate auth token" enabled="false">
+              <stringProp name="scriptLanguage">js</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">
+function Base64() {
+	// Note: no return statement here
+}
+
+
+Base64.prototype.encode64 = function (input) {
+  var keyStr = &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&apos;;
+
+  var output = &apos;&apos;;
+  var chr1,
+    chr2,
+    chr3;
+  var enc1,
+    enc2,
+    enc3,
+    enc4;
+  var i = 0;
+
+  do {
+    chr1 = input.charCodeAt(i++);
+    chr2 = input.charCodeAt(i++);
+    chr3 = input.charCodeAt(i++);
+
+    enc1 = chr1 &gt;&gt; 2;
+    enc2 = ((chr1 &amp; 3) &lt;&lt; 4) | (chr2 &gt;&gt; 4);
+    enc3 = ((chr2 &amp; 15) &lt;&lt; 2) | (chr3 &gt;&gt; 6);
+    enc4 = chr3 &amp; 63;
+
+    if (isNaN(chr2)) {
+      enc3 = enc4 = 64;
+    } else if (isNaN(chr3)) {
+      enc4 = 64;
+    }
+
+    output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+         keyStr.charAt(enc3) + keyStr.charAt(enc4);
+  } while (i &lt; input.length);
+
+  return output;
+};
+
+Base64.prototype.decode64 = function (input) {
+  var keyStr = &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=&apos;;
+
+  var output = &apos;&apos;;
+  var chr1,
+    chr2,
+    chr3;
+  var enc1,
+    enc2,
+    enc3,
+    enc4;
+  var i = 0;
+
+   // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+  input = input.replace(/[^A-Za-z0-9\+\/\=]/g, &apos;&apos;);
+
+  do {
+    enc1 = keyStr.indexOf(input.charAt(i++));
+    enc2 = keyStr.indexOf(input.charAt(i++));
+    enc3 = keyStr.indexOf(input.charAt(i++));
+    enc4 = keyStr.indexOf(input.charAt(i++));
+
+    chr1 = (enc1 &lt;&lt; 2) | (enc2 &gt;&gt; 4);
+    chr2 = ((enc2 &amp; 15) &lt;&lt; 4) | (enc3 &gt;&gt; 2);
+    chr3 = ((enc3 &amp; 3) &lt;&lt; 6) | enc4;
+
+    output += String.fromCharCode(chr1);
+
+    if (enc3 != 64) {
+      output += String.fromCharCode(chr2);
+    }
+    if (enc4 != 64) {
+      output += String.fromCharCode(chr3);
+    }
+  } while (i &lt; input.length);
+
+  return output;
+};
+
+function inspectString(input) {
+  var length = input.length;
+  var myarray = new Array();
+
+  for (count = 0; count &lt; length; count++) {
+  var charCode = input.charCodeAt(count);
+  var othercharCode = input.charAt(count);
+  myarray[count] = toHex(charCode);
+}
+  return myarray;
+}
+
+// toInt - convert a character array to an integer.
+function toInt(stringArray, offset, len) {
+   	var val = 0;
+   	var minlen = Math.min(len, 4);
+
+   	var stringlen = stringArray.length;
+   	var char1 = stringArray.charAt(0);
+   	var char2 = stringArray.charAt(1);
+   	var char3 = stringArray.charAt(2);
+   	var char4 = stringArray.charAt(3);
+
+	// Concatanate the byte array into one variable.
+   	for (var i = (minlen - 1); i &gt;= 0; i--) {
+     val &lt;&lt;= 8;
+   		var thischar = stringArray.charCodeAt(offset + i);
+   		var mask = thischar &amp; 0x0FF;
+     val |= thischar &amp; 0x00FF;
+   	}
+
+  return val;
+}
+function toHex(dec) {
+        // create list of hex characters
+  var hexCharacters = &apos;0123456789ABCDEF&apos;;
+        // if number is out of range return limit
+  if (dec &lt; 0)
+          {return &quot;00&quot;};
+  if (dec &gt; 255)
+          {return &quot;FF&quot;};
+        // decimal equivalent of first hex character in converted number
+  var i = Math.floor(dec / 16);
+        // decimal equivalent of second hex character in converted number
+  var j = dec % 16;
+        // return hexadecimal equivalent
+  return hexCharacters.charAt(i) + hexCharacters.charAt(j);
+}
+function generateAuthToken(userSessionId) {
+  var authToken_version = &apos;V1&apos;;
+  var cookiestring = userSessionId;
+  var base64 = new Base64();
+  var token = base64.decode64(cookiestring);// (new Buffer()).toString(&apos;ascii&apos;);
+  // token.substring = function (start, end) {
+  //   return token.slice(start, end).toString();
+  // };
+ 
+  var version = token.charCodeAt(0) &amp; 0xFF;
+
+	// Extract timelen.
+  var szTimelen = token.substring(1, 5);	// timelength
+  
+  
+  var timelen = toInt(szTimelen, 0, 4);
+
+	// Find the length of the user session id.
+  var uidlenstart = 5 + timelen;
+  var uidlenstop = uidlenstart + 4;
+  var szuidlen = token.substring(uidlenstart, uidlenstop);
+  var uidlen = toInt(szuidlen, 0, 4);
+
+	// Extract the string for the usersessionid.
+  var uidstart = uidlenstop;
+  var uidstop = uidstart + uidlen;
+  var uid = token.substring(uidstart, uidstop);
+
+	// In a verison 1 USID token we only need the iserSessionID. In version 2+
+	// extract the string for the algorithm. Position to the beginning of digest
+	// algorithm length, ignore csk value.
+
+  var cskIdLenStart = uidstop;			// cskidlen
+  var cskIdLenStop = cskIdLenStart + 4;
+  var szcskIdLen = token.substring(cskIdLenStart, cskIdLenStop);
+  var cskIdLen = toInt(szcskIdLen, 0, 4);
+
+  var cskidstart = cskIdLenStop;			// cskid
+  var cskidstop = cskidstart + cskIdLen;
+
+  if (version &gt;= 2) {
+    var digAlgLenStart = cskidstop;			// digAlgLen
+    var digAlgLenStop = digAlgLenStart + 4;
+    var szdigAlgLen = token.substring(digAlgLenStart, digAlgLenStop);
+    var digAlgLen = toInt(szdigAlgLen, 0, 4);
+
+    var digAlgStart = digAlgLenStop;		// digAlg
+    var digAlgStop = digAlgStart + digAlgLen;
+    var szDigAlg = token.substring(digAlgStart, digAlgStop);
+
+		// Now that we have a value for the algorithm, ensure that
+		// it is valid and insert into our digest. This is more for coms
+		// issues as it is validated server side.
+   
+    if (!(szDigAlg in { SHA: &apos;&apos;, &apos;SHA-1&apos;: &apos;&apos;, SHA1: &apos;&apos;, &apos;SHA-256&apos;: &apos;&apos;, &apos;SHA-384&apos;: &apos;&apos;, &apos;SHA-512&apos;: &apos;&apos; })) {
+      return &apos;bad digest algorithm&apos;;
+    }
+
+    var digLenStart = digAlgStop;			// diglen
+  } else { // version 1
+    var digLenStart = cskidstop;			// diglen
+  }
+
+  var digLenStop = digLenStart + 4;
+  var szdigLen = token.substring(digLenStart, digLenStop);
+  var digLen = toInt(szdigLen, 0, 4);
+
+  var digStart = digLenStop;			// dig
+  var digStop = digStart + digLen;
+  var dig = token.substring(digStart, digStop);
+
+  var authToken = authToken_version + dig;
+
+	// Base64 encode.
+  b64 = new Base64();
+  var b64Token = b64.encode64(authToken);
+
+	// return b64Token;
+  return b64Token;
+}
+var usersessionid = vars.get(&quot;COOKIE_usersessionid&quot;)
+var token = generateAuthToken(usersessionid);
+log.info(&quot;Token is &quot;+token);
+vars.put(&apos;auth_token&apos;,token)</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="User-Agent" elementType="Header">
+                  <stringProp name="Header.name">User-Agent</stringProp>
+                  <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Encoding" elementType="Header">
+                  <stringProp name="Header.name">Accept-Encoding</stringProp>
+                  <stringProp name="Header.value">gzip, deflate</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Refer</stringProp>
+                  <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Content-type</stringProp>
+                  <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Cache-Control</stringProp>
+                  <stringProp name="Header.value">no-cache</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">X-Requested-With</stringProp>
+                  <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                </elementProp>
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">Pragma</stringProp>
+                  <stringProp name="Header.value">no-cache</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
+              <boolProp name="displayJMeterProperties">false</boolProp>
+              <boolProp name="displayJMeterVariables">true</boolProp>
+              <boolProp name="displaySamplerProperties">true</boolProp>
+              <boolProp name="displaySystemProperties">false</boolProp>
+            </DebugPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get data module id" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">datamodule_id</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${datasource_dataModuleName}&quot;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">NOTFOUND</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get data set id" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">dataset_id</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${datasource_datasetName}&quot;)].id</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">NOTFOUND</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="if dataset exists delete it" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${dataset_id}&quot;!=&quot;NOTFOUND&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp><boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / delete dataset" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="force" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">true</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">force</stringProp>
+                  </elementProp>
+                  <elementProp name="recursive" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">true</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">recursive</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${dataset_id}</stringProp>
+              <stringProp name="HTTPSampler.method">DELETE</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Refer</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-type</stringProp>
+                    <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Cache-Control</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Pragma</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="IF data module exists" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${datamodule_id}&quot;!=&quot;NOTFOUND&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp><boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / open dataset perspective" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="attributes" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">type</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">attributes</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/perspectives/datasets</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Refer</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-type</stringProp>
+                    <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Cache-Control</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Pragma</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value"></stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">cafContextId</stringProp>
+                    <stringProp name="Header.value">${cafContextId}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value">${auth_token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
+                    <stringProp name="Header.value">${XSRF-TOKEN}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / get data module attribute" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="attributes" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">type</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">attributes</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/metadata/modules/${datamodule_id}/info</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.implementation">HttpClient4</stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Refer</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-type</stringProp>
+                    <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Cache-Control</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Pragma</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value"></stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">cafContextId</stringProp>
+                    <stringProp name="Header.value">${cafContextId}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value">${auth_token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
+                    <stringProp name="Header.value">${XSRF-TOKEN}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / start report session" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:bus=&apos;http://developer.cognos.com/schemas/bibus/3/&apos; xmlns:rns1=&apos;http://developer.cognos.com/schemas/reportService/1&apos;&gt;&lt;SOAP-ENV:Header&gt;&lt;bus:biBusHeader xsi:type=&quot;bus:biBusHeader&quot;&gt;&lt;bus:CAM xsi:type=&quot;bus:CAM&quot;&gt;&lt;authenticityToken xsi:type=&quot;xsd:base64Binary&quot;&gt;${auth_token}&lt;/authenticityToken&gt;&lt;/bus:CAM&gt;&lt;bus:CAF xsi:type=&quot;bus:CAF&quot;&gt;&lt;contextID xsi:type=&quot;xsd:string&quot;&gt;${cafContextId}&lt;/contextID&gt;&lt;/bus:CAF&gt;&lt;bus:hdrSession xsi:type=&quot;bus:hdrSession&quot;&gt;&lt;bus:formFieldVars SOAP-ENC:arrayType=&quot;bus:formFieldVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;_ContextBlockSize&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;1000000&lt;/value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;ignoreXHTMLStrict&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&lt;/item&gt;&lt;/bus:formFieldVars&gt;&lt;/bus:hdrSession&gt;&lt;bus:userPreferenceVars SOAP-ENC:arrayType=&quot;bus:userPreferenceVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;productLocale&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/bus:value&gt;&lt;/item&gt;&lt;item&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;contentLocale&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en-us&lt;/bus:value&gt;&lt;/item&gt;&lt;/bus:userPreferenceVars&gt;&lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;rs&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&lt;/item&gt;&lt;/bus:dispatcherTransportVars&gt;&lt;/bus:biBusHeader&gt;&lt;/SOAP-ENV:Header&gt;&lt;SOAP-ENV:Body&gt;&lt;rns1:runSpecification&gt;&lt;bus:specification xsi:type=&quot;bus:reportServiceReportSpecification&quot;&gt;&lt;bus:value xsi:type=&quot;bus:specification&quot;&gt;&amp;lt;report xmlns=&amp;quot;http://developer.cognos.com/schemas/report/14.2/&amp;quot;           useStyleVersion=&amp;quot;10&amp;quot; expressionLocale=&amp;quot;en-us&amp;quot;&amp;gt;&#xd;
+				&amp;lt;modelPath type=&amp;quot;module&amp;quot;&amp;gt;${searchPath}/module[@name=&amp;amp;apos;${datasource_dataModuleName}&amp;amp;apos;]&amp;lt;/modelPath&amp;gt;&#xd;
+				&amp;lt;drillBehavior/&amp;gt;&#xd;
+				&amp;lt;queries&amp;gt;&#xd;
+					&amp;lt;query name=&amp;quot;Query1&amp;quot;&amp;gt;&#xd;
+						&amp;lt;source&amp;gt;&#xd;
+							&amp;lt;model/&amp;gt;&#xd;
+						&amp;lt;/source&amp;gt;&#xd;
+						&amp;lt;selection/&amp;gt;&#xd;
+					&amp;lt;/query&amp;gt;&#xd;
+				&amp;lt;/queries&amp;gt;&#xd;
+				&amp;lt;layouts&amp;gt;&#xd;
+					&#xd;
+				&amp;lt;layout&amp;gt;&#xd;
+						&amp;lt;reportPages&amp;gt;&#xd;
+							&amp;lt;page name=&amp;quot;Page1&amp;quot;&amp;gt;&amp;lt;style&amp;gt;&amp;lt;defaultStyles&amp;gt;&amp;lt;defaultStyle refStyle=&amp;quot;pg&amp;quot;/&amp;gt;&amp;lt;/defaultStyles&amp;gt;&amp;lt;/style&amp;gt;&#xd;
+								&amp;lt;pageBody&amp;gt;&amp;lt;style&amp;gt;&amp;lt;defaultStyles&amp;gt;&amp;lt;defaultStyle refStyle=&amp;quot;pb&amp;quot;/&amp;gt;&amp;lt;/defaultStyles&amp;gt;&amp;lt;/style&amp;gt;&#xd;
+									&amp;lt;contents&amp;gt;&#xd;
+										&amp;lt;HTMLItem&amp;gt;&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute name=&amp;quot;appUsage&amp;quot; value=&amp;quot;true&amp;quot;/&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;roid&amp;quot; value=&amp;quot;i21&amp;quot;/&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;specname&amp;quot; value=&amp;quot;HTMLItem&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;dataSource&amp;gt;&amp;lt;staticValue&amp;gt;&amp;amp;lt;TABLE roid=&amp;amp;quot;i21&amp;amp;quot; specname=&amp;amp;quot;list&amp;amp;quot; style=&amp;amp;quot;cursor:default;;font-style: normal; font-variant: normal; font-weight: normal; font-size: medium; word-spacing: normal; letter-spacing: normal; text-transform: none; text-align: left; text-indent: 0px; line-height: normal; white-space: normal; overflow-wrap: initial; color: black;;color: rgb(0, 0, 0);;font-size: 8pt;;;border-collapse:collapse;height: 100%&amp;amp;quot; cellpadding=&amp;amp;quot;0&amp;amp;quot; cellspacing=&amp;amp;quot;0&amp;amp;quot;&amp;amp;gt;&amp;amp;lt;TR&amp;amp;gt;&amp;amp;lt;TD roid=&amp;amp;quot;i22&amp;amp;quot; specname=&amp;amp;quot;listColumnTitleStyle&amp;amp;quot; style=&amp;amp;quot;cursor:default;border: 1px dashed silver;;padding-left: 5px; padding-right: 5px;;;text-align: center; vertical-align: top; padding: 4px 5px 4px 6px; background-image: url(&amp;amp;amp;quot;../reportstyles/images/silver_grad.png&amp;amp;amp;quot;); background-position: left top; background-repeat: repeat-x; background-color: rgb(231, 229, 229); color: rgb(51, 51, 51); border: 1px solid silver;;;;width:750px;color:#3C4646;background-color:#F4F4F4;font-family:HelvNeueRomanforIBM;font-size:14px;height:44px;line-height:44px&amp;amp;quot;&amp;amp;gt;&amp;amp;amp;nbsp;&amp;amp;lt;/TD&amp;amp;gt;&amp;amp;lt;/TR&amp;amp;gt;&amp;amp;lt;TR&amp;amp;gt;&amp;amp;lt;TD roid=&amp;amp;quot;i25&amp;amp;quot; specname=&amp;amp;quot;listColumnBodyStyle&amp;amp;quot; style=&amp;amp;quot;cursor:default;border: 1px dashed silver;;padding-left: 5px; padding-right: 5px;;;vertical-align: top; padding: 4px 5px; color: rgb(69, 69, 69); border: 1pt solid rgb(226, 226, 226);;;;color:#6D7777;font-family:HelvNeueRomanforIBM;font-size:14px;border-top:1px solid #ECECEC;border-bottom:1px solid #ECECEC;border-left:1px solid #C8D2D2;border-right:1px solid #C8D2D2;height:44px;line-height:44px;padding: 0 16px;width:90px; height:80px; border-bottom:none;&amp;amp;quot;&amp;amp;gt;&amp;amp;amp;nbsp;&amp;amp;lt;/TD&amp;amp;gt;&amp;amp;lt;/TR&amp;amp;gt;&amp;amp;lt;TR&amp;amp;gt;&amp;amp;lt;TD roid=&amp;amp;quot;i25&amp;amp;quot; specname=&amp;amp;quot;listColumnBodyStyle&amp;amp;quot; style=&amp;amp;quot;cursor:default;font-family: &amp;amp;amp;quot;Helvetica Neue&amp;amp;amp;quot;,Helvetica,&amp;amp;amp;quot;Arial Unicode MS&amp;amp;amp;quot;,&amp;amp;amp;quot;Andale WT&amp;amp;amp;quot;,Tahoma,Arial,&amp;amp;amp;quot;MS UI Gothic&amp;amp;amp;quot;,Gulim,SimSun,PMingLiU,Raghu8,sans-serif; font-size: 14px; font-weight: normal; font-style: normal; color: rgb(34, 34, 34);;border: 1px dashed silver;;padding-left: 5px; padding-right: 5px;;;vertical-align: top; padding: 4px 5px; color: rgb(69, 69, 69); border: 1pt solid rgb(226, 226, 226);;;;color:#6D7777;font-family:HelvNeueRomanforIBM;font-size:14px;border-top:1px solid #ECECEC;border-bottom:1px solid #ECECEC;border-left:1px solid #C8D2D2;border-right:1px solid #C8D2D2;height:44px;line-height:44px;padding: 0 16px;border-top:none; border-bottom:none; text-align:center;&amp;amp;quot;  colspan=&amp;amp;quot;5&amp;amp;quot;&amp;amp;gt;Add data here&amp;amp;lt;/TD&amp;amp;gt;&amp;amp;lt;/TR&amp;amp;gt;&amp;amp;lt;TR&amp;amp;gt;&amp;amp;lt;TD roid=&amp;amp;quot;i25&amp;amp;quot; specname=&amp;amp;quot;listColumnBodyStyle&amp;amp;quot; style=&amp;amp;quot;cursor:default;border: 1px dashed silver;;padding-left: 5px; padding-right: 5px;;;vertical-align: top; padding: 4px 5px; color: rgb(69, 69, 69); border: 1pt solid rgb(226, 226, 226);;;;color:#6D7777;font-family:HelvNeueRomanforIBM;font-size:14px;border-top:1px solid #ECECEC;border-bottom:1px solid #ECECEC;border-left:1px solid #C8D2D2;border-right:1px solid #C8D2D2;height:44px;line-height:44px;padding: 0 16px;border-top:none; height:100%&amp;amp;quot;&amp;amp;gt;&amp;amp;amp;nbsp;&amp;amp;lt;/TD&amp;amp;gt;&amp;amp;lt;/TR&amp;amp;gt;&amp;amp;lt;/TABLE&amp;amp;gt;&amp;lt;/staticValue&amp;gt;&amp;lt;/dataSource&amp;gt;&amp;lt;/HTMLItem&amp;gt;&#xd;
+									&amp;lt;/contents&amp;gt;&#xd;
+								&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;roid&amp;quot; value=&amp;quot;i16&amp;quot;/&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;specname&amp;quot; value=&amp;quot;pageBody&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;/pageBody&amp;gt;&#xd;
+							&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;roid&amp;quot; value=&amp;quot;i12&amp;quot;/&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;specname&amp;quot; value=&amp;quot;page&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;pageHeader&amp;gt;&amp;lt;contents&amp;gt;&amp;lt;pageNumber&amp;gt;&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;isViewerInfo&amp;quot; value=&amp;quot;true&amp;quot;/&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;specname&amp;quot; value=&amp;quot;pageNumber&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;/pageNumber&amp;gt;&amp;lt;/contents&amp;gt;&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;HTML&amp;quot; name=&amp;quot;isViewerInfo&amp;quot; value=&amp;quot;true&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;/pageHeader&amp;gt;&amp;lt;/page&amp;gt;&#xd;
+						&amp;lt;/reportPages&amp;gt;&#xd;
+					&amp;lt;/layout&amp;gt;&amp;lt;/layouts&amp;gt;&#xd;
+			&amp;lt;XMLAttributes&amp;gt;&amp;lt;XMLAttribute output=&amp;quot;no&amp;quot; name=&amp;quot;RS_CreateExtendedDataItems&amp;quot; value=&amp;quot;true&amp;quot;/&amp;gt;&amp;lt;/XMLAttributes&amp;gt;&amp;lt;/report&amp;gt;&lt;/bus:value&gt;&lt;/bus:specification&gt;&lt;bus:parameterValues xmlns:bus=&apos;http://developer.cognos.com/schemas/bibus/3/&apos; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; SOAP-ENC:arrayType=&quot;bus:parameterValue[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;/bus:parameterValues&gt;&lt;bus:options SOAP-ENC:arrayType=&quot;bus:option[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item xsi:type=&quot;bus:genericOptionAnyURI&quot;&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;runOptionEnum#globalParameters&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;[]&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:asynchOptionInt&quot;&gt;&lt;bus:name xsi:type=&quot;bus:asynchOptionEnum&quot;&gt;primaryWaitThreshold&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:int&quot;&gt;5&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:asynchOptionInt&quot;&gt;&lt;bus:name xsi:type=&quot;bus:asynchOptionEnum&quot;&gt;secondaryWaitThreshold&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:int&quot;&gt;30&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionStringArray&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;outputFormat&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;xsd:string[1]&quot;&gt;&lt;item&gt;XHTML&lt;/item&gt;&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:asynchOptionEncoding&quot;&gt;&lt;bus:name xsi:type=&quot;bus:asynchOptionEnum&quot;&gt;attachmentEncoding&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;bus:encodingEnum&quot;&gt;MIME&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionAnyURI&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;xslURL&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;V5html_viewer.xsl&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionString&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;promptFormat&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;XHTMLFRGMT&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;prompt&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:boolean&quot;&gt;true&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionAnyURI&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;outputLocation&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/temporaryObjectLocationEnum#serverFileSystem&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionData&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;data&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;bus:dataEnum&quot;&gt;runWithAllData&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:genericOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/systemOptionEnum#accessibilityFeatures&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xs:boolean&quot;&gt;false&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:genericOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/biDirectionalOptionEnum#biDirectionalFeaturesEnabled&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xs:boolean&quot;&gt;false&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;returnOutputWhenAvailable&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xs:boolean&quot;&gt;true&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:runOptionNameValueArray&quot;&gt;&lt;bus:name xsi:type=&quot;bus:runOptionEnum&quot;&gt;xslParameters&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:nameValue[]&quot;&gt;&lt;item xsi:type=&quot;bus:nameValue&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;CVGateway&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;../v1/disp&lt;/value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:nameValue&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;renderIntermediateXML&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:nameValue&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;renderEnvironment&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;false&lt;/value&gt;&lt;/item&gt;&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:genericOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/runOptionEnum#optimizedOutputContextData&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:boolean&quot;&gt;true&lt;/bus:value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:genericOptionBoolean&quot;&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;http://developer.cognos.com/ceba/constants/runOptionEnum#interactive&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:boolean&quot;&gt;true&lt;/bus:value&gt;&lt;/item&gt;&lt;/bus:options&gt;&lt;/rns1:runSpecification&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/reports</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Refer</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/pat/rsapp.htm</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-type</stringProp>
+                    <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Pragma</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">SOAPAction</stringProp>
+                    <stringProp name="Header.value">http://host.com/xmlns/prod/cognos/reportService/201703/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">cafContextId</stringProp>
+                    <stringProp name="Header.value">${cafContextId}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value">${auth_token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
+                    <stringProp name="Header.value">${XSRF-TOKEN}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">DNT</stringProp>
+                    <stringProp name="Header.value">1</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Cache-Control</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get soap cafContextId" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">soap_cafContextId</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;bus:contextID xsi:type=&quot;xs:string&quot;&gt;(.*)&lt;\/bus:contextID&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: Get data set selection content" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol">file</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${__P(includecontroller.prefix,&apos;..&apos;)}datasource/data/${ds_prefix}_dataset_selection.data</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="process selection file" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">selection</stringProp>
+                <stringProp name="RegexExtractor.regex">(.*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+                <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
+              </RegexExtractor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="process variables in selection" enabled="true">
+                <stringProp name="scriptLanguage">javascript</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">var selection=vars.get(&apos;selection&apos;);
+var dmName=vars.get(&apos;datasource_dataModuleName&apos;).replace(/\s/g,&apos;_&apos;);
+selection=selection.replace(/\$\{datasource_dataModuleName\}/g,dmName);
+selection=selection.replace(/\$\{datasource_datasetName\}/g,vars.get(&quot;datasource_datasetName&quot;))
+selection=selection.replace(/\$\{soap_cafContextId\}/g,vars.get(&quot;soap_cafContextId&quot;))
+selection=selection.replace(/\$\{searchPath\}/g,vars.get(&quot;searchPath&quot;))
+selection=selection.replace(/\$\{auth_token\}/g,vars.get(&quot;auth_token&quot;))
+vars.put(&apos;selection&apos;,selection);</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+              <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
+                <boolProp name="displayJMeterProperties">false</boolProp>
+                <boolProp name="displayJMeterVariables">true</boolProp>
+                <boolProp name="displaySamplerProperties">true</boolProp>
+                <boolProp name="displaySystemProperties">false</boolProp>
+              </DebugPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${step_name} ${DS_Name}: / create data set" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">${selection}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/reports</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Refer</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-type</stringProp>
+                    <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Pragma</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">SOAPAction</stringProp>
+                    <stringProp name="Header.value">http://host.com/xmlns/prod/cognos/reportService/201703/</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">cafContextId</stringProp>
+                    <stringProp name="Header.value">${cafContextId}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">authenticityToken</stringProp>
+                    <stringProp name="Header.value">${auth_token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">X-XSRF-TOKEN</stringProp>
+                    <stringProp name="Header.value">${XSRF-TOKEN}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Cache-Control</stringProp>
+                    <stringProp name="Header.value">no-cache</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ remove previous report_actions" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">actionCountStr = vars.get(&quot;report_actions_matchNr&quot;);
+if (actionCountStr != null ) {
+	int actionCount = Integer.parseInt(actionCountStr);
+	while(actionCount &gt; 0) {
+		vars.remove(&quot;report_actions_&quot; + actionCount);
+		vars.remove(&quot;report_actions_datacheck_&quot; + actionCount);
+		vars.remove(&quot;report_actions_expected_chart_count_&quot; + actionCount);
+		actionCount = actionCount - 1;
+	}
+	vars.remove(&quot;report_actions&quot;);
+	vars.remove(&quot;report_actions_matchNr&quot;);
+}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get report details" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+        </JSR223Sampler>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_name" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_name</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_prompt" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_prompt</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.prompt</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_datacheck" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_datacheck</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.datacheck</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_expected_chart_count" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_expected_chart_count</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.chartcount</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get authoring_perspective" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">authoring_perspective</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.advancedViewer</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">${advanced_viewer}</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_id from navigation_response varilable" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_id</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${report_name}&quot;)].id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="Sample.scope">variable</stringProp>
+            <stringProp name="Scope.variable">navigation_response</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_actions</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[*].type</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_prompt" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_actions_prompt</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[*].prompt</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_datacheck" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_actions_datacheck</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[*].datacheck</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_expected_chart_count" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_actions_expected_chart_count</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[*].chartcount</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="has prompt?" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">
+if(vars.get(&quot;report_prompt&quot;).isEmpty()) {
+	vars.put(&quot;hasPrompt&quot;, &quot;false&quot;);
+} else {
+	vars.put(&quot;hasPrompt&quot;, &quot;true&quot;);
+}
+log.debug(&quot;hasPrompt: &quot; + vars.get(&quot;hasPrompt&quot;));</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_output_format" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_output_format</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.report_output_format</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+            <stringProp name="TestPlan.comments">defaults to HTML</stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">HTML</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get prompt_mode" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">prompt_mode</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.mode</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get prompt_type" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">prompt_type</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.prompt[0].type</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_drill-item" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_action_drill-item</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[0].drill-item</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_data-column" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_action_data-column</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[0].data-column</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get report_actions_report_name" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">report_action_report_name</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[0].name</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="if advanced_viewer" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;true&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If HTML" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${report_output_format}&quot;==&quot;HTML&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="runReport" enabled="true">
+              <stringProp name="IncludeController.includepath">authoring/runReport/fullInteractivity/run.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If PDF || EXCEL" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;{__P(force_run_spec)}&quot;==&quot;true&quot; || (&quot;${report_output_format}&quot;==&quot;PDF&quot; || &quot;${report_output_format}&quot;==&quot;EXCEL&quot;))}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="runSpecification" enabled="true">
+              <stringProp name="IncludeController.includepath">authoring/runReport/fullInteractivity/runSpec.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;!=&quot;interactiveReport&quot; &amp;&amp; &quot;${report_output_format}&quot;!=&quot;savedOutput_html&quot; &amp;&amp; &quot;${report_output_format}&quot;!=&quot;savedOutput_pdf&quot; &amp;&amp; &quot;${report_output_format}&quot;!=&quot;savedOutput_html_latestVersion&quot; &amp;&amp; &quot;${report_output_format}&quot;!=&quot;savedOutput_pdf_latestVersion&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="/ runReport_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runClassic.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer &amp;&amp; is savedOutput_html" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;==&quot;savedOutput_html&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="TestPlan.comments">Default report action set to View most recent report</stringProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="/ runSavedOutputHTML_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runClassicSavedOutputHTML.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer &amp;&amp; is savedOutput_pdf" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;==&quot;savedOutput_pdf&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="TestPlan.comments">Default report action set to View most recent report</stringProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="/ runSavedOutputPDF_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runClassicSavedOutputPDF.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer &amp;&amp; is savedOutput_html_latestVersion" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;==&quot;savedOutput_html_latestVersion&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="TestPlan.comments">Utilizes report&apos;s View versions option to select saved output version</stringProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="/ runSavedOutputHTML_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runClassicSavedOutputHTML.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer &amp;&amp; is savedOutput_pdf_latestVersion" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;==&quot;savedOutput_pdf_latestVersion&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+          <stringProp name="TestPlan.comments">Utilizes report&apos;s View versions option to select saved output version</stringProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="/ runSavedOutputPDF_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runClassicSavedOutputPDF.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If not advanced_viewer &amp;&amp; is Active Report" enabled="true">
+          <stringProp name="IfController.condition">${__groovy(&quot;${authoring_perspective}&quot;==&quot;false&quot; &amp;&amp; &quot;${report_output_format}&quot;==&quot;interactiveReport&quot;)}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+          <boolProp name="IfController.useExpression">true</boolProp>
+        </IfController>
+        <hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="runReport_classic" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/runInteractiveReport.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

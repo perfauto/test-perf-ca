@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false">
+        <stringProp name="TestPlan.comments"></stringProp>
+      </TestFragmentController>
+      <hashTree>
+        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="asyncLoop" enabled="true">
+          <stringProp name="WhileController.condition">${__groovy(&quot;${report_sendAsync}&quot;==&quot;true&quot;)}</stringProp>
+        </WhileController>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ update asyncTimer" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">int asyncTimer = Integer.parseInt(vars.get(&quot;asyncTimer&quot;));
+asyncTimer = asyncTimer + 1;
+if (asyncTimer &gt;= 300) {
+	log.error(&quot;async attempt limit reached&quot;);
+	vars.put(&quot;report_sendAsync&quot;, &quot;false&quot;);
+	vars.put(&quot;report_asyncTimeoutReached&quot;, &quot;true&quot;);
+}
+vars.put(&quot;asyncTimer&quot;, &quot;&quot; + asyncTimer);
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ async wait" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">&lt;SOAP-ENV:Envelope SOAP-ENV:encodingStyle=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:SOAP-ENV=&quot;http://schemas.xmlsoap.org/soap/envelope/&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot; xmlns:rns1=&quot;http://developer.cognos.com/schemas/reportService/1&quot;&gt;&lt;SOAP-ENV:Header&gt;&lt;bus:biBusHeader xsi:type=&quot;bus:biBusHeader&quot;&gt;&lt;bus:CAM xsi:type=&quot;bus:CAM&quot;&gt;&lt;authenticityToken xsi:type=&quot;xsd:base64Binary&quot;&gt;${authToken}&lt;/authenticityToken&gt;&lt;/bus:CAM&gt;&lt;bus:CAF xsi:type=&quot;bus:CAF&quot;&gt;&lt;contextID xsi:type=&quot;xsd:string&quot;&gt;${cafContextId}&lt;/contextID&gt;&lt;/bus:CAF&gt;&lt;bus:hdrSession xsi:type=&quot;bus:hdrSession&quot;&gt;&lt;bus:formFieldVars SOAP-ENC:arrayType=&quot;bus:formFieldVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;_ContextBlockSize&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;1000000&lt;/value&gt;&lt;/item&gt;&lt;item xsi:type=&quot;bus:formFieldVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;ignoreXHTMLStrict&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&lt;/item&gt;&lt;/bus:formFieldVars&gt;&lt;/bus:hdrSession&gt;&lt;bus:userPreferenceVars SOAP-ENC:arrayType=&quot;bus:userPreferenceVar[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;&gt;&lt;item&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;productLocale&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en&lt;/bus:value&gt;&lt;/item&gt;&lt;item&gt;&lt;bus:name xsi:type=&quot;xsd:string&quot;&gt;contentLocale&lt;/bus:name&gt;&lt;bus:value xsi:type=&quot;xsd:string&quot;&gt;en-us&lt;/bus:value&gt;&lt;/item&gt;&lt;/bus:userPreferenceVars&gt;&lt;bus:dispatcherTransportVars xsi:type=&quot;SOAP-ENC:Array&quot; SOAP-ENC:arrayType=&quot;bus:dispatcherTransportVar[]&quot;&gt;&lt;item xsi:type=&quot;bus:dispatcherTransportVar&quot;&gt;&lt;name xsi:type=&quot;xsd:string&quot;&gt;rs&lt;/name&gt;&lt;value xsi:type=&quot;xsd:string&quot;&gt;true&lt;/value&gt;&lt;/item&gt;&lt;/bus:dispatcherTransportVars&gt;${report_busTracking}&lt;/bus:biBusHeader&gt;&lt;/SOAP-ENV:Header&gt;&lt;SOAP-ENV:Body&gt;&lt;rns1:wait&gt;&lt;bus:conversation xsi:type=&quot;bus:asynchRequest&quot;&gt;&lt;/bus:conversation&gt;&lt;bus:parameterValues SOAP-ENC:arrayType=&quot;bus:parameterValue[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;/&gt;&lt;bus:options SOAP-ENC:arrayType=&quot;bus:option[]&quot; xsi:type=&quot;SOAP-ENC:Array&quot;/&gt;&lt;/rns1:wait&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+            <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/reports</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="getTrackingInfo" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">import com.ibm.bi.util.ContentUtil;
+
+trackingStartTag = &quot;&lt;bus:tracking &quot;;
+trackingEndTag = &quot;&lt;/bus:tracking&gt;&quot;;
+trackingInnerContent = ContentUtil.getOptional(prev.getResponseDataAsString(), trackingStartTag, trackingEndTag);
+log.debug(&quot;tracking is: &quot; + trackingInnerContent);
+trackingFull = trackingStartTag + trackingInnerContent + trackingEndTag;
+vars.put(&quot;report_busTracking&quot;, trackingFull);
+
+status = ContentUtil.getOptional(trackingInnerContent, &quot;&lt;bus:status &quot;, &quot;&lt;/bus:status&gt;&quot;);
+status = status.substring(status.indexOf(&quot;&gt;&quot;) + 1)
+vars.put(&quot;report_conversationStatus&quot;, status);</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+            <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="setReleaseInfo" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">log.debug(&quot;conversationStatus: &quot; + vars.get(&quot;report_conversationStatus&quot;));
+if (vars.get(&quot;report_conversationStatus&quot;) != null) {
+	if (!vars.get(&quot;report_conversationStatus&quot;).equals(&quot;conversationComplete&quot;)) {
+		log.debug(&quot;report_release: &quot; + vars.get(&quot;report_busTracking&quot;));
+		vars.put(&quot;report_release&quot;, &quot;true&quot;);
+	}
+	if (vars.get(&quot;report_conversationStatus&quot;).equals(&quot;conversationComplete&quot;)) {
+		if (vars.get(&quot;report_release&quot;) != null) {
+			vars.remove(&quot;report_release&quot;);
+			vars.put(&quot;report_sendAsync&quot;, &quot;false&quot;);
+		}
+	}
+	if (vars.get(&quot;report_conversationStatus&quot;).equals(&quot;complete&quot;)) {
+		vars.put(&quot;report_sendAsync&quot;, &quot;false&quot;);
+	}
+	if (vars.get(&quot;report_conversationStatus&quot;).equals(&quot;complete&quot;) &amp;&amp; (prev.getResponseDataAsString().contains(&quot;&lt;SOAP-ENV:Fault&gt;&quot;))){
+		if (vars.get(&quot;report_release&quot;) != null) {
+			vars.remove(&quot;report_release&quot;);
+			vars.put(&quot;report_sendAsync&quot;, &quot;false&quot;);
+		}
+	}
+
+	//log.info(&quot;busTracking: &quot; + vars.get(&quot;report_busTracking&quot;));
+}
+log.debug(&quot;sendAsync = &quot; + vars.get(&quot;report_sendAsync&quot;));
+vars.put(&quot;reportResponse&quot;, prev.getResponseDataAsString());//getSamplerData());</stringProp>
+            </JSR223PostProcessor>
+            <hashTree/>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="SOAPAction" elementType="Header">
+                  <stringProp name="Header.name">SOAPAction</stringProp>
+                  <stringProp name="Header.value">${soapAction_rs}.absolute</stringProp>
+                </elementProp>
+                <elementProp name="Accept" elementType="Header">
+                  <stringProp name="Header.name">Accept</stringProp>
+                  <stringProp name="Header.value">*/*</stringProp>
+                </elementProp>
+                <elementProp name="X-UseRsConsumerMode" elementType="Header">
+                  <stringProp name="Header.name">X-UseRsConsumerMode</stringProp>
+                  <stringProp name="Header.value">true</stringProp>
+                </elementProp>
+                <elementProp name="Referer" elementType="Header">
+                  <stringProp name="Header.name">Referer</stringProp>
+                  <stringProp name="Header.value">http://${serverName}:${serverPort}${urlPath}/bi/pat/rsapp.htm</stringProp>
+                </elementProp>
+                <elementProp name="Content-Type" elementType="Header">
+                  <stringProp name="Header.name">Content-Type</stringProp>
+                  <stringProp name="Header.value">text/xml; charset=utf-8</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Encoding" elementType="Header">
+                  <stringProp name="Header.name">Accept-Encoding</stringProp>
+                  <stringProp name="Header.value">gzip, deflate</stringProp>
+                </elementProp>
+                <elementProp name="X-RsCMStoreID" elementType="Header">
+                  <stringProp name="Header.name">X-RsCMStoreID</stringProp>
+                  <stringProp name="Header.value">${report_id}</stringProp>
+                </elementProp>
+                <elementProp name="Accept-Language" elementType="Header">
+                  <stringProp name="Header.name">Accept-Language</stringProp>
+                  <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

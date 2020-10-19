@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="/ Dashboard Suggestions Requests" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ remove previous dashboard_datachecks" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">datacheckCountStr = vars.get(&quot;dashboard_datachecks_matchNr&quot;);
+if (datacheckCountStr != null ) {
+	int datacheckCount = Integer.parseInt(datacheckCountStr);
+	while(datacheckCount &gt; 0) {
+		vars.remove(&quot;dashboard_datachecks_&quot; + datacheckCount);
+		datacheckCount = datacheckCount - 1;
+	}
+	vars.remove(&quot;dashboard_datachecks&quot;);
+	vars.remove(&quot;dashboard_datachecks_matchNr&quot;);
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get dashboard suggestions details" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+          </JSR223Sampler>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_suggestion_datachecks" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">dashboard_datachecks</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.suggestionsDatacheck[*]</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+              <stringProp name="TestPlan.comments"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">{\&quot;annotations</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Parse and send metadata call" enabled="true"/>
+          <hashTree>
+            <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="/ assign urls" enabled="true"/>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include dashboarding/processRecording.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">dashboarding/processRecording.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Read each suggestion request from file" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">dashboard_sa_request</stringProp>
+                <stringProp name="RegexExtractor.regex">(post_file.+suggestions)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                <stringProp name="TestPlan.comments"> (.+/bi/v1/predict/annotations/suggestions)</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="update suggestion datachecks" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">dwr_matchNr = vars.get(&quot;dashboard_sa_request_matchNr&quot;);
+if (dwr_matchNr != null) {
+	dsd_matchNr = vars.get(&quot;dashboard_datachecks_matchNr&quot;);
+	if (dsd_matchNr.equals(null)) {
+		dsd_matchNr = &quot;0&quot;;
+	}
+	dwr_Nr = Integer.parseInt(dwr_matchNr);
+	datacheckCount = Integer.parseInt(dsd_matchNr);
+	log.debug(&quot;dwr_Nr=&quot; + dwr_Nr + &quot; datacheckCount=&quot;+datacheckCount)
+	//dwr_Nr=0 datacheckCount=4 
+	//assert dwr_Nr != null
+	if (dwr_Nr == null) {
+		prev.setResponseMessage(&quot;dwr_Nr is &quot; + dwr_Nr);
+		prev.setSuccessful(false);  
+	}
+	//assert dwr_Nr &gt;= 0
+	if (dwr_Nr &lt;= 0) {
+		prev.setResponseMessage(&quot;dwr_Nr is &quot; + dwr_Nr);
+		prev.setSuccessful(false); 
+	}
+	//assert datacheckCount != null
+	if (datacheckCount == null) {
+		prev.setResponseMessage(&quot;datacheckCount is &quot; + datacheckCount);
+		prev.setSuccessful(false); 
+	}
+	while(datacheckCount != dwr_Nr) {
+		datacheckCount = datacheckCount + 1;
+		// create simple datacheck that will be in a valid response
+		vars.put(&quot;dashboard_datachecks_&quot; + datacheckCount, &quot;{\&quot;annot&quot;);
+	}
+	vars.put(&quot;dashboard_datachecks_matchNr&quot;, String.valueOf(datacheckCount));
+}</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}launchDashboard_SuggestionRequests_${recordingFileName}" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <com.ibm.jmeter.parallel.ParallelSampler guiclass="com.ibm.jmeter.parallel.gui.ParallelRequestGui" testclass="com.ibm.jmeter.parallel.ParallelSampler" testname="Parallel Sampler for dashboard widget calls - suggestion" enabled="true">
+              <stringProp name="urlArrayName">dashboard_sa_request</stringProp>
+              <stringProp name="datacheckArrayName">dashboard_datachecks</stringProp>
+              <stringProp name="resultObjectName">parallelSamplerErrors</stringProp>
+            </com.ibm.jmeter.parallel.ParallelSampler>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

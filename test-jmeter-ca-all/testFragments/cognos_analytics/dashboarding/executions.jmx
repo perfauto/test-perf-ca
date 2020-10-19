@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ remove previous dashboard_datachecks" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">datacheckCountStr = vars.get(&quot;dashboard_datachecks_matchNr&quot;);
+if (datacheckCountStr != null ) {
+	int datacheckCount = Integer.parseInt(datacheckCountStr);
+	while(datacheckCount &gt; 0) {
+		vars.remove(&quot;dashboard_datachecks_&quot; + datacheckCount);
+		datacheckCount = datacheckCount - 1;
+	}
+	vars.remove(&quot;dashboard_datachecks&quot;);
+	vars.remove(&quot;dashboard_datachecks_matchNr&quot;);
+}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get dashboard executions details" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+        </JSR223Sampler>
+        <hashTree>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_execution_datachecks" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">dashboard_datachecks</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.executionsDatacheck[*]</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+            <stringProp name="TestPlan.comments"></stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Initialize dictionary to track widget&apos;s value and filterValue " enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">import java.util.HashMap;
+import java.util.Map;
+
+Map&lt;Integer, ArrayList&lt;String&gt;&gt; widgetFilterValues = new HashMap&lt;Integer, ArrayList&lt;String&gt;&gt;();
+vars.putObject(&quot;widgetFilterValues&quot;,widgetFilterValues);
+vars.put(&quot;widgetNum&quot;, &quot;0&quot;);
+
+if (vars.get(&quot;dataSetType&quot;).toLowerCase().contains(&quot;dataset&quot;)) {
+	vars.put(&quot;dataSetType&quot;, &quot;dataset&quot;);
+}
+if (!vars.get(&quot;newModuleId&quot;).equals(&quot;NO_NEW&quot;)) {
+	vars.put(&quot;firstAssetId&quot;, vars.get(&quot;newModuleId&quot;));
+}
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="/ Dashboard Executions Requests" enabled="true"/>
+          <hashTree>
+            <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Parse and send metadata call" enabled="true"/>
+            <hashTree>
+              <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="/ assign urls" enabled="true"/>
+              <hashTree>
+                <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="use file tab_000" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">vars.put(&quot;recordingFileName&quot;, &quot;tab_000&quot;)</stringProp>
+                </JSR223PreProcessor>
+                <hashTree/>
+                <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include dashboarding/processRecording.jmx" enabled="true">
+                  <stringProp name="IncludeController.includepath">dashboarding/processRecording.jmx</stringProp>
+                </IncludeController>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Read each execution request from file" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">dashboard_widget_request</stringProp>
+                  <stringProp name="RegexExtractor.regex">(post_file.+execution.+|post_file.+smarts\/explore\/anno.+)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                  <stringProp name="TestPlan.comments"> (.+/bi/v1/predict/annotations/suggestions)</stringProp>
+                </RegexExtractor>
+                <hashTree/>
+              </hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset variables for dataset type calls" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">datasetTypesRequestsMade = new ArrayList();
+vars.putObject(&quot;datasetTypesRequestsMade&quot;, datasetTypesRequestsMade);
+vars.put(&quot;datasetTypeCount&quot;, &quot;1&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+            </hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset Counter " enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">vars.put(&quot;tabIndex&quot;, &quot;0&quot;);</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+            <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}launchDashboard_ExecutionRequests" enabled="true">
+              <boolProp name="TransactionController.includeTimers">false</boolProp>
+              <boolProp name="TransactionController.parent">true</boolProp>
+            </TransactionController>
+            <hashTree>
+              <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}launchDashboard_ExecutionRequests" enabled="true">
+                <boolProp name="TransactionController.includeTimers">false</boolProp>
+                <boolProp name="TransactionController.parent">true</boolProp>
+              </TransactionController>
+              <hashTree>
+                <com.ibm.jmeter.parallel.ParallelSampler guiclass="com.ibm.jmeter.parallel.gui.ParallelRequestGui" testclass="com.ibm.jmeter.parallel.ParallelSampler" testname="Parallel Sampler for dashboard widget calls - execution" enabled="true">
+                  <stringProp name="urlArrayName">dashboard_widget_request</stringProp>
+                  <stringProp name="datacheckArrayName">dashboard_datachecks</stringProp>
+                  <stringProp name="resultObjectName">parallelSamplerErrors</stringProp>
+                </com.ibm.jmeter.parallel.ParallelSampler>
+                <hashTree/>
+              </hashTree>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="delete the temp session if it was successful" enabled="true">
+              <stringProp name="TestPlan.comments">expect something like MSR-VRF-1000 No issues were detected during verification.</stringProp>
+              <stringProp name="IfController.condition">${__groovy(&quot;${feedback_message}&quot;.indexOf(&quot;No issues&quot;) != -1)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="delete session" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments"/>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/metadata/modules/${tempDatasetId}</stringProp>
+                <stringProp name="HTTPSampler.method">DELETE</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="204 or 200?" enabled="true">
+                  <collectionProp name="Asserion.test_strings">
+                    <stringProp name="-1443490196">204|200</stringProp>
+                  </collectionProp>
+                  <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
+                  <boolProp name="Assertion.assume_success">false</boolProp>
+                  <intProp name="Assertion.test_type">2</intProp>
+                  <stringProp name="Assertion.custom_message"></stringProp>
+                </ResponseAssertion>
+                <hashTree/>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

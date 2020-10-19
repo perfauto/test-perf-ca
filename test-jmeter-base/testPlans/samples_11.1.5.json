@@ -1,0 +1,1305 @@
+{
+   "scenarioGroups":[
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"C11R8_SampleDashboards_Country",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Canada",
+                        "Revenue",
+                        "2016",
+                        "Germany",
+                        "2018",
+                        "Planned revenue",
+                        "calculated",
+                        "Revenue",
+                        "Planned revenue",
+                        "Camping Equipment",
+                        "Outdoor Protection"
+                     ],
+                     "name":"Country comparison",
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Dashboards",
+               "scenario":"Country comparison"
+            }
+         ]
+      },
+	    {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"C11R8_SampleReports",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"9",
+                     "datacheck":"California",
+                     "name":"Corporate website visits",
+                     "type":"report"
+                  },
+                  {
+                     "chartcount":"2",
+                     "datacheck":"966K",
+                     "name":"Global sales",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,Reports",
+               "scenario":"C11R8_SampleReports"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"dashboardUploadedFile_csv_SamplesPolicyAnalysis_diff20Widget_3tabs",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "datachecks":[
+                              "Corporate",
+                              "Policies",
+                              "Policies",
+                              "Agent",
+                              "Door",
+                              "Medium",
+                              "Offer"
+                           ],
+                           "suggestions":4,
+                           "name":"Policy Details",
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "Luxury",
+                              "Personal",
+                              "Large",
+                              "Gender",
+                              "Arizona"
+                           ],
+                           "suggestions":4,
+                           "name":"Open Complaints",
+                           "type":"nextTab"
+                        }
+                     ],
+                     "datacheck":[
+                        "1009",
+                        "Open",
+                        "Months",
+                        "Policies",
+                        "Agent",
+                        "Agent"
+                     ],
+                     "suggestions":3,
+                     "name":"Policy analysis",
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By industry,Insurance,Dashboards",
+               "scenario":"dashboardUploadedFile_csv_SamplesPolicyAnalysis_diff20Widget_3tabs"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"samples_product_line_dash_4tabs",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "datachecks":[
+                              "Department Store",
+                              "Packs"
+                           ],
+                           "name":"Product",
+                           "suggestions":0,
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "United Kingdom",
+                              "Eyewear Store",
+                              "Canada"
+                           ],
+                           "name":"Retailer",
+                           "suggestions":0,
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "Equipment",
+                              "Mail"
+                           ],
+                           "name":"Order Method",
+                           "suggestions":1,
+                           "type":"nextTab"
+                        }
+                     ],
+                     "datacheck":[
+                        "2016",
+                        "Golf Equipment",
+                        "Golf Shop",
+                        "Web"
+                     ],
+                     "name":"Product line dashboard",
+                     "suggestions":2,
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Dashboards",
+               "scenario":"samples_product_line_dash_4tabs"
+            }
+         ]
+      },
+	   {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"valuePromptOptionalReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"5,113,701",
+                     "name":"Value prompt - optional",
+                     "prompt":[
+                        {
+                           "name":"pLineC",
+                           "type":"value-optional",
+                           "value":"Golf Equipment"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Value prompt-optional"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"valuePromptMultiSelectReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"34,907,705",
+                     "name":"Value prompt - multi select",
+                     "prompt":[
+                        {
+                           "name":"pLineC",
+                           "type":"value-multiselect",
+                           "value":"Personal Accessories,Camping Equipment"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Value prompt-multi select"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"valuePromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"12,014,445",
+                     "name":"Value prompt",
+                     "prompt":[
+                        {
+                           "name":"pLineC",
+                           "type":"value",
+                           "value":"Outdoor Protection"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Value prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"textPromptRangeReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"Switzerland",
+                     "name":"Text prompt range",
+                     "prompt":[
+                        {
+                           "endValue":"7007",
+                           "name":"p_country",
+                           "startValue":"6007",
+                           "type":"text-range"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Text prompt range"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"textPromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"Personal Accessories",
+                     "name":"Text prompt",
+                     "prompt":[
+                        {
+                           "name":"p_country",
+                           "type":"text",
+                           "value":"Canada"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Text prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"datePromptReportPageReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "chartcount":"0",
+                           "datacheck":"Navigation",
+                           "name":"Prompt on report page (Date)",
+                           "prompt":[
+                              {
+                                 "name":"p_date",
+                                 "type":"date-promptReportPage",
+                                 "value":"Apr 01, 2011"
+                              }
+                           ],
+                           "type":"prompt"
+                        }
+                     ],
+                     "chartcount":"0",
+                     "datacheck":"Sunscreen",
+                     "name":"Prompt on report page (Date)",
+                     "prompt":[
+                        {
+                           "name":"p_date",
+                           "type":"date-promptReportPage",
+                           "value":"Feb 15, 2001"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Prompt on report page (Date)"
+            }
+         ]
+      },
+	 {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"intervalElapsedTimePromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"Personal Accessories",
+                     "name":"Interval Elapsed Time prompt",
+                     "prompt":[
+                        {
+                           "name":"p_interval",
+                           "type":"interval-scope",
+                           "value":"P4410DT02H30M04.567S"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Interval Elapsed Time prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"generatedPromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"2013",
+                     "name":"Generated prompt",
+                     "prompt":[
+                        {
+                           "name":"pline",
+                           "type":"generated",
+                           "value":"Golf Equipment"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Generated prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"searchAndSelectPromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "chartcount":"0",
+                           "datacheck":"Outdoor Protection",
+                           "name":"Search and Select prompt",
+                           "prompt":[
+                              {
+                                 "name":"p_pline",
+                                 "type":"select",
+                                 "value":"BugShield Lotion"
+                              }
+                           ],
+                           "type":"prompt"
+                        }
+                     ],
+                     "chartcount":"0",
+                     "datacheck":"BugShield Spray",
+                     "name":"Search and Select prompt",
+                     "prompt":[
+                        {
+                           "name":"p_pline",
+                           "type":"search",
+                           "value":"BugShield"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Search and Select prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"treePromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "chartcount":"0",
+                           "datacheck":"Tents",
+                           "name":"Tree prompt",
+                           "prompt":[
+                              {
+                                 "name":"Parameter1",
+                                 "type":"tree",
+                                 "value":"Camping Equipment"
+                              }
+                           ],
+                           "type":"prompt"
+                        },
+                        {
+                           "chartcount":"0",
+                           "datacheck":"Star Lite",
+                           "name":"Tree prompt",
+                           "prompt":[
+                              {
+                                 "name":"Parameter1",
+                                 "type":"tree",
+                                 "value":"Tents"
+                              }
+                           ]
+                        }
+                     ],
+                     "chartcount":"0",
+                     "datacheck":"Camping Equipment",
+                     "name":"Tree prompt",
+                     "prompt":[
+                        {
+                           "name":"Parameter1",
+                           "type":"tree",
+                           "value":"Products"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Tree prompt"
+            }
+         ]
+      },
+	    {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"dateTimePromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"Putters",
+                     "name":"DateTime prompt",
+                     "prompt":[
+                        {
+                           "name":"p_dateTime",
+                           "type":"date-time",
+                           "value":"Dec 10, 2009 12:00 AM"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"DateTime prompt"
+            }
+         ]
+      },
+	        {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"intervalRangePromptReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"729",
+                     "name":"Interval Range prompt",
+                     "prompt":[
+                        {
+                           "endValue":"P1000DT00H00M00.000S",
+                           "name":"pInterval",
+                           "startValue":"P100DT00H00M00.000S",
+                           "type":"interval-range"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Interval Range prompt"
+            }
+         ]
+      },
+	    {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"valuePromptDefaultValuesReportGsr_html_DB2_dqm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"12,014,445",
+                     "name":"Value prompt - default values",
+                     "prompt":[
+                        {
+                           "name":"pLineC",
+                           "type":"value-default",
+                           "value":"Outdoor Protection"
+                        }
+                     ],
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,PromptReports",
+               "scenario":"Value prompt - default values"
+            }
+         ]
+      },
+	  
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"dashboardUploadedFile_xlsx_SamplesStormEvents_diff29Widget_5tabs",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "datachecks":[
+                              "Property",
+                              "Jan",
+                              "ALABAMA",
+                              "Property"
+                           ],
+                           "name":"Property Damage",
+                           "suggestions":1,
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "Crop",
+                              "Jan",
+                              "ALABAMA",
+                              "Crop"
+                           ],
+                           "name":"Crop Damage",
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "Injuries",
+                              "Injuries",
+                              "Injuries",
+                              "Injuries",
+                              "Tornado",
+                              "Winter",
+                              "Injuries",
+                              "Injuries",
+                              "Injuries"
+                           ],
+                           "name":"Injuries",
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "Deaths",
+                              "Deaths",
+                              "Deaths",
+                              "Deaths",
+                              "Tornado",
+                              "Heat",
+                              "Deaths",
+                              "Deaths",
+                              "Deaths"
+                           ],
+                           "name":"Deaths",
+                           "type":"nextTab"
+                        }
+                     ],
+                     "datacheck":[
+                        "Storm",
+                        "Storm",
+                        "Property",
+                        "Injuries",
+                        "Deaths"
+                     ],
+                     "name":"Storm events",
+                     "suggestions":0,
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Dashboards",
+               "scenario":"dashboardUploadedFile_xlsx_SamplesStormEvents_diff29Widget_5tabs"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"samples_weather_analytics_dash_4tabs",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "actions":[
+                        {
+                           "datachecks":[
+                              "Light Drizzle",
+                              "186167",
+                              "54747",
+                              "131420",
+                              "8162",
+                              "Animal Issues"
+                           ],
+                           "name":"Rain",
+                           "suggestions":3,
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "186167",
+                              "54747",
+                              "131420",
+                              "Ward 19",
+                              "Street Cleaning",
+                              "12304"
+                           ],
+                           "name":"Temperature",
+                           "suggestions":3,
+                           "type":"nextTab"
+                        },
+                        {
+                           "datachecks":[
+                              "1459",
+                              "Ward 07"
+                           ],
+                           "name":"Ward by Month",
+                           "suggestions":0,
+                           "type":"nextTab"
+                        }
+                     ],
+                     "datacheck":[
+                        "Overcast",
+                        "186167",
+                        "131420",
+                        "54747"
+                     ],
+                     "name":"Weather analytics",
+                     "suggestions":1,
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Dashboards",
+               "scenario":"samples_weather_analytics_dash_4tabs"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"SamplesReport_MapboxWebsiteVisits",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"4",
+                     "datacheck":"California",
+                     "name":"Corporate website visits",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Reports",
+               "scenario":"MapboxSampleWebsiteVisits"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"C11_SampleReports",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"Claim",
+                     "name":"Customer claim analysis",
+                     "type":"report"
+                  },
+                  {
+                     "chartcount":"4",
+                     "datacheck":"Customer",
+                     "name":"Customer lifetime value analysis",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By industry,Insurance,Reports",
+               "scenario":"C11_SampleReports"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"SampleReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"2",
+                     "datacheck":"Telephone",
+                     "name":"Global sales",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Reports",
+               "scenario":"SampleReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"SampleStories_AnimatedPathTransition",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "31439",
+                        "185195",
+                        "130653",
+                        "54542",
+                        "31439",
+                        "Overdue",
+                        "48963",
+                        "4057",
+                        "583",
+                        "5359",
+                        "16854",
+                        "On Time",
+                        "Dorchester"
+                     ],
+                     "name":"Animated path scene transition",
+                     "suggestions":10,
+                     "type":"story"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Stories",
+               "scenario":"SampleStories_AnimatedPathTransition"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"Guided_journey_template",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Divorced",
+                        "Bachelor",
+                        "Married",
+                        "Rural",
+                        "College",
+                        "Urban",
+                        "Luxury Car",
+                        "Vehicle Class"
+                     ],
+                     "name":"Guided journey template",
+                     "type":"story"
+                  }
+               ],
+               "navigation":"Samples,By industry,Insurance,Stories",
+               "scenario":"Guided_journey_template"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"More_valuable_customers",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Bachelor",
+                        "Rural",
+                        "Rural",
+                        "Bachelor",
+                        "Luxury Car",
+                        "Luxury Car",
+                        "Nevada",
+                        "Luxury Car",
+                        "Luxury SUV"
+                     ],
+                     "name":"More valuable customers",
+                     "type":"story"
+                  }
+               ],
+               "navigation":"Samples,By industry,Insurance,Stories",
+               "scenario":"More_valuable_customers"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_module_SamplesCaliforniaWebsite",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"Greenfield",
+                     "name":"California website visits",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data",
+               "scenario":"launch_module_SamplesCaliforniaWebsite"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_module_SamplesCustomerAnalysis",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"California",
+                     "name":"Customer analysis",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By industry,Insurance,Data",
+               "scenario":"launch_module_SamplesCustomerAnalysis"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_module_SamplesVehiculeCollisions_failing",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"2017",
+                     "name":"NYPD motor vehicle collisions",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data",
+               "scenario":"launch_module_SamplesVehiculeCollisions"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_SampleDataModule",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"Canada",
+                     "name":"Sample data module",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data",
+               "scenario":"launch_SampleDataModule"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_module_SamplesStorm",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"Winter",
+                     "name":"Storm events 2015",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data",
+               "scenario":"launch_module_SamplesStorm"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"launch_module_SamplesWeather",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"Overdue",
+                     "name":"Weather analytics",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data",
+               "scenario":"launch_module_SamplesWeather"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"openExploreTelco_failing",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "action":"open_source",
+                     "datacheck":[
+                        "Churn",
+                        "Tenure",
+                        "Charges",
+                        "sunburst",
+                        "Contract",
+                        "Internet",
+                        "Month",
+                        "Difference",
+                        "Score",
+                        "Monthly",
+                        "interest"
+                     ],
+                     "editmode":"true",
+                     "name":"Telco churn relationships",
+                     "type":"explore"
+                  }
+               ],
+               "navigation":"Samples,By industry,Telecommunications,Explorations",
+               "scenario":"openExploreTelco"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"Q1RevenueReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"223M",
+                     "name":"Q1 revenue",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Revenue,By quarter",
+               "scenario":"Q1RevenueReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"Q2RevenueReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"253M",
+                     "name":"Q2 revenue",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Revenue,By quarter",
+               "scenario":"Q2RevenueReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"Q3RevenueReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"240M",
+                     "name":"Q3 revenue",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Revenue,By quarter",
+               "scenario":"Q3RevenueReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"Q4RevenueReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"244M",
+                     "name":"Q4 revenue",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Revenue,By quarter",
+               "scenario":"Q4RevenueReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"QTDRevenueReport",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "chartcount":"0",
+                     "datacheck":"880M",
+                     "name":"QTD revenue",
+                     "type":"report"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Revenue,QTD",
+               "scenario":"QTDRevenueReport"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"SampleExtensionDataModule",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":"Australia",
+                     "name":"Sample extensions data module",
+                     "type":"module",
+					 "baseontype":"file"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions",
+               "scenario":"SampleExtensionDataModule"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"LineDashboard",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Year",
+                        "Revenue",
+                        "Quantity"
+                     ],
+                     "dsName":"Sample_Extensions_Data.xls",
+                     "name":"Line dashboard",
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions",
+               "scenario":"LineDashboard"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"ProductLineByYearDashboard",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Revenue",
+                        "Planned",
+                        "Quantity",
+                        "Golf"
+                     ],
+                     "name":"Product line by year",
+                     "suggestions":0,
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Overview",
+               "scenario":"ProductLineByYearDashboard"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"QuantitySoldDashboard",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "datacheck":[
+                        "Australia",
+                        "Web"
+                     ],
+                     "dsName":"Sample_Extensions_Data.xls",
+                     "name":"Quantity sold",
+                     "type":"dashboard"
+                  }
+               ],
+               "navigation":"Samples,By feature,Extensions,Tabs,Overview",
+               "scenario":"QuantitySoldDashboard"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "comments":" Group of Files ",
+         "scenarioGroup":"bulk_upload_Samples",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "name":"Samples",
+                     "type":"file_upload"
+                  }
+               ],
+               "scenario":"bulk_upload_Samples"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "scenarioGroup":"openExploreFromXlsx_California_4Fields",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "action":"open_source",
+                     "datacheck":[
+                        "Blog Visits",
+                        "Pages",
+                        "Unique Visitors",
+                        "Website Visits"
+                     ],
+                     "editmode":"true",
+                     "name":"California Zip Website Visits.xlsx",
+                     "type":"explore"
+                  }
+               ],
+               "navigation":"Samples,By feature,Core,Data,Source files",
+               "scenario":"openExploreFromXlsx_California_4Fields"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "comments":" ILT Scenario Name - mediumFileUpload_csv",
+         "scenarioGroup":"CSV_25000rows25cols",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "name":"CSV_25000rows25cols.csv",
+                     "type":"file_upload"
+                  }
+               ],
+               "scenario":"CSV_25000rows25cols"
+            }
+         ]
+      },
+      {
+         "_id":{
+            "$oid":""
+         },
+         "comments":" ILT Scenario Name - mediumFileUpload_xls",
+         "scenarioGroup":"XLSX_25000rows25cols",
+         "scenarios":[
+            {
+               "items":[
+                  {
+                     "name":"XLSX_25000rows25cols.xlsx",
+                     "type":"file_upload"
+                  }
+               ],
+               "scenario":"XLSX_25000rows25cols"
+            }
+         ]
+      }
+   ]
+}

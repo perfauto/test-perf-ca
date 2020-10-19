@@ -1,0 +1,2022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="/ runReport_classic" enabled="true"/>
+        <hashTree>
+          <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="manual inputs for debugging - normally disabled, do not delete" enabled="false">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="url_base" elementType="Argument">
+                <stringProp name="Argument.name">url_base</stringProp>
+                <stringProp name="Argument.value">http://${serverName}:${serverPort}${urlPath}/bi</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <stringProp name="Argument.desc">mostly for the referer header value</stringProp>
+              </elementProp>
+              <elementProp name="report_id" elementType="Argument">
+                <stringProp name="Argument.name">report_id</stringProp>
+                <stringProp name="Argument.value">iB8B0EDF0EDCA442D86FF534AE66CA5B6</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <stringProp name="Argument.desc">ID from the properties of the report</stringProp>
+              </elementProp>
+              <elementProp name="report_name" elementType="Argument">
+                <stringProp name="Argument.name">report_name</stringProp>
+                <stringProp name="Argument.value">master_detail</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_output_format" elementType="Argument">
+                <stringProp name="Argument.name">report_output_format</stringProp>
+                <stringProp name="Argument.value">HTML</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_datacheck" elementType="Argument">
+                <stringProp name="Argument.name">report_datacheck</stringProp>
+                <stringProp name="Argument.value">14,111,228.67</stringProp>
+                <stringProp name="Argument.desc">something that only appears in the report output, indicating a successful run</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_expected_chart_count" elementType="Argument">
+                <stringProp name="Argument.name">report_expected_chart_count</stringProp>
+                <stringProp name="Argument.value">3</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <stringProp name="Argument.desc">total number of expected charts in the report output</stringProp>
+              </elementProp>
+              <elementProp name="report_actions_1" elementType="Argument">
+                <stringProp name="Argument.name">report_actions_1</stringProp>
+                <stringProp name="Argument.value">nextPage</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_actions_datacheck_1" elementType="Argument">
+                <stringProp name="Argument.name">report_actions_datacheck_1</stringProp>
+                <stringProp name="Argument.value">1,969,460.13</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_actions_2" elementType="Argument">
+                <stringProp name="Argument.name">report_actions_2</stringProp>
+                <stringProp name="Argument.value">nextPage</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="report_actions_datacheck_2" elementType="Argument">
+                <stringProp name="Argument.name">report_actions_datacheck_2</stringProp>
+                <stringProp name="Argument.value">516,972.39</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+              <elementProp name="tr_prefix" elementType="Argument">
+                <stringProp name="Argument.name">tr_prefix</stringProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <stringProp name="Argument.desc">used for things like &quot;first_&quot; for identifying cold cache requests</stringProp>
+              </elementProp>
+            </collectionProp>
+            <stringProp name="TestPlan.comments">This &quot;User Defined Variables&quot; test element should be disabled for normal test execution. It contains a list of all inputs required to run this fragment. </stringProp>
+          </Arguments>
+          <hashTree/>
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="run report in classic viewer" enabled="true"/>
+          <hashTree>
+            <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}runcv_${report_name}" enabled="true">
+              <boolProp name="TransactionController.parent">true</boolProp>
+            </TransactionController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ get default output format" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="fields" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">fields</stringProp>
+                      <stringProp name="Argument.value">defaultOutputFormat</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${report_id}</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">*/*</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}?perspective=home</stringProp>
+                    </elementProp>
+                    <elementProp name="X-Requested-With" elementType="Header">
+                      <stringProp name="Header.name">X-Requested-With</stringProp>
+                      <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ get fields" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="fields" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">fields</stringProp>
+                      <stringProp name="Argument.value">defaultName,base.defaultName,executionPrompt,base.executionPrompt,options,base.options,permissions,base.permissions,runAsOwner,base.runAsOwner,runInAdvancedViewer,base.runInAdvancedViewer,runWithOwnerCapabilities,base.runWithOwnerCapabilities,type,base.type</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${report_id}</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}?perspective=home</stringProp>
+                    </elementProp>
+                    <elementProp name="X-Requested-With" elementType="Header">
+                      <stringProp name="Header.name">X-Requested-With</stringProp>
+                      <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get prompt exection" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">executionPrompt</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data..executionPrompt</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If first_open" enabled="true">
+                <stringProp name="TestPlan.comments">The perspective request should only be called for the first opens</stringProp>
+                <stringProp name="IfController.condition">${__groovy(&quot;${tr_prefix}&quot;==&quot;first_&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ open classic viewer perspective" enabled="true">
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                    <collectionProp name="Arguments.arguments"/>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                  <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/perspectives/classicviewer</stringProp>
+                  <stringProp name="HTTPSampler.method">GET</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                    <collectionProp name="HeaderManager.headers">
+                      <elementProp name="Content-Type" elementType="Header">
+                        <stringProp name="Header.name">Content-Type</stringProp>
+                        <stringProp name="Header.value">application/json; charset=utf-8</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Language" elementType="Header">
+                        <stringProp name="Header.name">Accept-Language</stringProp>
+                        <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept" elementType="Header">
+                        <stringProp name="Header.name">Accept</stringProp>
+                        <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                      </elementProp>
+                      <elementProp name="Referer" elementType="Header">
+                        <stringProp name="Header.name">Referer</stringProp>
+                        <stringProp name="Header.value">${url_base}?perspective=home</stringProp>
+                      </elementProp>
+                      <elementProp name="X-Requested-With" elementType="Header">
+                        <stringProp name="Header.name">X-Requested-With</stringProp>
+                        <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Encoding" elementType="Header">
+                        <stringProp name="Header.name">Accept-Encoding</stringProp>
+                        <stringProp name="Header.value">gzip, deflate</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </HeaderManager>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ get fields" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="fields" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">fields</stringProp>
+                      <stringProp name="Argument.value">defaultName%2Cowner.defaultName%2Cancestors%2Cpermissions%2Chidden%2Cdisabled</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${report_id}</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}?perspective=classicviewer&amp;id=${report_id}&amp;module=bi%2Fclassicviewer%2FcvContentView&amp;isViewer=true&amp;isNewFromModule=false&amp;isNewFromPackage=false&amp;isNewDataSetFromModule=false&amp;isNewDataSetFromPackage=false&amp;isTemplate=false&amp;isDataset=false&amp;UIProfile=Titan&amp;cmProperties%5BrunInAdvancedViewer%5D=&amp;cmProperties%5BexecutionPrompt%5D=true&amp;cmProperties%5Bpermissions%5D%5B%5D=execute&amp;cmProperties%5Bpermissions%5D%5B%5D=read&amp;cmProperties%5Bpermissions%5D%5B%5D=setPolicy&amp;cmProperties%5Bpermissions%5D%5B%5D=traverse&amp;cmProperties%5Bpermissions%5D%5B%5D=write&amp;cmProperties%5BmodificationTime%5D=2016-09-08T23%3A17%3A03.902Z&amp;cmProperties%5Boptions%5D=&amp;cmProperties%5BrunAsOwner%5D=&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bversions%5D%5BmimeType%5D=application%2Fjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bversions%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}%2Fversions&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bself%5D%5BmimeType%5D=application%2Fvnd.ibm.bi.report%2Bjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bself%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bhistories%5D%5BmimeType%5D=application%2Fjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bhistories%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}%2Fhistories&amp;cmProperties%5BrunWithOwnerCapabilities%5D=&amp;cmProperties%5Bid%5D=${report_id}&amp;cmProperties%5Btype%5D=report&amp;cmProperties%5BdefaultName%5D=Master_Detail&amp;cmProperties%5Bversion%5D=2&amp;rsFinalRunOptions%5Bformat%5D=HTML&amp;rsFinalRunOptions%5Ba11y%5D=false&amp;rsFinalRunOptions%5Bbidi%5D=false&amp;rsFinalRunOptions%5BrunInAdvancedViewer%5D=false&amp;rsFinalRunOptions%5Bprompt%5D=true</stringProp>
+                    </elementProp>
+                    <elementProp name="X-Requested-With" elementType="Header">
+                      <stringProp name="Header.name">X-Requested-With</stringProp>
+                      <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ get fields" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="fields" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">fields</stringProp>
+                      <stringProp name="Argument.value">defaultName%2Cowner.defaultName%2Cancestors%2Cpermissions%2Chidden%2Cdisabled</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${report_id}</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}?perspective=classicviewer&amp;id=${report_id}&amp;module=bi%2Fclassicviewer%2FcvContentView&amp;isViewer=true&amp;isNewFromModule=false&amp;isNewFromPackage=false&amp;isNewDataSetFromModule=false&amp;isNewDataSetFromPackage=false&amp;isTemplate=false&amp;isDataset=false&amp;UIProfile=Titan&amp;cmProperties%5BrunInAdvancedViewer%5D=&amp;cmProperties%5BexecutionPrompt%5D=true&amp;cmProperties%5Bpermissions%5D%5B%5D=execute&amp;cmProperties%5Bpermissions%5D%5B%5D=read&amp;cmProperties%5Bpermissions%5D%5B%5D=setPolicy&amp;cmProperties%5Bpermissions%5D%5B%5D=traverse&amp;cmProperties%5Bpermissions%5D%5B%5D=write&amp;cmProperties%5BmodificationTime%5D=2016-09-08T23%3A17%3A03.902Z&amp;cmProperties%5Boptions%5D=&amp;cmProperties%5BrunAsOwner%5D=&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bversions%5D%5BmimeType%5D=application%2Fjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bversions%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}%2Fversions&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bself%5D%5BmimeType%5D=application%2Fvnd.ibm.bi.report%2Bjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bself%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bhistories%5D%5BmimeType%5D=application%2Fjson&amp;cmProperties%5B_meta%5D%5Blinks%5D%5Bhistories%5D%5Burl%5D=%2Fbi%2Fv1%2Fobjects%2F${report_id}%2Fhistories&amp;cmProperties%5BrunWithOwnerCapabilities%5D=&amp;cmProperties%5Bid%5D=${report_id}&amp;cmProperties%5Btype%5D=report&amp;cmProperties%5BdefaultName%5D=Master_Detail&amp;cmProperties%5Bversion%5D=2&amp;rsFinalRunOptions%5Bformat%5D=HTML&amp;rsFinalRunOptions%5Ba11y%5D=false&amp;rsFinalRunOptions%5Bbidi%5D=false&amp;rsFinalRunOptions%5BrunInAdvancedViewer%5D=false&amp;rsFinalRunOptions%5Bprompt%5D=true</stringProp>
+                    </elementProp>
+                    <elementProp name="X-Requested-With" elementType="Header">
+                      <stringProp name="Header.name">X-Requested-With</stringProp>
+                      <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+              </hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ classic viewer run" enabled="true">
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="b_action" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">b_action</stringProp>
+                      <stringProp name="Argument.value">cognosViewer</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="run.outputFormat" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">run.outputFormat</stringProp>
+                      <stringProp name="Argument.value">${report_output_format}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="run.prompt" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">run.prompt</stringProp>
+                      <stringProp name="Argument.value">${executionPrompt}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="system.http://developer.cognos.com/ceba/constants/systemOptionEnum#accessibilityFeatures" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                      <stringProp name="Argument.name">system.http://developer.cognos.com/ceba/constants/systemOptionEnum#accessibilityFeatures</stringProp>
+                      <stringProp name="Argument.value">false</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="biDirectional.http://developer.cognos.com/ceba/constants/biDirectionalOptionEnum#biDirectionalFeaturesEnabled" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                      <stringProp name="Argument.name">biDirectional.http://developer.cognos.com/ceba/constants/biDirectionalOptionEnum#biDirectionalFeaturesEnabled</stringProp>
+                      <stringProp name="Argument.value">false</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="ui.object" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                      <stringProp name="Argument.name">ui.object</stringProp>
+                      <stringProp name="Argument.value">storeID(&quot;${report_id}&quot;)</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="ui.action" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">ui.action</stringProp>
+                      <stringProp name="Argument.value">run</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="cv.header" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">cv.header</stringProp>
+                      <stringProp name="Argument.value">false</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="cv.toolbar" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">cv.toolbar</stringProp>
+                      <stringProp name="Argument.value">false</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="protectParameters" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">protectParameters</stringProp>
+                      <stringProp name="Argument.value">false</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="isTitan" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">isTitan</stringProp>
+                      <stringProp name="Argument.value">true</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                    <elementProp name="cv.keepWindowOpen" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.name">cv.keepWindowOpen</stringProp>
+                      <stringProp name="Argument.value">true</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp</stringProp>
+                <stringProp name="HTTPSampler.method">GET</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get cv.actionState" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">cv.actionState</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;cv\.actionState&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_tracking" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">unescaped</stringProp>
+                  <stringProp name="RegexExtractor.refname">m_tracking</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sTracking&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default">error</stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.cafcontextid" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">ui.cafcontextid</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sCAFContext&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.conversation" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">ui.conversation</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sConversation&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_sStatus" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">m_sStatus</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sStatus&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default">error</stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get datacheck" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">datacheck_not_found</stringProp>
+                  <stringProp name="RegexExtractor.regex">${report_datacheck}</stringProp>
+                  <stringProp name="RegexExtractor.template">false</stringProp>
+                  <stringProp name="RegexExtractor.default">true</stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get chart_urls" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">chart_urls</stringProp>
+                  <stringProp name="RegexExtractor.regex">src=&quot;(\?[^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="m_tracking found" enabled="true">
+                  <collectionProp name="Asserion.test_strings">
+                    <stringProp name="96784904">error</stringProp>
+                  </collectionProp>
+                  <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                  <boolProp name="Assertion.assume_success">false</boolProp>
+                  <intProp name="Assertion.test_type">12</intProp>
+                  <stringProp name="Assertion.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">${m_tracking}</stringProp>
+                  <stringProp name="Assertion.custom_message"></stringProp>
+                </ResponseAssertion>
+                <hashTree/>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="save response" enabled="true">
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="script">vars.put(&quot;reportResponse&quot;, prev.getResponseDataAsString());</stringProp>
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get iframe src url (for pdf)" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">iframeSrcUrl</stringProp>
+                  <stringProp name="RegexExtractor.regex">frame width=&quot;100%&quot; src=&quot;(.+)&quot; style=&quot;height:</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number">1</stringProp>
+                </RegexExtractor>
+                <hashTree/>
+              </hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset runPrimaryAsync" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;runPrimaryAsync&quot;, &quot;true&quot;)</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include async" enabled="true">
+                <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/async.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If error or fault" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(&quot;${m_sStatus}&quot;==&quot;error&quot; || &quot;${m_sStatus}&quot; == &quot;fault&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ unexpected status is ${m_sStatus}" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script"></stringProp>
+                </JSR223Sampler>
+                <hashTree>
+                  <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="unexpected status is ${m_sStatus}" enabled="true">
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;bad status received &apos;&quot; + vars.get(&quot;m_sStatus&quot;) +  &quot;&apos; in response&quot;);</stringProp>
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                  </JSR223Assertion>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If report_output PDF" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(&quot;${report_output_format}&quot;==&quot;PDF&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ html decode PDF url" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+//log.info(&quot;===============&quot; + vars.get(&quot;chart_urls&quot;));
+vars.put(&quot;iframeSrcUrl_decoded&quot;, StringEscapeUtils.unescapeHtml4(vars.get(&quot;iframeSrcUrl&quot;)));</stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ execute PDF url from iframe" enabled="true">
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                    <collectionProp name="Arguments.arguments"/>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                  <stringProp name="HTTPSampler.path">${iframeSrcUrl_decoded}</stringProp>
+                  <stringProp name="HTTPSampler.method">GET</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                    <collectionProp name="HeaderManager.headers">
+                      <elementProp name="Accept-Language" elementType="Header">
+                        <stringProp name="Header.name">Accept-Language</stringProp>
+                        <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept" elementType="Header">
+                        <stringProp name="Header.name">Accept</stringProp>
+                        <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.80.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Referer" elementType="Header">
+                        <stringProp name="Header.name">Referer</stringProp>
+                        <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=${executionPrompt}&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Encoding" elementType="Header">
+                        <stringProp name="Header.name">Accept-Encoding</stringProp>
+                        <stringProp name="Header.value">gzip, deflate</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </HeaderManager>
+                  <hashTree/>
+                  <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Content-Type: application/PDF?" enabled="false">
+                    <collectionProp name="Asserion.test_strings">
+                      <stringProp name="-263532664">applicaton\/pdf</stringProp>
+                    </collectionProp>
+                    <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                    <boolProp name="Assertion.assume_success">false</boolProp>
+                    <intProp name="Assertion.test_type">2</intProp>
+                    <stringProp name="Assertion.custom_message"></stringProp>
+                  </ResponseAssertion>
+                  <hashTree/>
+                  <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="Assert response header contains datacheck" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">if(prev.getResponseHeaders().contains(vars.get(&quot;report_datacheck&quot;))){
+	vars.put(&quot;datacheck_not_found&quot;, &quot;false&quot;);
+	Failure=false;
+}
+</stringProp>
+                  </JSR223PostProcessor>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If report_output is NOT pdf" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(&quot;${report_output_format}&quot;!=&quot;PDF&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach chart_url in chart_urls" enabled="true">
+                  <stringProp name="ForeachController.inputVal">chart_urls</stringProp>
+                  <stringProp name="ForeachController.returnVal">chart_url</stringProp>
+                  <boolProp name="ForeachController.useSeparator">true</boolProp>
+                </ForeachController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ html decode chart url" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+vars.put(&quot;chart_url_decoded&quot;, StringEscapeUtils.unescapeHtml4(vars.get(&quot;chart_url&quot;)));</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ getChart" enabled="true">
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                      <collectionProp name="Arguments.arguments"/>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain"></stringProp>
+                    <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.protocol"></stringProp>
+                    <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                    <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp${chart_url_decoded}</stringProp>
+                    <stringProp name="HTTPSampler.method">GET</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                      <collectionProp name="HeaderManager.headers">
+                        <elementProp name="Accept-Language" elementType="Header">
+                          <stringProp name="Header.name">Accept-Language</stringProp>
+                          <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept" elementType="Header">
+                          <stringProp name="Header.name">Accept</stringProp>
+                          <stringProp name="Header.value">image/png,image/*;q=0.8,*/*;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Referer" elementType="Header">
+                          <stringProp name="Header.name">Referer</stringProp>
+                          <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=true&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept-Encoding" elementType="Header">
+                          <stringProp name="Header.name">Accept-Encoding</stringProp>
+                          <stringProp name="Header.value">gzip, deflate</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </HeaderManager>
+                    <hashTree/>
+                    <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Content-Type: image/png?" enabled="true">
+                      <collectionProp name="Asserion.test_strings">
+                        <stringProp name="277769327">Content-Type: image\/png</stringProp>
+                      </collectionProp>
+                      <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                      <boolProp name="Assertion.assume_success">false</boolProp>
+                      <intProp name="Assertion.test_type">2</intProp>
+                      <stringProp name="Assertion.custom_message"></stringProp>
+                    </ResponseAssertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+              </hashTree>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="/ if not prompt do datacheck and chart count" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(!${hasPrompt})}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If datacheck_not_found" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${datacheck_not_found})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ failed to find datacheck ${report_datacheck}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script"></stringProp>
+                  </JSR223Sampler>
+                  <hashTree>
+                    <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="failed to find datacheck ${report_datacheck}" enabled="true">
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;failed to find datacheck &apos;&quot; + vars.get(&quot;report_datacheck&quot;) +  &quot;&apos; in response&quot;);</stringProp>
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                    </JSR223Assertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="verify chart count" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${chart_urls_matchNr}!=${report_expected_chart_count})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ expected chart count ${report_expected_chart_count} not equal to actual chart count ${chart_urls_matchNr}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">vars.put(&quot;report_chart_count_verification&quot;, &quot;expected report chart count &quot; + vars.get(&quot;report_expected_chart_count&quot;) + &quot; not equal to actual report chart count &quot; + vars.get(&quot;$chart_urls_matchNr&quot;));</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+            </hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset action_counter" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">vars.put(&quot;action_counter&quot;, &quot;0&quot;);</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="run prompt" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(${hasPrompt})}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get prompt info" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">return vars.get(&quot;reportResponse&quot;);</stringProp>
+            </JSR223Sampler>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_parameters" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">unescaped</stringProp>
+                <stringProp name="RegexExtractor.refname">m_parameters</stringProp>
+                <stringProp name="RegexExtractor.regex">&quot;m_sParameters&quot;: &quot;([^&quot;]*)</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number"></stringProp>
+                <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
+              </RegexExtractor>
+              <hashTree/>
+              <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="get prompt value" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">import com.ibm.bi.util.ContentUtil;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.JsonArray;
+
+String report_response = vars.get(&quot;reportResponse&quot;);
+
+JsonArray prompts = new JsonStreamParser(vars.get(&quot;report_prompt&quot;)).next().getAsJsonArray();
+
+String prompts_parameter_values = &quot;&quot;;
+if(prompts.size() &gt; 0) {
+	for(int i = 0; i &lt; prompts.size(); i++) {
+		JsonObject prompt = prompts.get(i).getAsJsonObject();
+		log.debug(&quot;JsonObject is: &quot; + prompt.toString());
+		String key = prompt.get(&quot;name&quot;).getAsString();
+		String value = prompt.get(&quot;value&quot;).getAsString();
+		String res = ContentUtil.getOptional(report_response, &quot;\&quot;@parameter\&quot;:\&quot;&quot; + key + &quot;\&quot;&quot;, &quot;,\&quot;@displayValue\&quot;:\&quot;&quot; + value + &quot;\&quot;&quot;);
+		String useValue = res.substring(res.lastIndexOf(&quot;\&quot;@useValue\&quot;:&quot;) + 12);
+		if(!prompts_parameter_values.equals(&quot;&quot;)) {
+			prompts_parameter_values = prompts_parameter_values + &quot;&amp;&quot;;
+		}
+		prompts_parameter_values = prompts_parameter_values + &quot;p_&quot; + key + &quot;=&quot; + URLEncoder.encode(&quot;&lt;selectChoices&gt;&lt;selectOption useValue=&quot; + useValue + &quot; displayValue=\&quot;&quot; + value + &quot;\&quot;/&gt;&lt;/selectChoices&gt;&quot;).replace(&quot;%5C%5CU003E&quot;, &quot;%26gt%3B&quot;).replace(&quot;+&quot;, &quot;%20&quot;);
+	}
+}
+
+vars.put(&quot;prompts_parameter_values&quot;, prompts_parameter_values);
+
+log.debug(&quot;prompts_parameter_values is: &quot; + prompts_parameter_values);</stringProp>
+              </JSR223PostProcessor>
+              <hashTree/>
+            </hashTree>
+            <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}runcv_promptPage_${report_name}" enabled="true">
+              <boolProp name="TransactionController.parent">true</boolProp>
+            </TransactionController>
+            <hashTree>
+              <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ classic viewer run prompt" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">_promptControl=prompt&amp;b_action=cognosViewer&amp;cv.actionState=${__escapeHtml(${cv.actionState})}&amp;cv.catchLogOnFault=true&amp;cv.header=false&amp;cv.id=_NS_&amp;cv.objectPermissions=execute%20read%20setPolicy%20traverse%20write%20&amp;cv.responseFormat=data&amp;cv.showFaultPage=true&amp;cv.toolbar=false&amp;executionParameters=${__escapeHtml(${m_parameters})}&amp;m_tracking=${__escapeHtml(${m_tracking})}&amp;${prompts_parameter_values}&amp;run.prompt=true&amp;ui.action=forward&amp;ui.cafcontextid=${__escapeHtml(${ui.cafcontextid})}&amp;ui.conversation=${__escapeHtml(${ui.conversation})}&amp;ui.object=storeID(%22${__escapeHtml(${report_id})}%22)&amp;ui.objectClass=report&amp;ui.primaryAction=run</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain"></stringProp>
+                <stringProp name="HTTPSampler.port"></stringProp>
+                <stringProp name="HTTPSampler.protocol"></stringProp>
+                <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="save response" enabled="true">
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="script">vars.put(&quot;reportResponse&quot;, prev.getResponseDataAsString());</stringProp>
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="Accept-Language" elementType="Header">
+                      <stringProp name="Header.name">Accept-Language</stringProp>
+                      <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept" elementType="Header">
+                      <stringProp name="Header.name">Accept</stringProp>
+                      <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                    </elementProp>
+                    <elementProp name="Referer" elementType="Header">
+                      <stringProp name="Header.name">Referer</stringProp>
+                      <stringProp name="Header.value">${url_base}</stringProp>
+                    </elementProp>
+                    <elementProp name="Accept-Encoding" elementType="Header">
+                      <stringProp name="Header.name">Accept-Encoding</stringProp>
+                      <stringProp name="Header.value">gzip, deflate</stringProp>
+                    </elementProp>
+                    <elementProp name="Content-Type" elementType="Header">
+                      <stringProp name="Header.name">Content-Type</stringProp>
+                      <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+              </hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get prompt response" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+
+String decoded_response = StringEscapeUtils.unescapeHtml4(prev.getResponseDataAsString());
+vars.put(&quot;decoded_response&quot;, decoded_response);
+
+return decoded_response;
+
+</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get cv.actionState" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">cv.actionState</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;cv\.actionState&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.cafcontextid" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">ui.cafcontextid</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sCAFContext&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.conversation" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">ui.conversation</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sConversation&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_sStatus" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">m_sStatus</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sStatus&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default">error</stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get datacheck" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">datacheck_not_found</stringProp>
+                  <stringProp name="RegexExtractor.regex">${report_datacheck}</stringProp>
+                  <stringProp name="RegexExtractor.template">false</stringProp>
+                  <stringProp name="RegexExtractor.default">true</stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get chart_urls" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                  <stringProp name="RegexExtractor.refname">chart_urls</stringProp>
+                  <stringProp name="RegexExtractor.regex">src=&quot;(\?[^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                </RegexExtractor>
+                <hashTree/>
+                <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="m_tracking found" enabled="true">
+                  <collectionProp name="Asserion.test_strings">
+                    <stringProp name="96784904">error</stringProp>
+                  </collectionProp>
+                  <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                  <boolProp name="Assertion.assume_success">false</boolProp>
+                  <intProp name="Assertion.test_type">12</intProp>
+                  <stringProp name="Assertion.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">${m_tracking}</stringProp>
+                  <stringProp name="Assertion.custom_message"></stringProp>
+                </ResponseAssertion>
+                <hashTree/>
+              </hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset runPrimaryAsync" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;runPrimaryAsync&quot;, &quot;true&quot;)</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include async" enabled="true">
+                <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/async.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+              <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If error or fault" enabled="true">
+                <stringProp name="IfController.condition">${__groovy(&quot;${m_sStatus}&quot;==&quot;error&quot; || &quot;${m_sStatus}&quot; == &quot;fault&quot;)}</stringProp>
+                <boolProp name="IfController.evaluateAll">false</boolProp>
+                <boolProp name="IfController.useExpression">true</boolProp>
+              </IfController>
+              <hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ unexpected status is ${m_sStatus}" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script"></stringProp>
+                </JSR223Sampler>
+                <hashTree>
+                  <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="unexpected status is ${m_sStatus}" enabled="true">
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;bad status received &apos;&quot; + vars.get(&quot;m_sStatus&quot;) +  &quot;&apos; in response&quot;);</stringProp>
+                    <stringProp name="scriptLanguage">javascript</stringProp>
+                  </JSR223Assertion>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+              <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach chart_url in chart_urls" enabled="true">
+                <stringProp name="ForeachController.inputVal">chart_urls</stringProp>
+                <stringProp name="ForeachController.returnVal">chart_url</stringProp>
+                <boolProp name="ForeachController.useSeparator">true</boolProp>
+              </ForeachController>
+              <hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ html decode chart url" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+vars.put(&quot;chart_url_decoded&quot;, StringEscapeUtils.unescapeHtml4(vars.get(&quot;chart_url&quot;)));</stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ getChart" enabled="true">
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                    <collectionProp name="Arguments.arguments"/>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                  <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp${chart_url_decoded}</stringProp>
+                  <stringProp name="HTTPSampler.method">GET</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                    <collectionProp name="HeaderManager.headers">
+                      <elementProp name="Accept-Language" elementType="Header">
+                        <stringProp name="Header.name">Accept-Language</stringProp>
+                        <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept" elementType="Header">
+                        <stringProp name="Header.name">Accept</stringProp>
+                        <stringProp name="Header.value">image/png,image/*;q=0.8,*/*;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Referer" elementType="Header">
+                        <stringProp name="Header.name">Referer</stringProp>
+                        <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=true&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Encoding" elementType="Header">
+                        <stringProp name="Header.name">Accept-Encoding</stringProp>
+                        <stringProp name="Header.value">gzip, deflate</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </HeaderManager>
+                  <hashTree/>
+                  <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Content-Type: image/png?" enabled="true">
+                    <collectionProp name="Asserion.test_strings">
+                      <stringProp name="277769327">Content-Type: image\/png</stringProp>
+                    </collectionProp>
+                    <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                    <boolProp name="Assertion.assume_success">false</boolProp>
+                    <intProp name="Assertion.test_type">2</intProp>
+                    <stringProp name="Assertion.custom_message"></stringProp>
+                  </ResponseAssertion>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+              <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="/ datacheck and chart count" enabled="true">
+                <boolProp name="TransactionController.includeTimers">false</boolProp>
+                <boolProp name="TransactionController.parent">false</boolProp>
+              </TransactionController>
+              <hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If datacheck_not_found" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${datacheck_not_found})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ failed to find datacheck ${report_datacheck}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script"></stringProp>
+                  </JSR223Sampler>
+                  <hashTree>
+                    <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="failed to find datacheck ${report_datacheck}" enabled="true">
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;failed to find datacheck &apos;&quot; + vars.get(&quot;report_datacheck&quot;) +  &quot;&apos; in response&quot;);</stringProp>
+                      <stringProp name="scriptLanguage">javascript</stringProp>
+                    </JSR223Assertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="verify chart count" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${chart_urls_matchNr}!=${report_expected_chart_count})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ expected chart count ${report_expected_chart_count} not equal to actual chart count ${chart_urls_matchNr}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">vars.put(&quot;report_chart_count_verification&quot;, &quot;expected report chart count ${report_expected_chart_count} not equal to actual report chart count ${chart_urls_matchNr}&quot;);</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+          <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="for each action" enabled="true">
+            <stringProp name="ForeachController.inputVal">report_actions</stringProp>
+            <stringProp name="ForeachController.returnVal">report_action</stringProp>
+            <boolProp name="ForeachController.useSeparator">true</boolProp>
+          </ForeachController>
+          <hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ increment action_counter" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">// manually control the action_counter because jmeter&apos;s action_counter cannot be reset mid-execution of a thread group loop
+action_counter = Integer.parseInt(vars.get(&quot;action_counter&quot;));
+action_counter = action_counter + 1;
+vars.put(&quot;action_counter&quot;, String.valueOf(action_counter));
+
+// update datacheck for async fragments
+vars.put(&quot;report_datacheck&quot;, vars.get(&quot;report_actions_datacheck_&quot; + vars.get(&quot;action_counter&quot;)))</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="/ if action type is prompt" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${report_action}&quot; == &quot;prompt&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get prompt info" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">return vars.get(&quot;reportResponse&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_parameters" enabled="true">
+                  <stringProp name="RegexExtractor.useHeaders">unescaped</stringProp>
+                  <stringProp name="RegexExtractor.refname">m_parameters</stringProp>
+                  <stringProp name="RegexExtractor.regex">&quot;m_sParameters&quot;: &quot;([^&quot;]*)</stringProp>
+                  <stringProp name="RegexExtractor.template">$1$</stringProp>
+                  <stringProp name="RegexExtractor.default"></stringProp>
+                  <stringProp name="RegexExtractor.match_number"></stringProp>
+                  <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
+                </RegexExtractor>
+                <hashTree/>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="get prompt value" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import com.ibm.bi.util.ContentUtil;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.JsonArray;
+import java.util.Random;
+
+report_response = vars.get(&quot;reportResponse&quot;);
+
+JsonArray prompts = new JsonStreamParser(vars.get(&quot;report_actions_prompt_&quot; + vars.get(&quot;action_counter&quot;))).next().getAsJsonArray();
+
+prompts_parameter_values = &quot;&quot;;
+if(prompts.size() &gt; 0) {
+	for(int i = 0; i &lt; prompts.size(); i++) {
+		JsonObject prompt = prompts.get(i).getAsJsonObject();
+		if(prompt.get(&quot;type&quot;)!= null)
+			type = prompt.get(&quot;type&quot;).getAsString();
+		else
+			type= &quot;&quot;;
+		
+		if(prompt.get(&quot;mode&quot;)!= null)
+			mode = prompt.get(&quot;mode&quot;).getAsString();
+		else
+			mode = &quot;&quot;;
+		log.debug(&quot;JsonObject is: &quot; + prompt.toString());
+		key = prompt.get(&quot;name&quot;).getAsString();
+		if(mode.toLowerCase()==&quot;random&quot;){
+			def r = new Random()
+			values = prompt.get(&quot;value&quot;).getAsString().split(&quot;,&quot;)
+			value = values[r.nextInt(values.size())]
+		} else {
+			value = prompt.get(&quot;value&quot;).getAsString();
+		}
+		
+		if(!prompts_parameter_values.equals(&quot;&quot;)) {
+			prompts_parameter_values = prompts_parameter_values + &quot;&amp;&quot;;
+		}
+		if (type==&quot;raw&quot;) {
+			prompts_parameter_values = prompts_parameter_values + &quot;p_&quot; + key + &quot;=&quot; + URLEncoder.encode(&quot;&lt;selectChoices&gt;&quot; + prompt.get(&quot;value&quot;).getAsString()+&quot;&lt;/selectChoices&gt;&quot;);
+		} else {
+			res = ContentUtil.getOptional(report_response, &quot;\&quot;@parameter\&quot;:\&quot;&quot; + key + &quot;\&quot;&quot;, &quot;,\&quot;@displayValue\&quot;:\&quot;&quot; + value + &quot;\&quot;&quot;);
+			if (res != null) {
+				useValue = res.substring(res.lastIndexOf(&quot;\&quot;@useValue\&quot;:&quot;) + 12);			
+			} else {
+				useValue = ContentUtil.getOptional(report_response, &quot;&lt;option value=\&quot;&quot;, &quot;\&quot; dv=\&quot;&quot;+ value + &quot;\&quot;&quot;);
+			}
+	
+			prompts_parameter_values = prompts_parameter_values + &quot;p_&quot; + key + &quot;=&quot; + URLEncoder.encode(&quot;&lt;selectChoices&gt;&lt;selectOption useValue=&quot; + useValue + &quot; displayValue=\&quot;&quot; + value + &quot;\&quot;/&gt;&lt;/selectChoices&gt;&quot;).replace(&quot;%5C%5CU003E&quot;, &quot;%26gt%3B&quot;).replace(&quot;+&quot;, &quot;%20&quot;);
+		}
+	}
+}
+
+vars.put(&quot;prompts_parameter_values&quot;, prompts_parameter_values);
+
+log.debug(&quot;prompts_parameter_values is: &quot; + prompts_parameter_values);</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+              </hashTree>
+              <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}${report_action}_promptPage_${report_name}" enabled="true">
+                <boolProp name="TransactionController.parent">true</boolProp>
+              </TransactionController>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ classic viewer run prompt" enabled="true">
+                  <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.value">_promptControl=prompt&amp;b_action=cognosViewer&amp;cv.actionState=${__escapeHtml(${cv.actionState})}&amp;cv.catchLogOnFault=true&amp;cv.header=false&amp;cv.id=_NS_&amp;cv.objectPermissions=execute%20read%20setPolicy%20traverse%20write%20&amp;cv.responseFormat=data&amp;cv.showFaultPage=true&amp;cv.toolbar=false&amp;executionParameters=${__escapeHtml(${m_parameters})}&amp;m_tracking=${__escapeHtml(${m_tracking})}&amp;${prompts_parameter_values}&amp;run.prompt=true&amp;ui.action=forward&amp;ui.cafcontextid=${__escapeHtml(${ui.cafcontextid})}&amp;ui.conversation=${__escapeHtml(${ui.conversation})}&amp;ui.object=storeID(%22${__escapeHtml(${report_id})}%22)&amp;ui.objectClass=report&amp;ui.primaryAction=run</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                  <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp</stringProp>
+                  <stringProp name="HTTPSampler.method">POST</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="save response" enabled="true">
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="script">vars.put(&quot;reportResponse&quot;, prev.getResponseDataAsString());</stringProp>
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                  </JSR223PostProcessor>
+                  <hashTree/>
+                  <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                    <collectionProp name="HeaderManager.headers">
+                      <elementProp name="Accept-Language" elementType="Header">
+                        <stringProp name="Header.name">Accept-Language</stringProp>
+                        <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept" elementType="Header">
+                        <stringProp name="Header.name">Accept</stringProp>
+                        <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                      </elementProp>
+                      <elementProp name="Referer" elementType="Header">
+                        <stringProp name="Header.name">Referer</stringProp>
+                        <stringProp name="Header.value">${url_base}</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Encoding" elementType="Header">
+                        <stringProp name="Header.name">Accept-Encoding</stringProp>
+                        <stringProp name="Header.value">gzip, deflate</stringProp>
+                      </elementProp>
+                      <elementProp name="Content-Type" elementType="Header">
+                        <stringProp name="Header.name">Content-Type</stringProp>
+                        <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </HeaderManager>
+                  <hashTree/>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get prompt response" enabled="true">
+                  <stringProp name="scriptLanguage">java</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+
+String decoded_response = StringEscapeUtils.unescapeHtml4(prev.getResponseDataAsString());
+vars.put(&quot;decoded_response&quot;, decoded_response);
+
+return decoded_response;
+
+</stringProp>
+                </JSR223Sampler>
+                <hashTree>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get cv.actionState" enabled="false">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">cv.actionState</stringProp>
+                    <stringProp name="RegexExtractor.regex">&quot;cv\.actionState&quot;: &quot;([^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get cv.actionState" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">cv.actionState</stringProp>
+                    <stringProp name="RegexExtractor.regex">&quot;m_sActionState&quot;: &quot;([^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.cafcontextid" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">ui.cafcontextid</stringProp>
+                    <stringProp name="RegexExtractor.regex">&quot;m_sCAFContext&quot;: &quot;([^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get ui.conversation" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">ui.conversation</stringProp>
+                    <stringProp name="RegexExtractor.regex">&quot;m_sConversation&quot;: &quot;([^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get m_sStatus" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">m_sStatus</stringProp>
+                    <stringProp name="RegexExtractor.regex">&quot;m_sStatus&quot;: &quot;([^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default">error</stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get datacheck" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">datacheck_not_found</stringProp>
+                    <stringProp name="RegexExtractor.regex">${report_datacheck}</stringProp>
+                    <stringProp name="RegexExtractor.template">false</stringProp>
+                    <stringProp name="RegexExtractor.default">true</stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get chart_urls" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">chart_urls</stringProp>
+                    <stringProp name="RegexExtractor.regex">src=&quot;(\?[^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="m_tracking found" enabled="true">
+                    <collectionProp name="Asserion.test_strings">
+                      <stringProp name="96784904">error</stringProp>
+                    </collectionProp>
+                    <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                    <boolProp name="Assertion.assume_success">false</boolProp>
+                    <intProp name="Assertion.test_type">12</intProp>
+                    <stringProp name="Assertion.scope">variable</stringProp>
+                    <stringProp name="Scope.variable">${m_tracking}</stringProp>
+                    <stringProp name="Assertion.custom_message"></stringProp>
+                  </ResponseAssertion>
+                  <hashTree/>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset runPrimaryAsync" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">vars.put(&quot;runPrimaryAsync&quot;, &quot;true&quot;)</stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+                <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include async" enabled="true">
+                  <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/async.jmx</stringProp>
+                </IncludeController>
+                <hashTree/>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If error or fault" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(&quot;${m_sStatus}&quot;==&quot;error&quot; || &quot;${m_sStatus}&quot; == &quot;fault&quot;)}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ unexpected status is ${m_sStatus}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script"></stringProp>
+                  </JSR223Sampler>
+                  <hashTree>
+                    <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="unexpected status is ${m_sStatus}" enabled="true">
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;bad status received &apos;&quot; + vars.get(&quot;m_sStatus&quot;) +  &quot;&apos; in response&quot;);</stringProp>
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                    </JSR223Assertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach chart_url in chart_urls" enabled="true">
+                  <stringProp name="ForeachController.inputVal">chart_urls</stringProp>
+                  <stringProp name="ForeachController.returnVal">chart_url</stringProp>
+                  <boolProp name="ForeachController.useSeparator">true</boolProp>
+                </ForeachController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ html decode chart url" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+vars.put(&quot;chart_url_decoded&quot;, StringEscapeUtils.unescapeHtml4(vars.get(&quot;chart_url&quot;)));</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ getChart" enabled="true">
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                      <collectionProp name="Arguments.arguments"/>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain"></stringProp>
+                    <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.protocol"></stringProp>
+                    <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                    <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp${chart_url_decoded}</stringProp>
+                    <stringProp name="HTTPSampler.method">GET</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                      <collectionProp name="HeaderManager.headers">
+                        <elementProp name="Accept-Language" elementType="Header">
+                          <stringProp name="Header.name">Accept-Language</stringProp>
+                          <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept" elementType="Header">
+                          <stringProp name="Header.name">Accept</stringProp>
+                          <stringProp name="Header.value">image/png,image/*;q=0.8,*/*;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Referer" elementType="Header">
+                          <stringProp name="Header.name">Referer</stringProp>
+                          <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=true&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept-Encoding" elementType="Header">
+                          <stringProp name="Header.name">Accept-Encoding</stringProp>
+                          <stringProp name="Header.value">gzip, deflate</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </HeaderManager>
+                    <hashTree/>
+                    <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Content-Type: image/png?" enabled="true">
+                      <collectionProp name="Asserion.test_strings">
+                        <stringProp name="277769327">Content-Type: image\/png</stringProp>
+                      </collectionProp>
+                      <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                      <boolProp name="Assertion.assume_success">false</boolProp>
+                      <intProp name="Assertion.test_type">2</intProp>
+                      <stringProp name="Assertion.custom_message"></stringProp>
+                    </ResponseAssertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="/ datacheck and chart count" enabled="true">
+                  <boolProp name="TransactionController.includeTimers">false</boolProp>
+                  <boolProp name="TransactionController.parent">false</boolProp>
+                </TransactionController>
+                <hashTree>
+                  <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If datacheck_not_found" enabled="true">
+                    <stringProp name="IfController.condition">${__groovy(${datacheck_not_found})}</stringProp>
+                    <boolProp name="IfController.evaluateAll">false</boolProp>
+                    <boolProp name="IfController.useExpression">true</boolProp>
+                  </IfController>
+                  <hashTree>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ failed to find datacheck ${report_datacheck} in ${report_action}" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script"></stringProp>
+                    </JSR223Sampler>
+                    <hashTree>
+                      <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="failed to find datacheck in subsequent action response" enabled="true">
+                        <stringProp name="cacheKey">true</stringProp>
+                        <stringProp name="filename"></stringProp>
+                        <stringProp name="parameters"></stringProp>
+                        <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;failed to find datacheck &apos;&quot; + vars.get(&quot;report_actions_datacheck_&quot; + vars.get(&quot;action_counter&quot;)) + &quot;&apos; in &quot; + vars.get(&quot;report_action&quot;) + &quot; response&quot;);</stringProp>
+                        <stringProp name="scriptLanguage">groovy</stringProp>
+                      </JSR223Assertion>
+                      <hashTree/>
+                    </hashTree>
+                  </hashTree>
+                  <IfController guiclass="IfControllerPanel" testclass="IfController" testname="verify chart count" enabled="true">
+                    <stringProp name="IfController.condition">${__groovy(${chart_urls_matchNr}!=${__V(report_actions_expected_chart_count_${action_counter})})}</stringProp>
+                    <boolProp name="IfController.evaluateAll">false</boolProp>
+                    <boolProp name="IfController.useExpression">true</boolProp>
+                  </IfController>
+                  <hashTree>
+                    <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ expected chart count ${__V(report_actions_expected_chart_count_${action_counter})} not equal to actual chart count ${chart_urls_matchNr}" enabled="true">
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="script">vars.put(&quot;report_action_chart_count_verification&quot;, &quot;expected chart count ${__V(report_actions_expected_chart_count_${action_counter})} not equal to actual chart count ${chart_urls_matchNr}&quot;);</stringProp>
+                    </JSR223Sampler>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+              </hashTree>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="/ if action type is not prompt" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${report_action}&quot; != &quot;prompt&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}${report_action}_${report_name}" enabled="true">
+                <boolProp name="TransactionController.parent">true</boolProp>
+                <stringProp name="TestPlan.comments">run subsequent actions</stringProp>
+              </TransactionController>
+              <hashTree>
+                <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ classic viewr run subsequent action" enabled="true">
+                  <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                    <collectionProp name="Arguments.arguments">
+                      <elementProp name="b_action" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">b_action</stringProp>
+                        <stringProp name="Argument.value">cognosViewer</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.catchLogOnFault" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.catchLogOnFault</stringProp>
+                        <stringProp name="Argument.value">true</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.header" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.header</stringProp>
+                        <stringProp name="Argument.value">false</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.id" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.id</stringProp>
+                        <stringProp name="Argument.value">_NS_</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.objectPermissions" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                        <stringProp name="Argument.name">cv.objectPermissions</stringProp>
+                        <stringProp name="Argument.value">execute read setPolicy traverse write </stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.responseFormat" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.responseFormat</stringProp>
+                        <stringProp name="Argument.value">data</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.showFaultPage" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.showFaultPage</stringProp>
+                        <stringProp name="Argument.value">true</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="cv.toolbar" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">cv.toolbar</stringProp>
+                        <stringProp name="Argument.value">false</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="executionParameters" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                        <stringProp name="Argument.name">executionParameters</stringProp>
+                        <stringProp name="Argument.value">&lt;bus:parameters xmlns:bus=&quot;http://developer.cognos.com/schemas/bibus/3/&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xsi:type=&quot;SOAP-ENC:Array&quot; xmlns:SOAP-ENC=&quot;http://schemas.xmlsoap.org/soap/encoding/&quot; SOAP-ENC:arrayType=&quot;bus:parameterValue[0]&quot;/&gt;</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="m_tracking" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">m_tracking</stringProp>
+                        <stringProp name="Argument.value">${m_tracking}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.action" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">ui.action</stringProp>
+                        <stringProp name="Argument.value">${report_action}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.cafcontextid" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">ui.cafcontextid</stringProp>
+                        <stringProp name="Argument.value">${ui.cafcontextid}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.conversation" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">ui.conversation</stringProp>
+                        <stringProp name="Argument.value">${ui.conversation}</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.object" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                        <stringProp name="Argument.name">ui.object</stringProp>
+                        <stringProp name="Argument.value">storeID(&quot;${report_id}&quot;)</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.objectClass" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">ui.objectClass</stringProp>
+                        <stringProp name="Argument.value">report</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                      <elementProp name="ui.primaryAction" elementType="HTTPArgument">
+                        <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                        <stringProp name="Argument.name">ui.primaryAction</stringProp>
+                        <stringProp name="Argument.value">run</stringProp>
+                        <stringProp name="Argument.metadata">=</stringProp>
+                        <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                      </elementProp>
+                    </collectionProp>
+                  </elementProp>
+                  <stringProp name="HTTPSampler.domain"></stringProp>
+                  <stringProp name="HTTPSampler.port"></stringProp>
+                  <stringProp name="HTTPSampler.protocol"></stringProp>
+                  <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                  <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp</stringProp>
+                  <stringProp name="HTTPSampler.method">POST</stringProp>
+                  <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                  <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                  <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                  <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                  <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                  <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                  <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                </HTTPSamplerProxy>
+                <hashTree>
+                  <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                    <collectionProp name="HeaderManager.headers">
+                      <elementProp name="Content-Type" elementType="Header">
+                        <stringProp name="Header.name">Content-Type</stringProp>
+                        <stringProp name="Header.value">application/x-www-form-urlencoded</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Language" elementType="Header">
+                        <stringProp name="Header.name">Accept-Language</stringProp>
+                        <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept" elementType="Header">
+                        <stringProp name="Header.name">Accept</stringProp>
+                        <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
+                      </elementProp>
+                      <elementProp name="Referer" elementType="Header">
+                        <stringProp name="Header.name">Referer</stringProp>
+                        <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=true&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                      </elementProp>
+                      <elementProp name="Accept-Encoding" elementType="Header">
+                        <stringProp name="Header.name">Accept-Encoding</stringProp>
+                        <stringProp name="Header.value">gzip, deflate</stringProp>
+                      </elementProp>
+                    </collectionProp>
+                  </HeaderManager>
+                  <hashTree/>
+                  <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="m_tracking found" enabled="true">
+                    <collectionProp name="Asserion.test_strings">
+                      <stringProp name="96784904">error</stringProp>
+                    </collectionProp>
+                    <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                    <boolProp name="Assertion.assume_success">false</boolProp>
+                    <intProp name="Assertion.test_type">12</intProp>
+                    <stringProp name="Assertion.scope">variable</stringProp>
+                    <stringProp name="Scope.variable">${m_tracking}</stringProp>
+                    <stringProp name="Assertion.custom_message"></stringProp>
+                  </ResponseAssertion>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get async_state" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">async_state</stringProp>
+                    <stringProp name="RegexExtractor.regex">&lt;state&gt;([^&lt;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number">1</stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get chart_urls" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">chart_urls</stringProp>
+                    <stringProp name="RegexExtractor.regex">src=&quot;(\?[^&quot;]*)</stringProp>
+                    <stringProp name="RegexExtractor.template">$1$</stringProp>
+                    <stringProp name="RegexExtractor.default"></stringProp>
+                    <stringProp name="RegexExtractor.match_number">-1</stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="get datacheck" enabled="true">
+                    <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                    <stringProp name="RegexExtractor.refname">datacheck_not_found</stringProp>
+                    <stringProp name="RegexExtractor.regex">${report_datacheck}</stringProp>
+                    <stringProp name="RegexExtractor.template">false</stringProp>
+                    <stringProp name="RegexExtractor.default">true</stringProp>
+                    <stringProp name="RegexExtractor.match_number"></stringProp>
+                  </RegexExtractor>
+                  <hashTree/>
+                  <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="save response" enabled="true">
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="script">vars.put(&quot;reportResponse&quot;, prev.getResponseDataAsString());</stringProp>
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                  </JSR223PostProcessor>
+                  <hashTree/>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get async parameters" enabled="true">
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+return StringEscapeUtils.unescapeHtml4(vars.get(&quot;async_state&quot;));</stringProp>
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                </JSR223Sampler>
+                <hashTree>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get cv.actionState" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">cv.actionState</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.m_sActionState</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get m_tracking" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">m_tracking</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.m_sTracking</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get ui.cafcontextid" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">ui.cafcontextid</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">*.m_sCAFContext</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get ui.conversation" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">ui.conversation</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.m_sConversation</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                  <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get m_sStatus" enabled="true">
+                    <stringProp name="JSONPostProcessor.referenceNames">m_sStatus</stringProp>
+                    <stringProp name="JSONPostProcessor.jsonPathExprs">$.m_sStatus</stringProp>
+                    <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                    <stringProp name="JSONPostProcessor.defaultValues">error</stringProp>
+                  </JSONPostProcessor>
+                  <hashTree/>
+                </hashTree>
+                <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ reset runPrimaryAsync" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">vars.put(&quot;runPrimaryAsync&quot;, &quot;true&quot;)</stringProp>
+                </JSR223Sampler>
+                <hashTree/>
+                <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include async" enabled="true">
+                  <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/async.jmx</stringProp>
+                </IncludeController>
+                <hashTree/>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If datacheck_not_found" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${datacheck_not_found})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ failed to find datacheck ${report_datacheck} in ${report_action}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script"></stringProp>
+                  </JSR223Sampler>
+                  <hashTree>
+                    <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="failed to find datacheck in subsequent action response" enabled="true">
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;failed to find datacheck &apos;&quot; + vars.get(&quot;report_actions_datacheck_&quot; + vars.get(&quot;action_counter&quot;)) + &quot;&apos; in &quot; + vars.get(&quot;report_action&quot;) + &quot; response&quot;);</stringProp>
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                    </JSR223Assertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If error or fault" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(&quot;${m_sStatus}&quot;==&quot;error&quot; || &quot;${m_sStatus}&quot; == &quot;fault&quot;)}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ unexpected status ${m_sStatus}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script"></stringProp>
+                  </JSR223Sampler>
+                  <hashTree>
+                    <JSR223Assertion guiclass="TestBeanGUI" testclass="JSR223Assertion" testname="unexpected status" enabled="true">
+                      <stringProp name="cacheKey">true</stringProp>
+                      <stringProp name="filename"></stringProp>
+                      <stringProp name="parameters"></stringProp>
+                      <stringProp name="script">AssertionResult.setFailure(true);
+AssertionResult.setFailureMessage(&quot;unexpected status &apos;&quot; + vars.get(&quot;m_sStatus&quot;) + &quot;&apos; in response&quot;);</stringProp>
+                      <stringProp name="scriptLanguage">groovy</stringProp>
+                    </JSR223Assertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="ForEach chart_url in chart_urls" enabled="true">
+                  <stringProp name="ForeachController.inputVal">chart_urls</stringProp>
+                  <stringProp name="ForeachController.returnVal">chart_url</stringProp>
+                  <boolProp name="ForeachController.useSeparator">true</boolProp>
+                </ForeachController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ html decode chart url" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">import org.apache.commons.lang3.StringEscapeUtils;
+// __unescapeHtml not working here, force it by calling underlying library
+vars.put(&quot;chart_url_decoded&quot;, StringEscapeUtils.unescapeHtml4(vars.get(&quot;chart_url&quot;)));</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                  <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ getChart" enabled="true">
+                    <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                      <collectionProp name="Arguments.arguments"/>
+                    </elementProp>
+                    <stringProp name="HTTPSampler.domain"></stringProp>
+                    <stringProp name="HTTPSampler.port"></stringProp>
+                    <stringProp name="HTTPSampler.protocol"></stringProp>
+                    <stringProp name="HTTPSampler.contentEncoding">utf-8</stringProp>
+                    <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/disp${chart_url_decoded}</stringProp>
+                    <stringProp name="HTTPSampler.method">GET</stringProp>
+                    <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+                    <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                    <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                    <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                    <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+                    <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+                    <stringProp name="HTTPSampler.response_timeout"></stringProp>
+                  </HTTPSamplerProxy>
+                  <hashTree>
+                    <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                      <collectionProp name="HeaderManager.headers">
+                        <elementProp name="Accept-Language" elementType="Header">
+                          <stringProp name="Header.name">Accept-Language</stringProp>
+                          <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept" elementType="Header">
+                          <stringProp name="Header.name">Accept</stringProp>
+                          <stringProp name="Header.value">image/png,image/*;q=0.8,*/*;q=0.5</stringProp>
+                        </elementProp>
+                        <elementProp name="Referer" elementType="Header">
+                          <stringProp name="Header.name">Referer</stringProp>
+                          <stringProp name="Header.value">${url_base}v1/disp?b_action=cognosViewer&amp;run.outputFormat=${report_output_format}&amp;run.prompt=true&amp;system.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FsystemOptionEnum%23accessibilityFeatures=false&amp;biDirectional.http%3A%2F%2Fdeveloper.cognos.com%2Fceba%2Fconstants%2FbiDirectionalOptionEnum%23biDirectionalFeaturesEnabled=false&amp;ui.object=storeID(%22${report_id}%22)&amp;ui.action=run&amp;cv.header=false&amp;cv.toolbar=false&amp;protectParameters=false&amp;isTitan=true&amp;cv.keepWindowOpen=true</stringProp>
+                        </elementProp>
+                        <elementProp name="Accept-Encoding" elementType="Header">
+                          <stringProp name="Header.name">Accept-Encoding</stringProp>
+                          <stringProp name="Header.value">gzip, deflate</stringProp>
+                        </elementProp>
+                      </collectionProp>
+                    </HeaderManager>
+                    <hashTree/>
+                    <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Content-Type: image/png?" enabled="true">
+                      <collectionProp name="Asserion.test_strings">
+                        <stringProp name="277769327">Content-Type: image\/png</stringProp>
+                      </collectionProp>
+                      <stringProp name="Assertion.test_field">Assertion.response_headers</stringProp>
+                      <boolProp name="Assertion.assume_success">false</boolProp>
+                      <intProp name="Assertion.test_type">2</intProp>
+                      <stringProp name="Assertion.custom_message"></stringProp>
+                    </ResponseAssertion>
+                    <hashTree/>
+                  </hashTree>
+                </hashTree>
+                <IfController guiclass="IfControllerPanel" testclass="IfController" testname="verify chart count" enabled="true">
+                  <stringProp name="IfController.condition">${__groovy(${chart_urls_matchNr}!=${__V(report_actions_expected_chart_count_${action_counter})})}</stringProp>
+                  <boolProp name="IfController.evaluateAll">false</boolProp>
+                  <boolProp name="IfController.useExpression">true</boolProp>
+                </IfController>
+                <hashTree>
+                  <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ expected chart count ${__V(report_actions_expected_chart_count_${action_counter})} not equal to actual chart count ${chart_urls_matchNr}" enabled="true">
+                    <stringProp name="scriptLanguage">groovy</stringProp>
+                    <stringProp name="parameters"></stringProp>
+                    <stringProp name="filename"></stringProp>
+                    <stringProp name="cacheKey">true</stringProp>
+                    <stringProp name="script">vars.put(&quot;report_action_chart_count_verification&quot;, &quot;expected chart count ${__V(report_actions_expected_chart_count_${action_counter})} not equal to actual chart count ${chart_urls_matchNr}&quot;);</stringProp>
+                  </JSR223Sampler>
+                  <hashTree/>
+                </hashTree>
+              </hashTree>
+            </hashTree>
+          </hashTree>
+          <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include release" enabled="true">
+            <stringProp name="IncludeController.includepath">authoring/runReport/classicViewer/release.jmx</stringProp>
+          </IncludeController>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

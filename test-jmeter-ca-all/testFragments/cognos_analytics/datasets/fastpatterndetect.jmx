@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false">
+        <stringProp name="TestPlan.comments"></stringProp>
+      </TestFragmentController>
+      <hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}fpd_${dashboard_name}" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If dashboard" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;dashboard&quot; == &quot;${objectType}&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp><boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/bi/v1/objects/dashboardId?fields=defaultName" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="fields" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.name">fields</stringProp>
+                    <stringProp name="Argument.value">defaultName%2Cspecification%2CdeploymentReferences.defaultName%2CdeploymentReferences.id%2CdeploymentReferences.type%2CdeploymentReferences.searchPath%2Cancestors%2Cowner.defaultName%2Cpermissions%2Cdisabled%2Chidden</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/objects/${dashboard_id}</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value">en-US,en;q=0.5</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value">application/json, text/javascript, */*; q=0.01</stringProp>
+                  </elementProp>
+                  <elementProp name="User-Agent" elementType="Header">
+                    <stringProp name="Header.name">User-Agent</stringProp>
+                    <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value">http://vottplab26host.com:9800/bi/index.html?perspective=dashboard&amp;context=%7B%22perspective%22%3A%22dashboard%22%2C%22id%22%3A%22i3AFF8E40E6604E8DBE05D1539C7EBFDB%22%2C%22content%22%3A%7B%22isAuthoringMode%22%3Afalse%2C%22boardId%22%3A%22i3AFF8E40E6604E8DBE05D1539C7EBFDB%22%7D%7D</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value">gzip, deflate</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dataset_id" enabled="true">
+                <stringProp name="TestPlan.comments">needs a better path expression</stringProp>
+                <stringProp name="JSONPostProcessor.referenceNames">dataset_id</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$..deploymentReferences..id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                <stringProp name="JSONPostProcessor.defaultValues">NONE</stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ Assign dataset call urls" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import org.apache.jorphan.io.TextFile;
+
+String[] navPath = vars.get(&quot;navigation&quot;).split(&quot;,&quot;);
+String relDashboardDir = vars.get(&quot;data_dir&quot;) + &quot;/&quot;
+for(i = 1; i &lt; navPath.length+1; i ++){
+	relDashboardDir = relDashboardDir + &quot;/&quot; + navPath[i-1]; 
+}
+relDashboardDir = relDashboardDir + &quot;/&quot; + vars.get(&quot;dashboard_name&quot;); 
+queryspecFile = relDashboardDir + &quot;/tab_000&quot;;
+log.debug(&quot;queryspecFile = &quot; + queryspecFile);
+queryspec = new TextFile(queryspecFile);
+log.debug(&quot;dataset_id = &quot; +  vars.get(&quot;dataset_id&quot;));
+result= queryspec.getText().replaceAll(&quot;@@dataset_id@@&quot;, vars.get(&quot;dataset_id&quot;));
+dashboardName = vars.get(&quot;dashboard_name&quot;);
+if (dashboardName.contains(&quot;.csv&quot;)) {
+	tableName = dashboardName.substring(0, dashboardName.indexOf(&quot;.csv&quot;))
+	log.debug(&quot;table name replacing &quot; + tableName +&quot;. with &quot; + tableName + &quot;_csv.&quot;);
+	result = result.replaceAll(tableName + &quot;\\.&quot;, tableName + &quot;_csv.&quot;).replaceAll(&quot;type=module&quot;, &quot;type=uploadedFile&quot;)
+}
+return result;
+//return queryspec.getText().replaceAll(&quot;datasets/i[A-F0-9]{32}&quot;, &quot;datasets/&quot; + vars.get(&quot;dataset_id&quot;));</stringProp>
+          </JSR223Sampler>
+          <hashTree>
+            <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="if type is a file" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters">${objectType}</stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">log.info(&quot;object type read=&quot; + Parameters);
+if (&quot;uploadedFile&quot; == args[0]) {
+	vars.put(&quot;dataset_id&quot;, vars.get(&quot;dashboard_id&quot;))
+}
+</stringProp>
+            </JSR223PreProcessor>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Read each query spec line from file" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">dashboard_widget_request</stringProp>
+              <stringProp name="RegexExtractor.regex">(.*fastpatternkeydrivers.*)</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">-1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+          </hashTree>
+          <com.ibm.jmeter.parallel.ParallelSampler guiclass="com.ibm.jmeter.parallel.gui.ParallelRequestGui" testclass="com.ibm.jmeter.parallel.ParallelSampler" testname="Parallel Sampler for dashboard widget calls" enabled="true">
+            <stringProp name="urlArrayName">dashboard_widget_request</stringProp>
+            <stringProp name="datacheckArrayName">dashboard_datachecks</stringProp>
+            <stringProp name="resultObjectName">parallelSamplerErrors</stringProp>
+          </com.ibm.jmeter.parallel.ParallelSampler>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

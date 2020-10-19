@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false">
+        <stringProp name="TestPlan.comments"></stringProp>
+      </TestFragmentController>
+      <hashTree>
+        <ForeachController guiclass="ForeachControlPanel" testclass="ForeachController" testname="for each item in scenario" enabled="true">
+          <stringProp name="ForeachController.inputVal">items</stringProp>
+          <stringProp name="ForeachController.returnVal">item</stringProp>
+          <boolProp name="ForeachController.useSeparator">true</boolProp>
+          <stringProp name="ForeachController.startIndex">0</stringProp>
+        </ForeachController>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get item type" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+          </JSR223Sampler>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get type" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">type</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.type</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get setup" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">setup</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.setup</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">false</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get item_navigation" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">item_navigation</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.navigation</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">NO_NAVIGATION</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="if non-setup step or setup step and first" enabled="true">
+            <stringProp name="IfController.condition">${__groovy((!${setup}) || (${setup} &amp;&amp; &quot;${tr_prefix}&quot; == &quot;first_&quot;))}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If nav for item" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${item_navigation}&quot;!=&quot;NO_NAVIGATION&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set navigation" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;navigation&quot;, vars.get(&quot;item_navigation&quot;))</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="nav" enabled="true">
+                <stringProp name="IncludeController.includepath">common/bi_navigate.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If report" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;report&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include authoring/runReport/run_reports.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">authoring/runReport/run_reports.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If deployment_import" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;deployment_import&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include admin/importDeployment.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">admin/importDeployment.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If job" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;job&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set jobItem" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;jobItem&quot;, vars.get(&quot;item&quot;))</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include scheduling-service/runJob.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">scheduling-service/runJob.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If module" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;module&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include modules/launch.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">modules/launch.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If explore" enabled="true">
+              <stringProp name="IfController.condition">${__groovy( &quot;${type}&quot;==&quot;explore&quot; )}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get explore details" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_name" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_name</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_datachecks" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_datachecks</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.datacheck[*]</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_id from navigation_response variable" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_id</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${explore_name}&quot;)]..id</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="Sample.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">navigation_response</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_type from navigation_response variable" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_type</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${explore_name}&quot;)]..type</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="Sample.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">navigation_response</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_action" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_action</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.action</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get explore_editmode" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">explore_editmode</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.editmode</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">false</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="include explore/launch.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">explore/launch.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If dashboard or story" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;dashboard&quot; || &quot;${type}&quot;==&quot;story&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ remove previous dashboard_datachecks" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">datacheckCountStr = vars.get(&quot;dashboard_datachecks_matchNr&quot;);
+if (datacheckCountStr != null ) {
+	int datacheckCount = Integer.parseInt(datacheckCountStr);
+	while(datacheckCount &gt; 0) {
+		vars.remove(&quot;dashboard_datachecks_&quot; + datacheckCount);
+		datacheckCount = datacheckCount - 1;
+	}
+	vars.remove(&quot;dashboard_datachecks&quot;);
+	vars.remove(&quot;dashboard_datachecks_matchNr&quot;);
+}
+</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get dashboard details" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_name" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">dashboard_name</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_datachecks" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">dashboard_datachecks</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.datacheck[*]</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_id from navigation_response varilable" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">dashboard_id</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${dashboard_name}&quot;)].id</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="Sample.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">navigation_response</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_action_names" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">dashboard_action_names</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.actions[*].name</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">-1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get dashboard_editmode" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">dashboard_editmode</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.editmode</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">false</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get suggestionsCount" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">suggestionsCount</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.suggestions</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="check If dashboard Recording exists" enabled="true">
+                  <stringProp name="scriptLanguage">groovy</stringProp>
+                  <stringProp name="parameters"></stringProp>
+                  <stringProp name="filename"></stringProp>
+                  <stringProp name="cacheKey">true</stringProp>
+                  <stringProp name="script">import org.apache.jorphan.io.TextFile;
+
+vars.put(&quot;dashboardRecordingExists&quot;, &quot;false&quot;);
+
+String[] navPath = vars.get(&quot;navigation&quot;).split(&quot;,&quot;);
+String relDashboardDir = vars.get(&quot;data_dir&quot;) + &quot;/&quot;;
+for(i = 1; i &lt; navPath.length+1; i ++){
+	relDashboardDir = relDashboardDir + &quot;/&quot; + navPath[i-1]; 
+}
+String dashboard_name2 = vars.get(&quot;dashboard_name&quot;);
+relDashboardDir = relDashboardDir + &quot;/&quot; + dashboard_name2;
+vars.put(&quot;relDashboardDir&quot;, relDashboardDir);
+vars.put(&quot;relDashboardDir_enc&quot;, relDashboardDir.replaceAll(&quot; &quot;,&quot;%20&quot;));
+
+queryspecFile = relDashboardDir + &quot;/&quot; + (&quot;tab_000&quot;);
+log.debug(Label + &quot;: queryspecFile = &quot; + queryspecFile);
+queryspec = new TextFile(queryspecFile);
+//response = &quot;&quot;
+
+// define common logging function
+def loginfo = {
+	String msg -&gt;
+	log.info(msg);
+	response = response + msg + &quot;\n&quot;
+}
+
+if (queryspec.exists()) {
+	log.debug(Label + &quot;: file exists&quot;);
+	vars.put(&quot;dashboardRecordingExists&quot;, &quot;true&quot;);	
+} else {
+	log.error(&quot;recording file does not exist: &quot; + queryspec.getAbsolutePath());
+	//vars.put(&quot;dashboardRecordingExists&quot;, &quot;false&quot;);
+	prev.setSuccessful(false)
+	prev.setResponseMessage(&quot;recording file does not exist: &quot; + queryspec.getAbsolutePath());
+}
+	  
+</stringProp>
+                </JSR223PostProcessor>
+                <hashTree/>
+                <ResultAction guiclass="ResultActionGui" testclass="ResultAction" testname="Result Status Action Handler" enabled="true">
+                  <intProp name="OnError.action">3</intProp>
+                </ResultAction>
+                <hashTree/>
+              </hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="include dashboarding/launch.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">dashboarding/launch.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If fileUpload" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;file_upload&quot; || &quot;${type}&quot;==&quot;file_replace_append&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get file upload details" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">return vars.get(&quot;item&quot;);</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get file name" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">fileName</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include modules/file_upload.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">modules/file_upload.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If content-service" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;content-service&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include content-service/content-service.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">content-service/content-service.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If user-profile-service" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;user-profile-service&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include user-profile-service/user-profile-service.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">user-profile-service/user-profile-service.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If search" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;search&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set searchItem" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">vars.put(&quot;searchItem&quot;, vars.get(&quot;item&quot;))</stringProp>
+              </JSR223Sampler>
+              <hashTree/>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include search/search.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">search/search.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If conversation" enabled="true">
+              <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;sentence_exploration&quot; || &quot;${type}&quot;==&quot;sentence_dashboard&quot;)}</stringProp>
+              <boolProp name="IfController.evaluateAll">false</boolProp>
+              <boolProp name="IfController.useExpression">true</boolProp>
+            </IfController>
+            <hashTree>
+              <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get item variables" enabled="true">
+                <stringProp name="scriptLanguage">groovy</stringProp>
+                <stringProp name="parameters"></stringProp>
+                <stringProp name="filename"></stringProp>
+                <stringProp name="cacheKey">true</stringProp>
+                <stringProp name="script">//TODO hardcoded item index
+return vars.get(&quot;item&quot;)</stringProp>
+              </JSR223Sampler>
+              <hashTree>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get moduleName from item" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">moduleName</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.name</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get columnName from item" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">columnName</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.columnName</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="/ get type from item" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">type</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.type</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="get moduleId from navigation_response variable" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">moduleId</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data[?(@.defaultName==&quot;${moduleName}&quot;)].id</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+                  <stringProp name="Sample.scope">variable</stringProp>
+                  <stringProp name="Scope.variable">navigation_response</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include smarts/conversation.jmx" enabled="true">
+                <stringProp name="IncludeController.includepath">smarts/conversation.jmx</stringProp>
+              </IncludeController>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If datasource" enabled="true">
+            <stringProp name="IfController.condition">${__groovy(&quot;${type}&quot;==&quot;datasource&quot;)}</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+          </IfController>
+          <hashTree>
+            <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ get item type" enabled="true">
+              <stringProp name="scriptLanguage">groovy</stringProp>
+              <stringProp name="parameters"></stringProp>
+              <stringProp name="filename"></stringProp>
+              <stringProp name="cacheKey">true</stringProp>
+              <stringProp name="script">vars.put(&quot;datasource_parameters&quot;,vars.get(&quot;item&quot;));</stringProp>
+            </JSR223Sampler>
+            <hashTree/>
+            <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="Include datasource/launch.jmx" enabled="true">
+              <stringProp name="IncludeController.includepath">datasource/launch.jmx</stringProp>
+            </IncludeController>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/ set tr_prefix and output" enabled="true">
+          <stringProp name="scriptLanguage">groovy</stringProp>
+          <stringProp name="parameters"></stringProp>
+          <stringProp name="filename"></stringProp>
+          <stringProp name="cacheKey">true</stringProp>
+          <stringProp name="script">vars.put(&quot;tr_prefix&quot;, &quot;&quot;);
+</stringProp>
+        </JSR223Sampler>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

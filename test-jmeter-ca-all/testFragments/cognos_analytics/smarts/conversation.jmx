@@ -1,0 +1,988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <TestFragmentController guiclass="TestFragmentControllerGui" testclass="TestFragmentController" testname="Test Fragment" enabled="false"/>
+      <hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="${tr_prefix}conversation" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="/set variables for converstion in dashboard or exploration" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">type = vars.get(&quot;type&quot;)
+if (type == &quot;sentence_dashboard&quot;) {
+	vars.put(&quot;mode_type&quot;, &quot;dashboard&quot;);
+	vars.put(&quot;module_type&quot;, &quot;dashboard/glass/dashboard/DashboardView&quot;);
+	vars.put(&quot;title_type&quot;, &quot;New dashboard&quot;);
+} else {
+	vars.put(&quot;mode_type&quot;, &quot;explore&quot;);
+	vars.put(&quot;module_type&quot;, &quot;explore/view&quot;);
+	vars.put(&quot;title_type&quot;, &quot;New exploration&quot;);
+}</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Open conversation slideout" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="open slideout / POST /smarts/conversation/sentence" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;sentence&quot;:&quot;hello&quot;,&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_listen&quot;,&quot;main_intent&quot;:&quot;greet&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_listen&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/sentence</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="1879170103">How can I {{help}} you</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="open slideout / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;utter_ask_howcanhelp&quot;,&quot;main_intent&quot;:&quot;greet&quot;},&quot;restart&quot;:true,&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;utter_ask_howcanhelp&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="559542730">{&quot;id&quot;:&quot;listen&quot;}</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="load data modules" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <stringProp name="TestPlan.comments"></stringProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ load data modules / POST /smarts/conversation/sentence" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;sentence&quot;:&quot;load data modules&quot;,&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_listen&quot;,&quot;main_intent&quot;:&quot;greet&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_listen&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/sentence</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="807494380">I found these:</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ load data modules / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_show_source&quot;,&quot;main_intent&quot;:&quot;showsource&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_show_source&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;events&quot;:[{&quot;name&quot;:&quot;found&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;source&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;join_required&quot;,&quot;value&quot;:&quot;false&quot;}]},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ load data modules / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;utter_end&quot;,&quot;main_intent&quot;:&quot;showsource&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;utter_end&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="show data module ${moduleName} " enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <stringProp name="TestPlan.comments"></stringProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ show data module ${moduleName} / POST /smarts/conversation/sentence" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;sentence&quot;:&quot;show data module ${moduleName}&quot;,&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_listen&quot;,&quot;main_intent&quot;:&quot;showsource&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_listen&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/sentence</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-346057208">here is a list of relevant fields and some basic information about them</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ show data module ${moduleName} / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_show_source&quot;,&quot;main_intent&quot;:&quot;showsource&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_show_source&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;events&quot;:[{&quot;name&quot;:&quot;found&quot;,&quot;value&quot;:&quot;false&quot;},{&quot;name&quot;:&quot;source&quot;,&quot;value&quot;:&quot;${moduleName}&quot;},{&quot;name&quot;:&quot;join_required&quot;,&quot;value&quot;:&quot;false&quot;}]},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="show column ${columnName}" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+            <stringProp name="TestPlan.comments"></stringProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ show column ${columnName}  / POST /smarts/conversation/sentence" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;sentence&quot;:&quot;show column ${columnName}&quot;,&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_listen&quot;,&quot;main_intent&quot;:&quot;showsource&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_listen&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/sentence</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">simulate clicking on data module</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-754529878">and here are some interesting fields related to </stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ show column ${columnName} / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_show&quot;,&quot;main_intent&quot;:&quot;show&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_show&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;events&quot;:[{&quot;name&quot;:&quot;found&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;source&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;join_required&quot;,&quot;value&quot;:&quot;false&quot;}]},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ show column ${columnName} / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;utter_end&quot;,&quot;main_intent&quot;:&quot;show&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;utter_end&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="what influences column ${columnName}" enabled="true">
+            <boolProp name="TransactionController.includeTimers">false</boolProp>
+            <stringProp name="TestPlan.comments"></stringProp>
+            <boolProp name="TransactionController.parent">true</boolProp>
+          </TransactionController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ what influences column ${columnName}  / POST /smarts/conversation/sentence" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;sentence&quot;:&quot;what influences column Revenue&quot;,&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_listen&quot;,&quot;main_intent&quot;:&quot;show&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_listen&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/sentence</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="TestPlan.comments">simulate clicking on data module</stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-1931753144">Here are the fields that have great influence on </stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">2</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ what influences column ${columnName} / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;action_influencer&quot;,&quot;main_intent&quot;:&quot;showinfluencer&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;action_influencer&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;events&quot;:[{&quot;name&quot;:&quot;found&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;source&quot;,&quot;value&quot;:&quot;true&quot;},{&quot;name&quot;:&quot;join_required&quot;,&quot;value&quot;:&quot;false&quot;}]},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="/ what influences column ${columnName} / POST /smarts/conversation/continue" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;context&quot;:{&quot;dialog&quot;:{&quot;executed_state&quot;:&quot;utter_end&quot;,&quot;main_intent&quot;:&quot;showinfluencer&quot;},&quot;module&quot;:&quot;${moduleId}&quot;,&quot;name&quot;:&quot;${moduleName}&quot;,&quot;last_action&quot;:&quot;utter_end&quot;,&quot;type&quot;:&quot;uploadedFile&quot;},&quot;userContext&quot;:{&quot;defaultName&quot;:&quot;${username}&quot;,&quot;displayName&quot;:&quot;${username}&quot;,&quot;givenName&quot;:null,&quot;surname&quot;:&quot;${username}&quot;,&quot;email&quot;:null},&quot;appContext&quot;:{&quot;mode&quot;:&quot;${mode_type}&quot;,&quot;title&quot;:&quot;${title_type}&quot;,&quot;isHomepage&quot;:false,&quot;id&quot;:null,&quot;includedCharts&quot;:[&quot;Area&quot;,&quot;Bar&quot;,&quot;Bubble&quot;,&quot;Bullet&quot;,&quot;Column&quot;,&quot;Crosstab&quot;,&quot;Heatmap&quot;,&quot;HierarchicalPackedBubble&quot;,&quot;Line&quot;,&quot;DualAxis&quot;,&quot;Tiledmap&quot;,&quot;Marimekko&quot;,&quot;Network&quot;,&quot;PackedBubble&quot;,&quot;Pie&quot;,&quot;Point&quot;,&quot;Dial&quot;,&quot;Scatter&quot;,&quot;Spiral&quot;,&quot;StackedBar&quot;,&quot;StackedColumn&quot;,&quot;Singleton&quot;,&quot;List&quot;,&quot;Treemap&quot;,&quot;Wordle&quot;],&quot;content&quot;:{&quot;boardId&quot;:null,&quot;isAuthoringMode&quot;:true,&quot;module&quot;:&quot;${module_type}&quot;},&quot;sources&quot;:[{&quot;id&quot;:&quot;${moduleId}&quot;,&quot;label&quot;:&quot;${moduleName}&quot;,&quot;type&quot;:&quot;uploadedFile&quot;,&quot;active&quot;:true}]},&quot;chatContext&quot;:{}}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${urlPath}/bi/v1/smarts/conversation/continue</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="Content-Type" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value"> application/json</stringProp>
+                  </elementProp>
+                  <elementProp name="Referer" elementType="Header">
+                    <stringProp name="Header.name">Referer</stringProp>
+                    <stringProp name="Header.value"> http://${serverName}:${serverPort}${urlPath}/bi/?perspective=home</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Encoding" elementType="Header">
+                    <stringProp name="Header.name">Accept-Encoding</stringProp>
+                    <stringProp name="Header.value"> gzip, deflate</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept-Language" elementType="Header">
+                    <stringProp name="Header.name">Accept-Language</stringProp>
+                    <stringProp name="Header.value"> en-US,en;q=0.8</stringProp>
+                  </elementProp>
+                  <elementProp name="Accept" elementType="Header">
+                    <stringProp name="Header.name">Accept</stringProp>
+                    <stringProp name="Header.value"> */*</stringProp>
+                  </elementProp>
+                  <elementProp name="Origin" elementType="Header">
+                    <stringProp name="Header.name">Origin</stringProp>
+                    <stringProp name="Header.value">http://${serverName}:${serverPort}</stringProp>
+                  </elementProp>
+                  <elementProp name="X-Requested-With" elementType="Header">
+                    <stringProp name="Header.name">X-Requested-With</stringProp>
+                    <stringProp name="Header.value">XMLHttpRequest</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+                <collectionProp name="Asserion.test_strings">
+                  <stringProp name="-656556998">&quot;isError&quot;: true</stringProp>
+                </collectionProp>
+                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+                <boolProp name="Assertion.assume_success">false</boolProp>
+                <intProp name="Assertion.test_type">6</intProp>
+                <stringProp name="Assertion.custom_message"></stringProp>
+              </ResponseAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
